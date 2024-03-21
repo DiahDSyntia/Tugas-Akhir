@@ -17,7 +17,19 @@ menu_selection = st.sidebar.selectbox('Klik Tombol Di bawah ini', ['Home', 'Pre-
 # Membuat konten berdasarkan pilihan menu
 if menu_selection == 'Home':
     st.title('Selamat Datang di Website Klasifikasi Hipertensi')
-    st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi [7]. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
+    st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
+    st.write('Faktor Faktor Resiko Hipertensi')
+    st.write("""
+    1. Jenis Kelamin
+    2. Usia
+    3. Indeks Massa Tubuh
+    4. Sistolik
+    5. Diastolik
+    6. Nafas
+    7. Detak Nadi
+    """)
+    data = pd.read_excel('https://github.com/DiahDSyntia/Tugas-Akhir/blob/main/DATABARU3.xlsx')
+    st.write(data)
 
 elif menu_selection == 'Pre-Pocesssing Data':
     st.title('Halaman Pre-pocessing Data')
