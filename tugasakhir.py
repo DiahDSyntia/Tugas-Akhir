@@ -21,8 +21,8 @@ with st.sidebar:
 if selected == "Homepage":
     st.title(f"Homepage {selected}")
 if selected == "Pre-Processing Data":
-    st.title(f""Pre-Processing Data" {selected}")
+    st.title(f"Pre-Processing Data" {selected}")
 if selected == "Klasifikasi SVM":
-    st.title(f""Klasifikasi SVM" {selected}")
+    st.title(f"Klasifikasi SVM" {selected}")
 if selected == "Uji Coba":
-    st.title(f""Uji Coba" {selected}")
+    st.title(f"Uji Coba" {selected}")
