@@ -8,25 +8,6 @@ import seaborn as sns
 
 import streamlit as st
 
-# Menambahkan CSS khusus untuk navbar
-st.markdown(
-    """
-    <style>
-    .sidebar .sidebar-content {
-        background-color: #ffcccc; /* Warna latar belakang sidebar (pink muda) */
-    }
-    .sidebar .sidebar-content .block-container {
-        color: #333; /* Warna teks pada pilihan menu */
-    }
-    .sidebar .sidebar-content .stButton>button {
-        background-color: #ff3399; /* Warna latar belakang tombol (pink cerah) */
-        color: white; /* Warna teks tombol */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 # Judul navbar
 st.sidebar.title('Main Menu')
 
@@ -35,7 +16,7 @@ menu_selection = st.sidebar.selectbox('Klik Tombol Di bawah ini', ['Home', 'Pre-
 
 # Membuat konten berdasarkan pilihan menu
 if menu_selection == 'Home':
-    st.title('Selamat Data di Halaman Home Page')
+    st.title('Selamat Data di Home Page')
     st.write('This is the homepage content.')
 
 elif menu_selection == 'Pre-Pocesssing Data':
