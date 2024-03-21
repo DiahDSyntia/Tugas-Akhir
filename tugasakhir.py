@@ -29,7 +29,7 @@ st.sidebar.write("""
             Alat analisis sentimen dapat memindai teks ini untuk secara otomatis menentukan sikap penulis terhadap suatu topik.
             """
             )
-st.sidebar.write("""
+st.sidebar("""
             # Mengapa harus Analisis Sentimen?"""
             )
 st.sidebar.write("""
