@@ -28,6 +28,8 @@ if menu_selection == 'Home':
     6. Nafas
     7. Detak Nadi
     """)
+    st.markdown("### Data Hipertensi")
+    st.write('Data Hipertensi ini merupakan data dari Puskesmas Modopuro, Mojokerto')
     url = "https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
     df = pd.read_csv(url)
     st.write(df)
