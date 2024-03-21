@@ -6,11 +6,13 @@ from PIL import Image
 from collections import OrderedDict
 import seaborn as sns
 
+import streamlit as st
+
 # Judul navbar
 st.sidebar.title('Navigation')
 
-# Menambahkan pilihan menu ke navbar
-menu_selection = st.sidebar.radio('Go to', ['Home', 'About', 'Contact'])
+# Pilihan menu dalam bentuk dropdown
+menu_selection = st.sidebar.selectbox('Go to', ['Home', 'About', 'Contact'])
 
 # Membuat konten berdasarkan pilihan menu
 if menu_selection == 'Home':
