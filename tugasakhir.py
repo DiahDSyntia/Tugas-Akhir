@@ -7,15 +7,17 @@ from collections import OrderedDict
 import seaborn as sns
 
 st.write("""
-# Analisis Sentimen Ulasan Air Terjun Dlundung
-### Metode K-NN
+# Klasifikasi Penyakit Hipertensi 
+### Metode SVM (Support Vector Machine)
 """
 )
 
 tab_titles = [
     "Homepage",
-    "Preposcessing",
-    "Wordcloud",]
+    "Pre-processing Data",
+    "Klasifikasi SVM",
+    "Klasifikasi SVM",
+    "Uji Coba",]
 
 tabs = st.tabs(tab_titles)
 
