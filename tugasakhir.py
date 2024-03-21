@@ -21,9 +21,7 @@ if menu_selection == 'Home':
 
 elif menu_selection == 'Pre-Pocesssing Data':
     st.title('Halaman Pre-pocessing Data')
-    st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, 
-    biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. 
-    Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
+    st.write('Hipertensi')
 
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Klasifikasi SVM')
