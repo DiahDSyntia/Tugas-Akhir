@@ -28,7 +28,7 @@ if menu_selection == 'Home':
     6. Nafas
     7. Detak Nadi
     """)
-    data = pd.read_excel('https://github.com/DiahDSyntia/Tugas-Akhir/blob/main/DATABARU3.xlsx')
+    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.csv')
     st.write(data)
 
 elif menu_selection == 'Pre-Pocesssing Data':
