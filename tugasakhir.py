@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
+import streamlit_option_menu import option_menu
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -12,17 +12,40 @@ st.write("""
 ### Metode SVM (Support Vector Machine)
 """
 )
-with st.sidebar:
-    selected = option_menu(
-        menu_title="Main Menu", #required
-        options=["Homepage", "Pre-Processing Data", "Klasifikasi SVM", "Uji Coba"], #required
-    )
 
-if selected == "Homepage":
-    st.title(f"Homepage {selected}")
-if selected == "Pre-Processing Data":
-    st.title(f"Pre-Processing Data {selected}")
-if selected == "Klasifikasi SVM":
-    st.title(f"Klasifikasi SVM {selected}")
-if selected == "Uji Coba":
-    st.title(f"Uji Coba {selected}")
+tab_titles = [
+    "Homepage",
+    "Pre-processing Data",
+    "Klasifikasi SVM",
+    "Klasifikasi SVM",
+    "Uji Coba",]
+
+tabs = st.tabs(tab_titles)
+
+st.sidebar.write("""
+            # Pengertian Analisis Sentimen"""
+            )
+st.sidebar.write("""
+            Analisis sentimen adalah proses menganalisis teks digital untuk menentukan apakah nada emosional pesan tersebut positif, negatif, atau netral.
+            Alat analisis sentimen dapat memindai teks ini untuk secara otomatis menentukan sikap penulis terhadap suatu topik.
+            """
+            )
+st.sidebar.write("""
+            # Mengapa harus Analisis Sentimen?"""
+            )
+st.sidebar.write("""
+            1. Memberikan wawasan yang objektif
+            """
+            )
+st.sidebar.write("""
+            2. Membangun produk dan layanan yang lebih baik
+            """
+            )
+st.sidebar.write("""
+            3. Menganalisis dalam skala besar
+            """
+            )
+st.sidebar.write("""
+            4. Hasil waktu nyata
+            """
+            )
