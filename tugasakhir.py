@@ -28,7 +28,7 @@ if menu_selection == 'Home':
     6. Nafas
     7. Detak Nadi
     """)
-    url = "https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.csv"
+    url = "https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
     df = pd.read_csv(url)
     st.write(df)
 
