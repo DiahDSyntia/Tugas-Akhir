@@ -13,13 +13,13 @@ st.markdown(
     """
     <style>
     .sidebar .sidebar-content {
-        background-color: pink; /* Warna latar belakang sidebar */
+        background-color: #ADD8E6; /* Warna latar belakang sidebar */
     }
     .sidebar .sidebar-content .block-container {
-        color: #333; /* Warna teks pada pilihan menu */
+        color: #E6E6FA; /* Warna teks pada pilihan menu */
     }
     .sidebar .sidebar-content .stButton>button {
-        background-color: skyblue; /* Warna latar belakang tombol */
+        background-color: #BC8F8F; /* Warna latar belakang tombol */
         color: white; /* Warna teks tombol */
     }
     </style>
