@@ -28,8 +28,9 @@ if menu_selection == 'Home':
     6. Nafas
     7. Detak Nadi
     """)
-    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.csv')
-    st.write(data)
+    url = "https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.csv"
+    df = pd.read_csv(url)
+    st.write(df)
 
 elif menu_selection == 'Pre-Pocesssing Data':
     st.title('Halaman Pre-pocessing Data')
