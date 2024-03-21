@@ -23,10 +23,10 @@ elif menu_selection == 'Pre-Pocesssing Data':
     st.title('Halaman Pre-pocessing Data')
     st.write('This is the about us page.')
 
-elif menu_selection == ''Klasifikasi SVM'':
+elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Klasifikasi SVM')
     st.write('This is the contact us page.')
 
-elif menu_selection == ''Uji Coba'':
+elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
     st.write('This is the contact us page.')
