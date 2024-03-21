@@ -19,6 +19,7 @@ tab_titles = [
     "Klasifikasi SVM",
     "Uji Coba",]
 
+tabs = st.tabs(tab_titles)
 with tabs[0]:
     st.write("""
     Air Terjun Dlundung di Kecamatan Trawas, Kabupaten Mojokerto menjadi salah satu destinasi wisata yang sayang untuk dilewatkan. Panorama alamnya memukau dan udaranya yang sejuk membuat liburan terasa singkat di sini.
