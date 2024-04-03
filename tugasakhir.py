@@ -137,13 +137,10 @@ elif menu_selection == 'Uji Coba':
     col1,col2 = st.columns([2,2])
     with col1:
         usia = st.number_input("Usia",0)
-        bmi = st.number_input("BMI",0.00)
-        glukosa = st.number_input("Glukosa",0)
-        insulin = st.number_input("Insulin",0.00)
+        IMT = st.number_input("BMI",0.00)
+        sistole = st.number_input("Glukosa",0)
     with col2:
-        homa = st.number_input("HOMA",0.00)
-        leptin = st.number_input("Leptin",0.00)
-        adiponectin = st.number_input("Adiponectin",0.00)
-        resistin = st.number_input("Resistin",0.00)
-        mcp = st.number_input("MCP.1",0.00)
+        diastole = st.number_input("Insulin",0.00)
+        nafas = st.number_input("HOMA",0.00)
+        detak nadi = st.number_input("Leptin",0.00)
     submit = st.button('Prediksi')
