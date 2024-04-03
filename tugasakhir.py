@@ -61,6 +61,18 @@ elif menu_selection == 'Pre-Pocesssing Data':
         data_encoded = pd.get_dummies(data, columns=['Jenis Kelamin'], prefix='JK')
         # Mengganti nilai yang mewakili keberadaan kategori dengan 1 dan yang tidak dengan 0
         data_encoded.replace({col: {1: '1', 0: '0'} for col in data_encoded.columns}, inplace=True)
+
+        # Melakukan preprocessing pada kolom yang dipilih
+            def preprocess_text(text):
+                text = re.sub(r'[^A-Za-z0-9\s]', '', text)
+                text = re.sub(r'[A-Za-z]', '', text)
+                text = re.sub(r'\s+', ' ', text)
+                text = text.strip()
+                return text
+
+            columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
+            for col in columns_to_clean:
+                data_encoded[col] = data_encoded[col].apply(preprocess_text)
         
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
