@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from collections import OrderedDict
 import seaborn as sns
+from sklearn.preprocessing import MinMaxScaler
+import regex as re
 
 import streamlit as st
 
@@ -46,13 +48,42 @@ elif menu_selection == 'Pre-Pocesssing Data':
 
     # Tambahkan tombol untuk memicu proses preprocessing
     if st.button('Proses Data'):
-        # Masukkan kode preprocessing di sini
+        if st.button('Proses Data'):
+        # Menghapus baris dengan nilai yang hilang (NaN)
+        df = df.dropna()
+        # Menghapus duplikat data
+        df = df.drop_duplicates()
 
-        # Misalnya, contoh kode preprocessing yang telah diberikan sebelumnya
-        # ...
+        # Mapping for 'Hipertensi'
+        df['Diagnosa'] = df['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': '2', 'TIDAK': 0})
+
+        # Melakukan one-hot encoding pada kolom 'Jenis_Kelamin'
+        df_encoded = pd.get_dummies(df, columns=['Jenis Kelamin'], prefix='JK')
+
+        # Fungsi preprocessing untuk membersihkan teks
+        def preprocess_text(text):
+            text = re.sub(r'[^A-Za-z0-9\s]', '', text)
+            text = re.sub(r'[A-Za-z]', '', text)
+            text = re.sub(r'\s+', ' ', text)
+            text = text.strip()
+            return text
+
+        # Kolom yang ingin Anda bersihkan
+        columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
+
+        # Melakukan preprocessing pada kolom yang dipilih
+        for col in columns_to_clean:
+            df[col] = df[col].apply(preprocess_text)
+
+        #Normalisasi data
+        from sklearn.preprocessing import MinMaxScaler
+        scaler = MinMaxScaler()
+        df[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']] = scaler.fit_transform(
+            df[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']])
 
         # Tampilkan hasil preprocessing di bawah tombol
-        st.write(df_scaled.head())
+        st.write('Data setelah preprocessing:')
+        st.write(df.head())
 
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Klasifikasi SVM')
