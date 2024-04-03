@@ -99,8 +99,8 @@ elif menu_selection == 'Klasifikasi SVM':
     cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
     
     # Menampilkan akurasi K-Fold Cross Validation
-    print(f'K-Fold Cross Validation Scores: {cv_scores}')
-    print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
+    st.write(f'K-Fold Cross Validation Scores: {cv_scores}')
+    st.write(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
 
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
