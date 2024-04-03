@@ -102,6 +102,31 @@ elif menu_selection == 'Klasifikasi SVM':
     st.write(f'K-Fold Cross Validation Scores: {cv_scores}')
     st.write(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
 
+    # Melatih model pada data latih
+    model.fit(X_train, y_train)
+
+    # Menguji model pada data uji
+    y_pred = model.predict(X_test)
+
+    # Mengukur akurasi pada data uji
+    accuracy = accuracy_score(y_test, y_pred)
+    st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
+
+    # Confusion Matrix
+    conf_matrix = confusion_matrix(y_test, y_pred)
+    # Tampilkan confusion matrix di halaman Streamlit
+    st.write('Confusion Matrix:')
+    st.write(conf_matrix)
+
+    plt.figure(figsize=(5, 3))
+    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
+                xticklabels=['Predict Positive', 'Predict Negative'],
+                yticklabels=['Actual Positive', 'Actual Negative'])
+    plt.xlabel('Predicted')
+    plt.ylabel('True')
+    plt.title('Confusion Matrix')
+    st.pyplot()
+
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
     st.write('This is the contact us page.')
