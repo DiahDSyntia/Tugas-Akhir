@@ -7,8 +7,11 @@ from collections import OrderedDict
 import seaborn as sns
 from sklearn.preprocessing import MinMaxScaler
 import re
-
 import streamlit as st
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split, cross_val_score, KFold
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
 
 # Judul navbar
 st.sidebar.title('Main Menu')
