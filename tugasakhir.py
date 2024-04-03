@@ -60,7 +60,7 @@ elif menu_selection == 'Pre-Pocesssing Data':
        # Melakukan one-hot encoding pada kolom 'Jenis_Kelamin'
         data_encoded = pd.get_dummies(data, columns=['Jenis Kelamin'], prefix='JK')
         # Mengganti nilai yang mewakili keberadaan kategori dengan 1 dan yang tidak dengan 0
-        data_encoded.replace({col: {1: 1, 0: 0} for col in data_encoded.columns}, inplace=True)
+        data_encoded.replace({col: {1: '1', 0: '0'} for col in data_encoded.columns}, inplace=True)
         
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
