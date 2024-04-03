@@ -80,10 +80,11 @@ elif menu_selection == 'Pre-Pocesssing Data':
 
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Hasil Klasifikasi SVM')
-
+    dataset = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/hasilnormalisasi.csv', sep=';')
+    st.write(dataset)
     # Pisahkan fitur dan target
-    X = data_encoded[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
-    y = data_encoded['Diagnosa']  # Target (output)
+    X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
+    y = dataset['Diagnosa']  # Target (output)
 
     # Bagi dataset menjadi data latih dan data uji
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
