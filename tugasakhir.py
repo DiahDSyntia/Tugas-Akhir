@@ -41,6 +41,7 @@ elif menu_selection == 'Pre-Pocesssing Data':
 # Memuat data
     url = "https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
     df = pd.read_csv(url)
+    st.write(df)
 
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Klasifikasi SVM')
