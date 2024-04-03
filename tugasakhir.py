@@ -48,7 +48,6 @@ elif menu_selection == 'Pre-Pocesssing Data':
 
     # Tambahkan tombol untuk memicu proses preprocessing
     if st.button('Proses Data'):
-        if st.button('Proses Data'):
         # Menghapus baris dengan nilai yang hilang (NaN)
         df = df.dropna()
         # Menghapus duplikat data
