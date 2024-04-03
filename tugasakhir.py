@@ -114,9 +114,20 @@ elif menu_selection == 'Klasifikasi SVM':
 
     # Confusion Matrix
     conf_matrix = confusion_matrix(y_test, y_pred)
+    
+    # Hitung metrik evaluasi
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+    
     # Tampilkan confusion matrix di halaman Streamlit
     st.write('Confusion Matrix:')
     st.write(conf_matrix)
+    st.write(f'Accuracy: {accuracy:.2f}')
+    st.write(f'Precision: {precision:.2f}')
+    st.write(f'Recall: {recall:.2f}')
+    st.write(f'F1-score: {f1:.2f}')
 
     # Tampilkan visualisasi confusion matrix menggunakan heatmap
     fig, ax = plt.subplots(figsize=(5, 3))
