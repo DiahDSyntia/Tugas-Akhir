@@ -6,7 +6,7 @@ from PIL import Image
 from collections import OrderedDict
 import seaborn as sns
 from sklearn.preprocessing import MinMaxScaler
-import regex as re
+import re
 
 import streamlit as st
 
