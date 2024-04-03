@@ -57,11 +57,8 @@ elif menu_selection == 'Pre-Pocesssing Data':
         data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': '2', 'TIDAK': 0})
 
        # Melakukan one-hot encoding pada kolom 'Jenis_Kelamin'
+       # Melakukan one-hot encoding pada kolom 'Jenis_Kelamin'
         data_encoded = pd.get_dummies(data, columns=['Jenis Kelamin'], prefix='JK')
-        # Menghapus baris dengan nilai yang hilang (NaN)
-        data_encoded = data_encoded.dropna()
-        # Menghapus duplikat data
-        data_encoded = data_encoded.drop_duplicates()
         
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
