@@ -82,8 +82,8 @@ elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Hasil Klasifikasi SVM')
 
     # Pisahkan fitur dan target
-    X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
-    y = dataset['Diagnosa']  # Target (output)
+    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
+    y = data['Diagnosa']  # Target (output)
 
     # Bagi dataset menjadi data latih dan data uji
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
