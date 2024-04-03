@@ -118,14 +118,15 @@ elif menu_selection == 'Klasifikasi SVM':
     st.write('Confusion Matrix:')
     st.write(conf_matrix)
 
-    plt.figure(figsize=(5, 3))
+    # Tampilkan visualisasi confusion matrix menggunakan heatmap
+    fig, ax = plt.subplots(figsize=(5, 3))
     sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
                 xticklabels=['Predict Positive', 'Predict Negative'],
                 yticklabels=['Actual Positive', 'Actual Negative'])
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
-    st.pyplot()
+    st.pyplot(fig) 
 
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
