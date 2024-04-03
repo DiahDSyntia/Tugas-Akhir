@@ -157,5 +157,5 @@ elif menu_selection == 'Uji Coba':
             st.write("""# Anda Tidak Hipertensi""")
         elif predict_svm == 1:
             st.write("""# Anda Hipertensi tingkat 1, Segera Ke Dokter""")
-        else predict_svm == 2:
+        else:
             st.write("""# Anda Hipertensi tingkat 2, Segera Ke Dokter """)
