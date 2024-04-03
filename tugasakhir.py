@@ -79,8 +79,24 @@ elif menu_selection == 'Pre-Pocesssing Data':
         st.write(data_encoded)
 
 elif menu_selection == 'Klasifikasi SVM':
-    st.title('Halaman Klasifikasi SVM')
-    st.write('This is the contact us page.')
+    st.title('Halaman Hasil Klasifikasi SVM')
+
+    # Pisahkan fitur dan target
+    X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
+    y = dataset['Diagnosa']  # Target (output)
+
+    # Bagi dataset menjadi data latih dan data uji
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+    # Inisialisasi model SVM
+    model = SVC(kernel='linear', C=1)
+    # K-Fold Cross Validation
+    k_fold = 5
+    cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
+    
+    # Menampilkan akurasi K-Fold Cross Validation
+    print(f'K-Fold Cross Validation Scores: {cv_scores}')
+    print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
 
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
