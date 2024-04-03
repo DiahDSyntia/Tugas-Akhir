@@ -33,8 +33,8 @@ if menu_selection == 'Home':
     st.markdown("### Data Hipertensi")
     st.write('Data Hipertensi ini merupakan data dari Puskesmas Modopuro, Mojokerto')
     url = "https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
-    df = pd.read_csv(url)
-    st.write(df)
+    data = pd.read_csv(url)
+    st.write(data)
 
 elif menu_selection == 'Pre-Pocesssing Data':
     st.title('Halaman Pre-pocessing Data')
@@ -43,18 +43,18 @@ elif menu_selection == 'Pre-Pocesssing Data':
     st.markdown("### Data Hipertensi")
     st.write('Data Hipertensi ini merupakan data dari Puskesmas Modopuro, Mojokerto')
     url = "https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
-    df = pd.read_csv(url)
-    st.write(df)
+    data = pd.read_csv(url)
+    st.write(data)
 
     # Tambahkan tombol untuk memicu proses preprocessing
     if st.button('Proses Data'):
         # Menghapus baris dengan nilai yang hilang (NaN)
-        df = df.dropna()
+        data = data.dropna()
         # Menghapus duplikat data
-        df = df.drop_duplicates()
+        data = data.drop_duplicates()
 
         # Mapping for 'Hipertensi'
-        df['Diagnosa'] = df['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': '2', 'TIDAK': 0})
+        data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': '2', 'TIDAK': 0})
 
        # Melakukan one-hot encoding pada kolom 'Jenis_Kelamin'
         data_encoded = pd.get_dummies(data, columns=['Jenis Kelamin'], prefix='JK')
