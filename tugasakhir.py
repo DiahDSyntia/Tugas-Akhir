@@ -76,7 +76,7 @@ elif menu_selection == 'Pre-Pocesssing Data':
 
         # Normalisasi data
         scaler = MinMaxScaler()
-        data_encoded[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']] = scaler.fit_transform(data_encoded[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']])
+        data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']] = scaler.fit_transform(data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']])
         
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
