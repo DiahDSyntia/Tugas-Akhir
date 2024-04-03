@@ -54,7 +54,7 @@ elif menu_selection == 'Pre-Pocesssing Data':
         df = df.drop_duplicates()
 
         # Mapping for 'Hipertensi'
-        data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': '2', 'TIDAK': 0})
+        df['Diagnosa'] = df['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': '2', 'TIDAK': 0})
 
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
