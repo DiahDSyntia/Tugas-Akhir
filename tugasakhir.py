@@ -145,3 +145,17 @@ elif menu_selection == 'Uji Coba':
         detak_nadi = st.number_input("detak nadi",0.00)
     jenis_kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
     submit = st.button('Prediksi')
+
+    if submit:
+        X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, jenis_kelamin]])
+    
+        # Prediksi dengan model SVM
+        predict_svm = model_svm.predict(X_new)
+    
+        # Tulis hasil prediksi
+        if predict_svm == 0:
+            st.write("""# Anda Tidak Hipertensi""")
+        elif predict_svm == 1:
+            st.write("""# Anda Hipertensi tingkat 1, Segera Ke Dokter""")
+        else predict_svm == 2:
+            st.write("""# Anda Hipertensi tingkat 2, Segera Ke Dokter """)
