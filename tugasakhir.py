@@ -74,10 +74,6 @@ elif menu_selection == 'Pre-Pocesssing Data':
         for col in columns_to_clean:
             data_encoded[col] = data_encoded[col].apply(preprocess_text)
 
-        # Normalisasi data
-        scaler = MinMaxScaler()
-        data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']] = scaler.fit_transform(data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']])
-        
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
         st.write(data_encoded)
