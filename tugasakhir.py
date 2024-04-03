@@ -75,7 +75,6 @@ elif menu_selection == 'Pre-Pocesssing Data':
             data_encoded[col] = data_encoded[col].apply(preprocess_text)
 
         # Normalisasi data
-        from sklearn.preprocessing import MinMaxScaler
         scaler = MinMaxScaler()
         data_encoded[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']] = scaler.fit_transform(data_encoded[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']])
         
