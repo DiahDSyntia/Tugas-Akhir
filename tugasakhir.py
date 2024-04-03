@@ -143,4 +143,5 @@ elif menu_selection == 'Uji Coba':
         diastole = st.number_input("diastole",0.00)
         nafas = st.number_input("nafas",0.00)
         detak_nadi = st.number_input("detak nadi",0.00)
+    jenis_kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
     submit = st.button('Prediksi')
