@@ -73,6 +73,11 @@ elif menu_selection == 'Pre-Pocesssing Data':
         columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
         for col in columns_to_clean:
             data_encoded[col] = data_encoded[col].apply(preprocess_text)
+
+        # Normalisasi data
+        from sklearn.preprocessing import MinMaxScaler
+        scaler = MinMaxScaler()
+        data_encoded[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']] = scaler.fit_transform(data_encoded[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']])
         
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
