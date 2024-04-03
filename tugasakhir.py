@@ -44,6 +44,16 @@ elif menu_selection == 'Pre-Pocesssing Data':
     df = pd.read_csv(url)
     st.write(df)
 
+    # Tambahkan tombol untuk memicu proses preprocessing
+    if st.button('Proses Data'):
+        # Masukkan kode preprocessing di sini
+
+        # Misalnya, contoh kode preprocessing yang telah diberikan sebelumnya
+        # ...
+
+        # Tampilkan hasil preprocessing di bawah tombol
+        st.write(df_scaled.head())
+
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Klasifikasi SVM')
     st.write('This is the contact us page.')
