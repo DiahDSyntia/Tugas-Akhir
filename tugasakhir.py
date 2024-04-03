@@ -38,6 +38,10 @@ elif menu_selection == 'Pre-Pocesssing Data':
     st.title('Halaman Pre-pocessing Data')
     st.write('Hipertensi')
 
+# Memuat data
+    url = "https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
+    df = pd.read_csv(url)
+
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Klasifikasi SVM')
     st.write('This is the contact us page.')
