@@ -55,7 +55,7 @@ elif menu_selection == 'Pre-Pocesssing Data':
 
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
-        st.write(df.head())
+        st.write(df)
 
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Klasifikasi SVM')
