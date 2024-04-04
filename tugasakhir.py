@@ -135,13 +135,28 @@ elif menu_selection == 'Klasifikasi SVM':
     st.pyplot(fig) 
 
     # Membuat DataFrame untuk menampilkan metrik evaluasi dalam bentuk tabel
-    metrics_data = {'Metric': ['Precision', 'Recall', 'F1 Score'],
-                    'Value': [precision, recall, f1]}
+    metrics_data = {'Metric': ['Akurasi','Precision', 'Recall', 'F1 Score'],
+                    'Nilai': [accuracy, precision, recall, f1]}
     metrics_df = pd.DataFrame(metrics_data)
     
     # Tampilkan tabel metrik evaluasi
     st.write("### Metrics:")
     st.table(metrics_df)
+
+    # Tampilkan tabel metrik evaluasi dengan CSS kustom
+    st.write("### Metrics:")
+    st.write(
+        metrics_df.style
+            .set_table_styles([{
+                'selector': 'thead th',
+                'props': [
+                    ('background-color', '#4CAF50'),
+                    ('color', 'white'),
+                    ('text-align', 'center')
+                ]
+            }])
+            .set_properties(**{'text-align': 'center'})
+    )
 
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
