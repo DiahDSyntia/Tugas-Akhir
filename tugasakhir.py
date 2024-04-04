@@ -96,7 +96,8 @@ elif menu_selection == 'Pre-Pocesssing Data':
             # Tampilkan hasil normalisasi data
             st.subheader('Data Setelah Normalisasi')
             st.write(data)
-
+# Variabel svm didefinisikan di luar blok
+svm = None
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Hasil Klasifikasi SVM')
     dataset = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/hasilnormalisasi.csv', sep=';')
