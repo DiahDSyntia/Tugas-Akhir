@@ -79,11 +79,11 @@ elif menu_selection == 'Pre-Pocesssing Data':
         
         columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
         for col in columns_to_clean:
-            data_encoded[col] = data_encoded[col].apply(preprocess_text)
+            encoded_gender[col] = encoded_gender[col].apply(preprocess_text)
 
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
-        st.write(data_encoded)
+        st.write(encoded_gender)
 
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Hasil Klasifikasi SVM')
