@@ -21,6 +21,7 @@ menu_selection = st.sidebar.selectbox('Klik Tombol Di bawah ini', ['Home', 'Pre-
 
 # Inisialisasi model SVM di bagian atas skrip
 svm = SVC(kernel='linear', C=1)
+svm.fit(X_train, y_train)
 
 # Membuat konten berdasarkan pilihan menu
 if menu_selection == 'Home':
