@@ -110,6 +110,7 @@ elif menu_selection == 'Klasifikasi SVM':
 
     # Inisialisasi model SVM
     svm = SVC(kernel='linear', C=1)
+    svm.fit(X_train, y_train)
     
     # K-Fold Cross Validation
     k_fold = 5
