@@ -118,7 +118,7 @@ elif menu_selection == 'Klasifikasi SVM':
     cv_scores = cross_val_score(svm, X_train, y_train, cv=k_fold)
 
     # Melatih model pada data latih
-    svm.fit(X_train, y_train)
+    # svm.fit(X_train, y_train)
     
     # Mengevaluasi model SVM
     Y_prediction = svm.predict(X_test)
