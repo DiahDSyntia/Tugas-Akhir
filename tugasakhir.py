@@ -16,6 +16,11 @@ from sklearn.preprocessing import OneHotEncoder
 # Judul navbar
 st.sidebar.title('Main Menu')
 
+def normalize_data(data):
+    scaler = MinMaxScaler()
+    normalized_data = pd.DataFrame(scaler.fit_transform(data), columns=data.columns)
+    return normalized_data
+
 # Pilihan menu dalam bentuk dropdown
 menu_selection = st.sidebar.selectbox('Klik Tombol Di bawah ini', ['Home', 'Pre-Pocesssing Data', 'Klasifikasi SVM','Uji Coba'])
 
@@ -50,12 +55,6 @@ elif menu_selection == 'Pre-Pocesssing Data':
     st.write(data)
 
     # Tambahkan tombol untuk memicu proses preprocessing
-    def normalize_data(data):
-        scaler = MinMaxScaler()
-        # Normalisasi data numerik
-        numeric_columns = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
-        data[numeric_columns] = scaler.fit_transform(data[numeric_columns])
-        return data
     if st.button('Proses Data'):
         # Menghapus baris dengan nilai yang hilang (NaN)
         data = data.dropna()
@@ -87,6 +86,12 @@ elif menu_selection == 'Pre-Pocesssing Data':
         st.write('Data setelah preprocessing:')
         st.write(data)
 
+        if 'preprocess_text' in st.write:  # Check if preprocessed_data exists in session state
+                if st.button("Normalize Data"):
+                    normalized_data = normalize_data(st.session_state.write.copy())
+                    st.write("Normalization completed.")
+                    st.dataframe(normalized_data)
+        
         if st.button('Normalisasi Data'):
             # Normalisasi data
             data = normalize_data(data)
