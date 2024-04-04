@@ -16,11 +16,6 @@ from sklearn.preprocessing import OneHotEncoder
 # Judul navbar
 st.sidebar.title('Main Menu')
 
-def normalize_data(data):
-    scaler = MinMaxScaler()
-    normalized_data = pd.DataFrame(scaler.fit_transform(data), columns=data.columns)
-    return normalized_data
-
 # Pilihan menu dalam bentuk dropdown
 menu_selection = st.sidebar.selectbox('Klik Tombol Di bawah ini', ['Home', 'Pre-Pocesssing Data', 'Klasifikasi SVM','Uji Coba'])
 
@@ -85,20 +80,6 @@ elif menu_selection == 'Pre-Pocesssing Data':
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
         st.write(data)
-
-        if 'preprocess_text' in st.write:  # Check if preprocessed_data exists in session state
-                if st.button("Normalize Data"):
-                    normalized_data = normalize_data(st.session_state.write.copy())
-                    st.write("Normalization completed.")
-                    st.dataframe(normalized_data)
-        
-        if st.button('Normalisasi Data'):
-            # Normalisasi data
-            data = normalize_data(data)
-
-            # Tampilkan hasil normalisasi data
-            st.subheader('Data Setelah Normalisasi')
-            st.write(data)
             
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Hasil Klasifikasi SVM')
