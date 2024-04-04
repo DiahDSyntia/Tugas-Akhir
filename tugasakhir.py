@@ -139,9 +139,10 @@ elif menu_selection == 'Klasifikasi SVM':
                     'Nilai': [accuracy, precision, recall, f1]}
     metrics_df = pd.DataFrame(metrics_data)
     
-    # Tampilkan tabel metrik evaluasi
+    # Tampilkan tabel metrik evaluasi dengan CSS kustom
     st.write("### Metrics:")
-    st.table(metrics_df)
+    st.write('<style> table { width: 50%; border-collapse: collapse; } th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; } th { background-color: #4CAF50; color: white; } </style>', unsafe_allow_html=True)
+    st.write(metrics_df)
 
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
