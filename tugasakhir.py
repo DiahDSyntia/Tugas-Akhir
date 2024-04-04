@@ -134,6 +134,15 @@ elif menu_selection == 'Klasifikasi SVM':
     plt.title('Confusion Matrix')
     st.pyplot(fig) 
 
+    # Membuat DataFrame untuk menampilkan metrik evaluasi dalam bentuk tabel
+    metrics_data = {'Metric': ['Precision', 'Recall', 'F1 Score'],
+                    'Value': [precision, recall, f1]}
+    metrics_df = pd.DataFrame(metrics_data)
+    
+    # Tampilkan tabel metrik evaluasi
+    st.write("### Metrics:")
+    st.table(metrics_df)
+
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
     col1,col2 = st.columns([2,2])
