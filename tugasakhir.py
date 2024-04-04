@@ -63,9 +63,6 @@ elif menu_selection == 'Pre-Pocesssing Data':
 
         # Melakukan one-hot encoding pada kolom 'Jenis Kelamin'
         data = pd.get_dummies(data, columns=['Jenis Kelamin'], prefix='JK')
-        
-        # Konversi hasil one-hot encoding menjadi integer
-        data = data.astype(int)
 
         def preprocess_text(text):
             # Menghapus karakter non-alphanumeric dan spasi ganda
