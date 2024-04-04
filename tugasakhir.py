@@ -113,7 +113,7 @@ elif menu_selection == 'Klasifikasi SVM':
     
     # K-Fold Cross Validation
     k_fold = 5
-    cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
+    cv_scores = cross_val_score(model_svm, X_train, y_train, cv=k_fold)
 
     # Melatih model pada data latih
     model_svm.fit(X_train, y_train)
