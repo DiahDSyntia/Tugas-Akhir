@@ -61,8 +61,11 @@ elif menu_selection == 'Pre-Pocesssing Data':
         # Mapping for 'Hipertensi'
         data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0})
 
-        # Melakukan one-hot encoding pada kolom 'Jenis_Kelamin'
-        data = pd.get_dummies(data, columns=['Jenis Kelamin'], prefix='JK'.applymap(int))
+        # Melakukan one-hot encoding pada kolom 'Jenis Kelamin'
+        data = pd.get_dummies(data, columns=['Jenis Kelamin'], prefix='JK')
+        
+        # Konversi nilai dalam kolom hasil one-hot encoding menjadi integer
+        data[['JK_Laki-laki', 'JK_Perempuan']] = data[['JK_Laki-laki', 'JK_Perempuan']].applymap(int)
 
         def preprocess_text(text):
             # Menghapus karakter non-alphanumeric dan spasi ganda
