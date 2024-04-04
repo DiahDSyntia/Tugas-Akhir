@@ -59,9 +59,10 @@ elif menu_selection == 'Pre-Pocesssing Data':
         # Mapping for 'Hipertensi'
         data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': '2', 'TIDAK': 0})
 
-       # Melakukan one-hot encoding pada kolom 'Jenis_Kelamin'
-       # Melakukan one-hot encoding pada kolom 'Jenis_Kelamin'
-        data_encoded = pd.get_dummies(data, columns=['Jenis Kelamin'], prefix='JK')
+        # One-hot encoding for 'Jenis Kelamin'
+        one_hot_encoder = OneHotEncoder()
+        encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
+        encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['Jenis Kelamin']))
 
         # Melakukan preprocessing pada kolom yang dipilih
         def preprocess_text(text):
