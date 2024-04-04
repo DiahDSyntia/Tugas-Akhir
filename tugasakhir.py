@@ -52,6 +52,12 @@ elif menu_selection == 'Pre-Pocesssing Data':
     st.write(data)
 
     # Tambahkan tombol untuk memicu proses preprocessing
+    def normalize_data(data):
+    scaler = MinMaxScaler()
+    # Normalisasi data numerik
+    numeric_columns = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
+    data[numeric_columns] = scaler.fit_transform(data[numeric_columns])
+    return data
     if st.button('Proses Data'):
         # Menghapus baris dengan nilai yang hilang (NaN)
         data = data.dropna()
@@ -82,16 +88,14 @@ elif menu_selection == 'Pre-Pocesssing Data':
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
         st.write(data)
-        
+
         if st.button('Normalisasi Data'):
             # Normalisasi data
-            scaler = MinMaxScaler()
-            data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']] = scaler.fit_transform(data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']])
-            normalized_data = normalize_data(data)
+            data = normalize_data(data)
 
-            # Tampilkan data yang sudah dinormalisasi
-            st.write('Data setelah dinormalisasi:')
-            st.write(normalized_data)
+            # Tampilkan hasil normalisasi data
+            st.subheader('Data Setelah Normalisasi')
+            st.write(data)
 
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Hasil Klasifikasi SVM')
