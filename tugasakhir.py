@@ -79,7 +79,7 @@ elif menu_selection == 'Pre-Pocesssing Data':
         
         columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
         for col in columns_to_clean:
-            encoded_gender[col] = encoded_gender[col].apply(preprocess_text)
+            encoded_gender[col] = encoded_gender[columns_to_clean].apply(preprocess_text)
 
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
