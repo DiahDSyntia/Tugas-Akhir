@@ -110,9 +110,9 @@ elif menu_selection == 'Klasifikasi SVM':
     accuracy = accuracy_score(y_test, y_pred)
     st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
     # Hitung metrik evaluasi
-    precision = precision_score(y_test, y_pred, average='binary')
-    recall = recall_score(y_test, y_pred, average='binary')
-    f1 = f1_score(y_test, y_pred, average='binary')
+    precision = precision_score(y_test, y_pred, average='micro')
+    recall = recall_score(y_test, y_pred, average='micro')
+    f1 = f1_score(y_test, y_pred, average='micro')
     
     st.write(f'Precision: {precision:.2f}')
     st.write(f'Recall: {recall:.2f}')
