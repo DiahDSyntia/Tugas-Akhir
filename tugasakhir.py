@@ -19,38 +19,6 @@ st.sidebar.title('Main Menu')
 # Pilihan menu dalam bentuk dropdown
 menu_selection = st.sidebar.selectbox('Klik Tombol Di bawah ini', ['Home', 'Pre-Pocesssing Data', 'Klasifikasi SVM','Uji Coba'])
 
-# Inisialisasi model SVM di bagian atas skrip
-dataset = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/hasilnormalisasi.csv', sep=';')
-# Pisahkan fitur dan target
-X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
-y = dataset['Diagnosa']  # Target (output)
-
-# Bagi dataset menjadi data latih dan data uji
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
-# Inisialisasi model SVM
-svm = SVC(kernel='linear', C=1)
-svm.fit(X_train, y_train)
-    
-# K-Fold Cross Validation
-k_fold = 5
-cv_scores = cross_val_score(svm, X_train, y_train, cv=k_fold)
-
-# Melatih model pada data latih
-# svm.fit(X_train, y_train)
-    
-# Mengevaluasi model SVM
-Y_prediction = svm.predict(X_test)
-accuracy_svm = round(accuracy_score(y_test, Y_prediction) * 100, 2)
-acc_svm = round(svm.score(X_train, y_train) * 100, 2)
-    
-cm = confusion_matrix(y_test, Y_prediction)
-accuracy = accuracy_score(y_test, Y_prediction)
-precision = precision_score(y_test, Y_prediction, average='micro')
-recall = recall_score(y_test, Y_prediction, average='micro')
-f1 = f1_score(y_test, Y_prediction, average='micro')
-
-
 # Membuat konten berdasarkan pilihan menu
 if menu_selection == 'Home':
     st.title('Selamat Datang di Website Klasifikasi Hipertensi')
