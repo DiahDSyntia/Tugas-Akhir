@@ -61,10 +61,8 @@ elif menu_selection == 'Pre-Pocesssing Data':
         # Mapping for 'Hipertensi'
         data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': '2', 'TIDAK': 0})
 
-        # One-hot encoding for 'Jenis Kelamin'
-        one_hot_encoder = OneHotEncoder()
-        encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
-        encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['Jenis Kelamin']))
+        # Melakukan one-hot encoding pada kolom 'Jenis_Kelamin'
+        df_encoded = pd.get_dummies(df, columns=['Jenis Kelamin'], prefix='JK')
 
         def preprocess_text(text):
             # Menghapus karakter non-alphanumeric dan spasi ganda
@@ -79,11 +77,11 @@ elif menu_selection == 'Pre-Pocesssing Data':
         
         columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
         for col in columns_to_clean:
-            encoded_gender[col] = encoded_gender[columns_to_clean].apply(preprocess_text)
+            data_encoded[col] = data_encoded[col].apply(preprocess_text)
 
         # Tampilkan hasil preprocessing di bawah tombol
         st.write('Data setelah preprocessing:')
-        st.write(encoded_gender)
+        st.write(data_encoded)
 
 elif menu_selection == 'Klasifikasi SVM':
     st.title('Halaman Hasil Klasifikasi SVM')
