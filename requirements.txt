@@ -6,4 +6,4 @@ Pillow
 matplotlib 
 matplotlib-inline 
 seaborn 
-scikit-learn
+scikit_learn
