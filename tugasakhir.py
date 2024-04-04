@@ -143,21 +143,6 @@ elif menu_selection == 'Klasifikasi SVM':
     st.write("### Metrics:")
     st.table(metrics_df)
 
-    # Tampilkan tabel metrik evaluasi dengan CSS kustom
-    st.write("### Metrics:")
-    st.write(
-        metrics_df.style
-            .set_table_styles([{
-                'selector': 'thead th',
-                'props': [
-                    ('background-color', '#4CAF50'),
-                    ('color', 'white'),
-                    ('text-align', 'center')
-                ]
-            }])
-            .set_properties(**{'text-align': 'center'})
-    )
-
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
     col1,col2 = st.columns([2,2])
