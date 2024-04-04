@@ -53,11 +53,11 @@ elif menu_selection == 'Pre-Pocesssing Data':
 
     # Tambahkan tombol untuk memicu proses preprocessing
     def normalize_data(data):
-    scaler = MinMaxScaler()
-    # Normalisasi data numerik
-    numeric_columns = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
-    data[numeric_columns] = scaler.fit_transform(data[numeric_columns])
-    return data
+        scaler = MinMaxScaler()
+        # Normalisasi data numerik
+        numeric_columns = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
+        data[numeric_columns] = scaler.fit_transform(data[numeric_columns])
+        return data
     if st.button('Proses Data'):
         # Menghapus baris dengan nilai yang hilang (NaN)
         data = data.dropna()
