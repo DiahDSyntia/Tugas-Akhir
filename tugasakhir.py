@@ -179,44 +179,7 @@ elif menu_selection == 'Uji Coba':
     submit = st.button('Prediksi')
 
     if submit:
-        # Pisahkan fitur dan target
-        X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
-        y = dataset['Diagnosa']  # Target (output)
-    
-        # Bagi dataset menjadi data latih dan data uji
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-    
-        # Inisialisasi model SVM
-        svm = SVC(kernel='linear', C=1)
-        
-        # K-Fold Cross Validation
-        k_fold = 5
-        cv_scores = cross_val_score(svm, X_train, y_train, cv=k_fold)
-    
-        # Melatih model pada data latih
-        svm.fit(X_train, y_train)
-        
-        # Mengevaluasi model SVM
-        Y_prediction = svm.predict(X_test)
-        accuracy_svm = round(accuracy_score(y_test, Y_prediction) * 100, 2)
-        acc_svm = round(svm.score(X_train, y_train) * 100, 2)
-        
-        cm = confusion_matrix(y_test, Y_prediction)
-        accuracy = accuracy_score(y_test, Y_prediction)
-        precision = precision_score(y_test, Y_prediction, average='micro')
-        recall = recall_score(y_test, Y_prediction, average='micro')
-        f1 = f1_score(y_test, Y_prediction, average='micro')
-    
-        # Mengukur akurasi pada data uji
-        accuracy = accuracy_score(y_test, Y_prediction)
-        st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
-        
-        # Hitung metrik evaluasi
-        precision = precision_score(y_test, Y_prediction, average='micro')
-        recall = recall_score(y_test, Y_prediction, average='micro')
-        f1 = f1_score(y_test, Y_prediction, average='micro')
-            X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, jenis_kelamin]])
-    
+        X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, jenis_kelamin]])
         # Prediksi dengan model SVM
         predict = svm.predict(X_new)
     
