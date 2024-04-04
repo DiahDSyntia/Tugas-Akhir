@@ -154,6 +154,37 @@ elif menu_selection == 'Klasifikasi SVM':
     metrics_df = pd.DataFrame(metrics_data)
     st.write(metrics_df)
 
+# Inisialisasi model SVM
+model_svm = SVC(kernel='linear', C=1)
+
+# Melatih model SVM
+model_svm.fit(X_train, y_train)
+
+# Mengevaluasi model SVM
+Y_prediction = model_svm.predict(X_test)
+accuracy_svm = round(accuracy_score(y_test, Y_prediction) * 100, 2)
+acc_svm = round(model_svm.score(X_train, y_train) * 100, 2)
+
+# K-Fold Cross Validation
+k_fold = 5
+cv_scores = cross_val_score(model_svm, X_train, y_train, cv=k_fold)
+
+# Melihat skor validasi silang
+print("CV Scores:", cv_scores)
+print("Mean CV Score:", cv_scores.mean())
+
+cm = confusion_matrix(y_test, Y_prediction)
+accuracy = accuracy_score(y_test, Y_prediction)
+precision = precision_score(y_test, Y_prediction, average='micro')
+recall = recall_score(y_test, Y_prediction, average='micro')
+f1 = f1_score(y_test, Y_prediction, average='micro')
+
+print('Confusion matrix for SVM\n', cm)
+print('accuracy_SVM : %.3f' % accuracy)
+print('precision_SVM : %.3f' % precision)
+print('recall_SVM : %.3f' % recall)
+print('f1-score_SVM : %.3f' % f1)
+
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
     col1,col2 = st.columns([2,2])
