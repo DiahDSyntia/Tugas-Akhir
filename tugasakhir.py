@@ -109,13 +109,14 @@ elif menu_selection == 'Klasifikasi SVM':
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
     # Inisialisasi model SVM
-    model = SVC(kernel='linear', C=1)
+    model_svm = SVC(kernel='linear', C=1)
+    
     # K-Fold Cross Validation
     k_fold = 5
     cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
 
     # Melatih model pada data latih
-    model.fit(X_train, y_train)
+    model_svm.fit(X_train, y_train)
 
     # Menguji model pada data uji
     y_pred = model.predict(X_test)
@@ -170,20 +171,14 @@ elif menu_selection == 'Klasifikasi SVM':
     cv_scores = cross_val_score(model_svm, X_train, y_train, cv=k_fold)
     
     # Melihat skor validasi silang
-    print("CV Scores:", cv_scores)
-    print("Mean CV Score:", cv_scores.mean())
+    # print("CV Scores:", cv_scores)
+    # print("Mean CV Score:", cv_scores.mean())
     
     cm = confusion_matrix(y_test, Y_prediction)
     accuracy = accuracy_score(y_test, Y_prediction)
     precision = precision_score(y_test, Y_prediction, average='micro')
     recall = recall_score(y_test, Y_prediction, average='micro')
     f1 = f1_score(y_test, Y_prediction, average='micro')
-    
-    print('Confusion matrix for SVM\n', cm)
-    print('accuracy_SVM : %.3f' % accuracy)
-    print('precision_SVM : %.3f' % precision)
-    print('recall_SVM : %.3f' % recall)
-    print('f1-score_SVM : %.3f' % f1)
 
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
