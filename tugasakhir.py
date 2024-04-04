@@ -66,14 +66,17 @@ elif menu_selection == 'Pre-Pocesssing Data':
         encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
         encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['Jenis Kelamin']))
 
-        # Melakukan preprocessing pada kolom yang dipilih
         def preprocess_text(text):
+            # Menghapus karakter non-alphanumeric dan spasi ganda
             text = re.sub(r'[^A-Za-z0-9\s]', '', text)
+            # Menghapus karakter alfabet
             text = re.sub(r'[A-Za-z]', '', text)
+            # Mengganti spasi ganda dengan spasi tunggal
             text = re.sub(r'\s+', ' ', text)
+            # Menghapus spasi di awal dan akhir teks
             text = text.strip()
             return text
-
+        
         columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
         for col in columns_to_clean:
             data_encoded[col] = data_encoded[col].apply(preprocess_text)
