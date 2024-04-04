@@ -109,23 +109,23 @@ elif menu_selection == 'Klasifikasi SVM':
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
     # Inisialisasi model SVM
-    model_svm = SVC(kernel='linear', C=1)
+    svm = SVC(kernel='linear', C=1)
     
     # K-Fold Cross Validation
     k_fold = 5
-    cv_scores = cross_val_score(model_svm, X_train, y_train, cv=k_fold)
+    cv_scores = cross_val_score(svm, X_train, y_train, cv=k_fold)
 
     # Melatih model pada data latih
-    model_svm.fit(X_train, y_train)
+    svm.fit(X_train, y_train)
     
     # Mengevaluasi model SVM
-    Y_prediction = model_svm.predict(X_test)
+    Y_prediction = svm.predict(X_test)
     accuracy_svm = round(accuracy_score(y_test, Y_prediction) * 100, 2)
-    acc_svm = round(model_svm.score(X_train, y_train) * 100, 2)
+    acc_svm = round(svm.score(X_train, y_train) * 100, 2)
     
     # K-Fold Cross Validation
     k_fold = 5
-    cv_scores = cross_val_score(model_svm, X_train, y_train, cv=k_fold)
+    cv_scores = cross_val_score(svm, X_train, y_train, cv=k_fold)
     
     # Melihat skor validasi silang
     # print("CV Scores:", cv_scores)
@@ -189,12 +189,12 @@ elif menu_selection == 'Uji Coba':
         X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, jenis_kelamin]])
     
         # Prediksi dengan model SVM
-        predict_svm = model_svm.predict(X_new)
+        predict = svm.predict(X_new)
     
         # Tulis hasil prediksi
-        if predict_svm == 0:
+        if predict == 0:
             st.write("""# Anda Tidak Hipertensi""")
-        elif predict_svm == 1:
+        elif predict == 1:
             st.write("""# Anda Hipertensi tingkat 1, Segera Ke Dokter""")
         else:
             st.write("""# Anda Hipertensi tingkat 2, Segera Ke Dokter """)
