@@ -19,6 +19,9 @@ st.sidebar.title('Main Menu')
 # Pilihan menu dalam bentuk dropdown
 menu_selection = st.sidebar.selectbox('Klik Tombol Di bawah ini', ['Home', 'Pre-Pocesssing Data', 'Klasifikasi SVM','Uji Coba'])
 
+# Inisialisasi model SVM di bagian atas skrip
+svm = SVC(kernel='linear', C=1)
+
 # Membuat konten berdasarkan pilihan menu
 if menu_selection == 'Home':
     st.title('Selamat Datang di Website Klasifikasi Hipertensi')
@@ -162,9 +165,6 @@ elif menu_selection == 'Klasifikasi SVM':
                     'Nilai': [accuracy, precision, recall, f1]}
     metrics_df = pd.DataFrame(metrics_data)
     st.write(metrics_df)
-    
-# Inisialisasi model SVM di bagian atas skrip
-svm = SVC(kernel='linear', C=1)
 
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
