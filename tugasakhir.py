@@ -99,10 +99,6 @@ elif menu_selection == 'Klasifikasi SVM':
     # K-Fold Cross Validation
     k_fold = 5
     cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
-    
-    # Menampilkan akurasi K-Fold Cross Validation
-    st.write(f'K-Fold Cross Validation Scores: {cv_scores}')
-    st.write(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
 
     # Melatih model pada data latih
     model.fit(X_train, y_train)
@@ -120,10 +116,6 @@ elif menu_selection == 'Klasifikasi SVM':
     # Hitung metrik evaluasi
     accuracy = accuracy_score(y_test, y_pred)
     
-    # Tampilkan confusion matrix di halaman Streamlit
-    st.write('Confusion Matrix:')
-    st.write(conf_matrix)
-
     # Tampilkan visualisasi confusion matrix menggunakan heatmap
     fig, ax = plt.subplots(figsize=(5, 3))
     sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
