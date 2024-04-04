@@ -109,6 +109,14 @@ elif menu_selection == 'Klasifikasi SVM':
     # Mengukur akurasi pada data uji
     accuracy = accuracy_score(y_test, y_pred)
     st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
+    # Hitung metrik evaluasi
+    precision = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+
+    st.write(f'Precision: {precision:.2f}')
+    st.write(f'Recall: {recall:.2f}')
+    st.write(f'F1 Score: {f1:.2f}')
 
     # Confusion Matrix
     conf_matrix = confusion_matrix(y_test, y_pred)
