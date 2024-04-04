@@ -84,6 +84,12 @@ elif menu_selection == 'Pre-Pocesssing Data':
         st.write(data)
 
         if st.button('Normalisasi Data'):
+            # Fungsi untuk normalisasi data
+            def normalize_data(data):
+                scaler = MinMaxScaler()
+                normalized_data = scaler.fit_transform(data)
+                normalized_data = pd.DataFrame(normalized_data, columns=data.columns)
+                return normalized_data
             # Normalisasi data
             normalized_data = normalize_data(data)
 
