@@ -162,6 +162,9 @@ elif menu_selection == 'Klasifikasi SVM':
                     'Nilai': [accuracy, precision, recall, f1]}
     metrics_df = pd.DataFrame(metrics_data)
     st.write(metrics_df)
+    
+# Inisialisasi model SVM di bagian atas skrip
+svm = SVC(kernel='linear', C=1)
 
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
