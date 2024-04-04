@@ -123,14 +123,6 @@ elif menu_selection == 'Klasifikasi SVM':
     accuracy_svm = round(accuracy_score(y_test, Y_prediction) * 100, 2)
     acc_svm = round(svm.score(X_train, y_train) * 100, 2)
     
-    # K-Fold Cross Validation
-    k_fold = 5
-    cv_scores = cross_val_score(svm, X_train, y_train, cv=k_fold)
-    
-    # Melihat skor validasi silang
-    # print("CV Scores:", cv_scores)
-    # print("Mean CV Score:", cv_scores.mean())
-    
     cm = confusion_matrix(y_test, Y_prediction)
     accuracy = accuracy_score(y_test, Y_prediction)
     precision = precision_score(y_test, Y_prediction, average='micro')
@@ -138,22 +130,23 @@ elif menu_selection == 'Klasifikasi SVM':
     f1 = f1_score(y_test, Y_prediction, average='micro')
 
     # Mengukur akurasi pada data uji
-    accuracy = accuracy_score(y_test, y_pred)
+    accuracy = accuracy_score(y_test, Y_prediction)
     st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
+    
     # Hitung metrik evaluasi
-    precision = precision_score(y_test, y_pred, average='micro')
-    recall = recall_score(y_test, y_pred, average='micro')
-    f1 = f1_score(y_test, y_pred, average='micro')
+    precision = precision_score(y_test, Y_prediction, average='micro')
+    recall = recall_score(y_test, Y_prediction, average='micro')
+    f1 = f1_score(y_test, Y_prediction, average='micro')
     
     st.write(f'Precision: {precision:.2f}')
     st.write(f'Recall: {recall:.2f}')
     st.write(f'F1 Score: {f1:.2f}')
 
     # Confusion Matrix
-    conf_matrix = confusion_matrix(y_test, y_pred)
+    conf_matrix = confusion_matrix(y_test, Y_prediction)
     
     # Hitung metrik evaluasi
-    accuracy = accuracy_score(y_test, y_pred)
+    accuracy = accuracy_score(y_test, Y_prediction)
     
     # Tampilkan visualisasi confusion matrix menggunakan heatmap
     fig, ax = plt.subplots(figsize=(5, 3))
