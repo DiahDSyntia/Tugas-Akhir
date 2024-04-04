@@ -83,13 +83,10 @@ elif menu_selection == 'Pre-Pocesssing Data':
         st.write('Data setelah preprocessing:')
         st.write(data)
         
-        def normalize_data(data):
-            scaler = MinMaxScaler()
-            normalized_data = scaler.fit_transform(data)
-            normalized_data = pd.DataFrame(normalized_data, columns=data.columns)
-            return normalized_data
         if st.button('Normalisasi Data'):
             # Normalisasi data
+            scaler = MinMaxScaler()
+            data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']] = scaler.fit_transform(data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']])
             normalized_data = normalize_data(data)
 
             # Tampilkan data yang sudah dinormalisasi
