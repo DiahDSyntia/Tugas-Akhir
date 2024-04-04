@@ -21,6 +21,17 @@ st.sidebar.title('Main Menu')
 # Pilihan menu dalam bentuk dropdown
 menu_selection = st.sidebar.selectbox('Klik Tombol Di bawah ini', ['Home', 'Pre-Pocesssing Data', 'Klasifikasi SVM','Uji Coba'])
 
+def train_svm_model():
+    dataset = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/hasilnormalisasi.csv', sep=';')
+    X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'JK_L', 'JK_P']]
+    y = dataset['Diagnosa']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    svm = SVC(kernel='linear', C=1)
+    svm.fit(X_train, y_train)
+    return svm
+
+svm = train_svm_model()
+
 # Membuat konten berdasarkan pilihan menu
 if menu_selection == 'Home':
     st.title('Selamat Datang di Website Klasifikasi Hipertensi')
