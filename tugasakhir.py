@@ -180,7 +180,7 @@ elif menu_selection == 'Uji Coba':
     submit = st.button('Prediksi')
 
     if submit:
-        X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, jenis_kelamin]])
+        X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, 0 if jenis_kelamin == "Laki-laki" else 1]])
         # Prediksi dengan model SVM
         predict = svm.predict(X_new)
     
