@@ -165,6 +165,17 @@ elif menu_selection == 'Klasifikasi SVM':
     metrics_df = pd.DataFrame(metrics_data)
     st.write(metrics_df)
 
+# Inisialisasi model SVM
+svm = SVC(kernel='linear', C=1)
+svm.fit(X_train, y_train)
+
+# Membuat fungsi untuk prediksi
+def predict_svm(usia, IMT, sistole, diastole, nafas, detak_nadi, jenis_kelamin):
+    X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, jenis_kelamin]])
+    # Prediksi dengan model SVM
+    predict = svm.predict(X_new)
+    return predict
+
 elif menu_selection == 'Uji Coba':
     st.title('Halaman Uji Coba')
     col1,col2 = st.columns([2,2])
@@ -180,14 +191,10 @@ elif menu_selection == 'Uji Coba':
     submit = st.button('Prediksi')
 
     if submit:
-        X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, jenis_kelamin]])
-        # Prediksi dengan model SVM
-        predict = svm.predict(X_new)
-    
-        # Tulis hasil prediksi
-        if predict == 0:
+        prediction = predict_svm(usia, IMT, sistole, diastole, nafas, detak_nadi, jenis_kelamin)
+        if prediction == 0:
             st.write("""# Anda Tidak Hipertensi""")
-        elif predict == 1:
+        elif prediction == 1:
             st.write("""# Anda Hipertensi tingkat 1, Segera Ke Dokter""")
         else:
             st.write("""# Anda Hipertensi tingkat 2, Segera Ke Dokter """)
