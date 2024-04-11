@@ -73,7 +73,7 @@ def main():
                     st.write("Normalization completed.")
                     st.dataframe(normalized_data)
     
-    elif selected == 'Klasifikasi SVM:
+    elif selected == 'Klasifikasi SVM':
         st.write("Berikut merupakan hasil klasifikasi yang di dapat dari pemodelan SVM")
     
         if upload_file is not None:
