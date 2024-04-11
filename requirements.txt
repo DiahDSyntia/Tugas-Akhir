@@ -7,3 +7,5 @@ matplotlib
 matplotlib-inline 
 seaborn 
 scikit_learn
+streamlit-option-menu
+tensorflow
