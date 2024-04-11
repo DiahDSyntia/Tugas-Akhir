@@ -74,7 +74,7 @@ def main():
                     st.dataframe(normalized_data)
     
     elif selected == 'Klasifikasi SVM:
-        st.write("Berikut merupakan hasil klasifikasi yang di dapat dari pemodelan Elman Recurrent Neural Network (ERNN)")
+        st.write("Berikut merupakan hasil klasifikasi yang di dapat dari pemodelan SVM")
     
         if upload_file is not None:
             df = pd.read_csv(upload_file)
