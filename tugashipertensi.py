@@ -73,10 +73,6 @@ def classify_SVM(data):
     # Bagi dataset menjadi data latih dan data uji
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-    # Normalisasi data
-    X_train = normalize_data(X_train)
-    X_test = normalize_data(X_test)
-
     # Inisialisasi model SVM
     model = SVC(kernel='linear', C=1, random_state=0)
 
@@ -256,6 +252,10 @@ def main():
         
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+        # Normalisasi data
+        X_train = normalize_data(X_train)
+        X_test = normalize_data(X_test)
         
         # Inisialisasi model SVM
         model = SVC(kernel='linear', C=1, random_state=0)
@@ -289,7 +289,8 @@ def main():
         
         # Button for testing
         if submit:
-            X_new = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
+            input_data = normalize_data(pd.DataFrame([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]],
+                                                 columns=X.columns))
 
             # Prediction using SVM
             prediction = model.predict(X_new)
