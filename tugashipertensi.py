@@ -57,7 +57,8 @@ def transform_data(data):
     
 def normalize_data(data):
     scaler = MinMaxScaler()
-    normalized_data = pd.DataFrame(scaler.fit_transform(data), columns=data.columns)
+    columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
+    data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
     return data
 
 def main():
