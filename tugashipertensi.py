@@ -26,6 +26,9 @@ def preprocess_data(data):
     # Replace commas with dots and convert numerical columns to floats
     numerical_columns = ['IMT']
     data[numerical_columns] = data[numerical_columns].replace({',': '.'}, regex=True).astype(float)
+    columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
+    for col in columns_to_clean:
+        data[col] = data[col].apply(preprocess_text)
     # One-hot encoding for 'Jenis Kelamin'
     one_hot_encoder = OneHotEncoder()
     encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
@@ -42,6 +45,10 @@ def preprocess_data(data):
     data = pd.concat([data, encoded_gender], axis=1)
     return data
 
+def transform_data(data):
+    # Add transformation steps here
+    return data
+    
 def normalize_data(data):
     scaler = MinMaxScaler()
     normalized_data = pd.DataFrame(scaler.fit_transform(data), columns=data.columns)
