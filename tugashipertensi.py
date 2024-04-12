@@ -172,14 +172,15 @@ def main():
                 # Generate confusion matrix
                 cm = confusion_matrix(y_true, y_pred)
         
-                # Plot confusion matrix
-                plt.figure(figsize=(8, 6))
-                sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+                 # Tampilkan visualisasi confusion matrix menggunakan heatmap
+                fig, ax = plt.subplots(figsize=(5, 3))
+                sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
+                            xticklabels=['Predict Positive', 'Predict Negative'],
+                            yticklabels=['Actual Positive', 'Actual Negative'])
                 plt.xlabel('Predicted')
                 plt.ylabel('True')
                 plt.title('Confusion Matrix')
-                #st.pyplot()
-                st.pyplot(plt.gcf())  # Pass the current figure to st.pyplot()
+                st.pyplot(fig) 
         
                 # Clear the current plot to avoid displaying it multiple times
                 plt.clf()
