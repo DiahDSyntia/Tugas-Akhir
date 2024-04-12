@@ -120,7 +120,7 @@ def classify_SVM(data):
     plt.title('Confusion Matrix')
     st.pyplot(fig) 
 
-    return y_test, y_pred, accuracy, fig
+    return y_test, y_pred, accuracy, fig, plt.gcf()
 
 def main():
     with st.sidebar:
@@ -195,16 +195,14 @@ def main():
                 # Generate confusion matrix
                 conf_matrix = confusion_matrix(y_true, y_pred)
         
-                 # Tampilkan visualisasi confusion matrix menggunakan heatmap
-                fig, ax = plt.subplots(figsize=(8, 6))
-                sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
-                            xticklabels=['Predict Positive', 'Predict Negative'],
-                            yticklabels=['Actual Positive', 'Actual Negative'])
+                # Plot confusion matrix
+                plt.figure(figsize=(8, 6))
+                sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
                 plt.xlabel('Predicted')
                 plt.ylabel('True')
                 plt.title('Confusion Matrix')
-                plt.show()
-                st.pyplot(fig)
+                #st.pyplot()
+                st.pyplot(plt.gcf())  # Pass the current figure to st.pyplot()
 
                 st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
                 st.write(f'Precision: {precision:.2f}')
