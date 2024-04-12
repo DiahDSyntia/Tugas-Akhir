@@ -242,6 +242,8 @@ def main():
                 st.markdown(html_code, unsafe_allow_html=True)
     
     elif selected == 'Uji Coba':
+        # Inisialisasi model SVM
+        model = SVC(kernel='linear', C=1, random_state=0)
         # Latih model pada data latih
         model.fit(X_train, y_train)
     
