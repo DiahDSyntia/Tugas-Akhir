@@ -246,33 +246,23 @@ def main():
         st.write("Masukkan nilai untuk pengujian:")
     
         # Input fields
-        age = st.number_input("Umur", min_value=0, max_value=150, step=1, value=30)
-        bmi = st.number_input("IMT", min_value=0.0, max_value=100.0, step=0.1, value=25.0)
-        systole = st.number_input("Sistole", min_value=0, max_value=300, step=1, value=120)
-        diastole = st.number_input("Diastole", min_value=0, max_value=200, step=1, value=80)
-        breaths = st.number_input("Nafas", min_value=0, max_value=100, step=1, value=16)
-        heart_rate = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1, value=70)
-        gender = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
-    
+        Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
+        IMT = st.number_input("IMT", min_value=0.0, max_value=100.0, step=0.1)
+        Sistole = st.number_input("Sistole", min_value=0, max_value=300, step=1)
+        Diastole = st.number_input("Diastole", min_value=0, max_value=200, step=1)
+        Nafas = st.number_input("Nafas", min_value=0, max_value=100, step=1)
+        Detak nadi = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1)
+        Jenis Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
         # Convert gender to binary
         gender_binary = 1 if gender == "Perempuan" else 0
+        submit = st.button('Uji Coba')
         
         # Button for testing
-        if st.button("Hasil Uji Coba"):
-            # Prepare input data for testing
-            input_data = pd.DataFrame({
-                "Umur": [age],
-                "IMT": [bmi],
-                "Sistole": [systole],
-                "Diastole": [diastole],
-                "Nafas": [breaths],
-                "Detak Nadi": [heart_rate],
-                "Jenis Kelamin": [gender_binary],
-                "Diagnosa": [0]  # Placeholder value
-            })
+        if submit:
+            X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, gender_binary]])
 
             # Prediction using SVM
-            prediction = model.predict(input_data[['Umur', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']])
+            prediction = model.predict(X_new)
             
             # Output the prediction result
             if prediction[0] == 0:
