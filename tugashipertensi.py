@@ -111,8 +111,8 @@ def classify_SVM(data):
     conf_matrix = confusion_matrix(y_test, y_pred)
 
     # Plot confusion matrix dalam bentuk heatmap
-    fig, ax = plt.subplots(figsize=(5, 3))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
@@ -195,12 +195,11 @@ def main():
         
                 # Plot confusion matrix
                 plt.figure(figsize=(8, 6))
-                sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+                sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
                 plt.xlabel('Predicted')
                 plt.ylabel('True')
                 plt.title('Confusion Matrix')
-                #st.pyplot()
-                st.pyplot(plt.gcf())  # Pass the current figure to st.pyplot()
+                st.pyplot(plt.gcf())
 
                 # Clear the current plot to avoid displaying it multiple times
                 plt.clf()
