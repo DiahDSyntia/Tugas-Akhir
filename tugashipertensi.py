@@ -88,16 +88,16 @@ def classify_SVM(data):
     conf_matrix = confusion_matrix(y_test, y_pred)
 
     # Plot confusion matrix dalam bentuk heatmap
-    plt.figure(figsize=(5, 3))
+    plt.figure(figsize=(8, 6))
     sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
                 xticklabels=['Predicted Positive', 'Predicted Negative'],
                 yticklabels=['Actual Positive', 'Actual Negative'])
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
-    plt.show()
+    fig = plt.gcf()
 
-    return y_test, y_pred, accuracy
+    return y_test, y_pred, accuracy, fig
 
 def main():
     with st.sidebar:
