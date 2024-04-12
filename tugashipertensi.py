@@ -262,7 +262,7 @@ def main():
             X_new = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
 
             # Prediction using SVM
-            prediction = model.predict(X_new)
+            prediction = y_pred.predict(X_new)
             
             # Output the prediction result
             if prediction[0] == 0:
