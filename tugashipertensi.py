@@ -73,6 +73,10 @@ def classify_SVM(data):
     # Bagi dataset menjadi data latih dan data uji
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
+    # Normalisasi data
+    X_train = normalize_data(X_train)
+    X_test = normalize_data(X_test)
+
     # Inisialisasi model SVM
     model = SVC(kernel='linear', C=1, random_state=0)
 
@@ -246,7 +250,6 @@ def main():
                 st.markdown(html_code, unsafe_allow_html=True)
     
     elif selected == 'Uji Coba':
-        data = pd.read_csv(upload_file)
         # Pisahkan fitur dan target
         X = data.drop('Diagnosa', axis=1)  # Fitur (input)
         y = data['Diagnosa']
