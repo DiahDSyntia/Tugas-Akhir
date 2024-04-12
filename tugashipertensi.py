@@ -101,23 +101,29 @@ def classify_SVM(data):
     y_pred = model.predict(X_test)
 
     # Mengukur akurasi pada data uji
+    conf_matrix = confusion_matrix(y_test, y_pred)
     accuracy = accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred, average='micro')
     recall = recall_score(y_test, y_pred, average='micro')
     f1 = f1_score(y_test, y_pred, average='micro')
 
-    # Membuat confusion matrix
-    conf_matrix = confusion_matrix(y_test, y_pred)
+    st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
+    st.write(f'Precision: {precision:.2f}')
+    st.write(f'Recall: {recall:.2f}')
+    st.write(f'F1 Score: {f1:.2f}')
+
+    # Confusion Matrix
+    conf_matrix = confusion_matrix(y_test, Y_prediction)
 
     # Plot confusion matrix dalam bentuk heatmap
-    plt.figure(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(5, 3))
     sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
                 xticklabels=['Predicted Positive', 'Predicted Negative'],
                 yticklabels=['Actual Positive', 'Actual Negative'])
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
-    fig = plt.gcf()
+    st.pyplot(fig) 
 
     return y_test, y_pred, accuracy, fig
 
@@ -202,7 +208,6 @@ def main():
                 plt.xlabel('Predicted')
                 plt.ylabel('True')
                 plt.title('Confusion Matrix')
-                fig = plt.figure()
                 plt.show()
                 st.pyplot(fig)
         
