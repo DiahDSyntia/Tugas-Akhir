@@ -111,12 +111,14 @@ def classify_SVM(data):
     conf_matrix = confusion_matrix(y_test, y_pred)
 
     # Plot confusion matrix dalam bentuk heatmap
-    plt.figure(figsize=(8, 6))
-    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+    fig, ax = plt.subplots(figsize=(5, 3))
+    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
+                xticklabels=['Predict Positive', 'Predict Negative'],
+                yticklabels=['Actual Positive', 'Actual Negative'])
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
-    st.pyplot(plt.gcf())
+    st.pyplot(fig) 
 
     return y_test, y_pred, accuracy, fig, plt.gcf()
 
@@ -194,20 +196,20 @@ def main():
                 conf_matrix = confusion_matrix(y_true, y_pred)
         
                 # Plot confusion matrix
-                plt.figure(figsize=(8, 6))
-                sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+                fig, ax = plt.subplots(figsize=(5, 3))
+                sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
+                            xticklabels=['Predict Positive', 'Predict Negative'],
+                            yticklabels=['Actual Positive', 'Actual Negative'])
                 plt.xlabel('Predicted')
                 plt.ylabel('True')
                 plt.title('Confusion Matrix')
-                st.pyplot(plt.gcf())
+                st.pyplot(fig) 
 
-                # Clear the current plot to avoid displaying it multiple times
-                plt.clf()
-
-                st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
-                st.write(f'Precision: {precision:.2f}')
-                st.write(f'Recall: {recall:.2f}')
-                st.write(f'F1 Score: {f1:.2f}')
+                # Membuat DataFrame untuk menampilkan metrik evaluasi dalam bentuk tabel
+                metrics_data = {'Metric': ['Akurasi','Precision', 'Recall', 'F1 Score'],
+                                'Nilai': [accuracy, precision, recall, f1]}
+                metrics_df = pd.DataFrame(metrics_data)
+                st.write(metrics_df)
         
                 # Generate classification report
                 with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
