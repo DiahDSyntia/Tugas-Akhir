@@ -246,9 +246,10 @@ def main():
                 st.markdown(html_code, unsafe_allow_html=True)
     
     elif selected == 'Uji Coba':
-        # Pisahkan fitur dan target
-        X = data.drop('Diagnosa', axis=1)  # Fitur (input)
-        y = data['Diagnosa']
+        data_normalized = normalize_data(data_sebelumnya)
+        # Pisahkan fitur dan target dari data yang sudah dinormalisasi
+        X = data_normalized.drop('Diagnosa', axis=1)  # Fitur (input)
+        y = data_normalized['Diagnosa']
         
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
