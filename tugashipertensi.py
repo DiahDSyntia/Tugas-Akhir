@@ -170,7 +170,7 @@ def main():
                 y_true, y_pred, accuracy = classify_SVM(normalized_data)  # Assuming classify_MLP also returns loss
                 
                 # Generate confusion matrix
-                cm = confusion_matrix(y_true, y_pred)
+                conf_matrix = confusion_matrix(y_true, y_pred)
         
                  # Tampilkan visualisasi confusion matrix menggunakan heatmap
                 fig, ax = plt.subplots(figsize=(8, 6))
