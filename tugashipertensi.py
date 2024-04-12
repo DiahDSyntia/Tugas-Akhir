@@ -106,7 +106,7 @@ def main():
             st.markdown('<h3 style="text-align: left;"> Melakukan Normalisasi Data </h1>', unsafe_allow_html=True)
             if 'transformed_data' in st.session_state:  # Check if preprocessed_data exists in session state
                 if st.button("Normalize Data"):
-                    normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
+                    normalized_data = normalize_data(st.session_state.transformed_data.copy())
                     st.write("Normalization completed.")
                     st.dataframe(normalized_data)
     
