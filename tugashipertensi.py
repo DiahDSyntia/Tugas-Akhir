@@ -184,7 +184,7 @@ def main():
     elif selected == 'Klasifikasi SVM':
         st.write("Hasil klasifikasi yang di dapat dari pemodelan SVM")
         if upload_file is not None:
-            df = pd.read_csv(upload_file)
+            df = pd.read_csv(normalize_data(data))
             st.write(df)
             if 'preprocessed_data' in st.session_state:  # Check if preprocessed_data exists in session state
                 normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
