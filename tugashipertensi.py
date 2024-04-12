@@ -135,11 +135,8 @@ def main():
     if selected == 'Home':
         st.markdown('<h1 style="text-align: center;"> Selamat Data di Website Klasifikasi Hipertensi </h1>', unsafe_allow_html=True)
         st.markdown('<h3 style="text-align: left;"> Hipertensi </h1>', unsafe_allow_html=True)
-        # Mendefinisikan ukuran gambar
-        width = 800
-        height = 600
-        # Menampilkan gambar dengan ukuran yang telah ditentukan
-        st.image('hipertensikemenkes.png', width=width, height=height)
+        img = Image.open('hipertensikemenkes.png')
+        st.image(img, use_column_width=False)
         st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
         st.write('Faktor Faktor Resiko Hipertensi')
         st.write("""
