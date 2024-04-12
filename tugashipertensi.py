@@ -270,6 +270,17 @@ def main():
                 "Jenis Kelamin": [gender_binary],
                 "Diagnosa": [0]  # Placeholder value
             })
+
+            # Prediction using SVM
+            prediction = model_svm.predict(input_data[['Umur', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']])
+            
+            # Output the prediction result
+            if prediction[0] == 0:
+                st.write("# Tidak Hipertensi")
+            elif prediction[0] == 1:
+                st.write("# Hipertensi 1")
+            else:
+                st.write("# Hipertensi 2")
     
 if __name__ == "__main__":
     main()
