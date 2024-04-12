@@ -92,23 +92,23 @@ def main():
             st.markdown('<h3 style="text-align: left;"> Melakukan Transformation Data </h1>', unsafe_allow_html=True)
             if st.button("Clean Data"):
                 cleaned_data = preprocess_data(df)
-                st.write("Data cleaning completed.")
+                st.write("Cleaning Data Selesai.")
                 st.dataframe(cleaned_data)
                 st.session_state.cleaned_data = cleaned_data
 
             st.markdown('<h3 style="text-align: left;"> Transformasi Data </h3>', unsafe_allow_html=True)
             if 'cleaned_data' in st.session_state:
-                if st.button("Transform Data"):
+                if st.button("Transformasi Data"):
                     transformed_data = transform_data(st.session_state.cleaned_data.copy())
-                    st.write("Data transformation completed.")
+                    st.write("Transformasi Data Selesai.")
                     st.dataframe(transformed_data)
                     st.session_state.transformed_data = transformed_data  # Store preprocessed data in session state
     
             st.markdown('<h3 style="text-align: left;"> Melakukan Normalisasi Data </h1>', unsafe_allow_html=True)
             if 'transformed_data' in st.session_state:  # Check if preprocessed_data exists in session state
-                if st.button("Normalize Data"):
+                if st.button("Normalisasi Data"):
                     normalized_data = normalize_data(st.session_state.transformed_data.copy())
-                    st.write("Normalization completed.")
+                    st.write("Normalisasi Data Selesai.")
                     st.dataframe(normalized_data)
     
     elif selected == 'Klasifikasi SVM':
