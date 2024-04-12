@@ -111,14 +111,12 @@ def classify_SVM(data):
     conf_matrix = confusion_matrix(y_test, y_pred)
 
     # Plot confusion matrix dalam bentuk heatmap
-    fig, ax = plt.subplots(figsize=(8, 6))
-    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
-                xticklabels=['Predict Positive', 'Predict Negative'],
-                yticklabels=['Actual Positive', 'Actual Negative'])
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
-    st.pyplot(fig) 
+    st.pyplot()
 
     return y_test, y_pred, accuracy, fig
 
@@ -191,6 +189,17 @@ def main():
             if 'preprocessed_data' in st.session_state:  # Check if preprocessed_data exists in session state
                 normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
                 y_true, y_pred, accuracy, fig = classify_SVM(normalized_data)
+
+                # Confusion Matrix
+                conf_matrix = confusion_matrix(y_test, y_pred)
+            
+                # Plot confusion matrix dalam bentuk heatmap
+                plt.figure(figsize=(8, 6))
+                sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+                plt.xlabel('Predicted')
+                plt.ylabel('True')
+                plt.title('Confusion Matrix')
+                st.pyplot()
                 
     
     elif selected == 'Uji Coba':
