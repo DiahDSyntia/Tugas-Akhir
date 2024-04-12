@@ -272,7 +272,7 @@ def main():
             })
 
             # Prediction using SVM
-            prediction = model_svm.predict(input_data[['Umur', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']])
+            prediction = model.predict(input_data[['Umur', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']])
             
             # Output the prediction result
             if prediction[0] == 0:
