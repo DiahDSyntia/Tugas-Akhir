@@ -58,7 +58,7 @@ def transform_data(data):
 def normalize_data(data):
     scaler = MinMaxScaler()
     normalized_data = pd.DataFrame(scaler.fit_transform(data), columns=data.columns)
-    return normalized_data
+    return data
 
 def main():
     with st.sidebar:
@@ -90,7 +90,6 @@ def main():
             st.dataframe(df)
             st.markdown('<h3 style="text-align: left;"> Melakukan Transformation Data </h1>', unsafe_allow_html=True)
             if st.button("Clean Data"):
-                # Load your data
                 cleaned_data = preprocess_data(df)
                 st.write("Data cleaning completed.")
                 st.dataframe(cleaned_data)
