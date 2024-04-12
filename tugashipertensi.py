@@ -242,10 +242,17 @@ def main():
                 st.markdown(html_code, unsafe_allow_html=True)
     
     elif selected == 'Uji Coba':
+        data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/hasilnormalisasi.csv', sep=';')
+        # Pisahkan fitur dan target
+        X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
+        y = data['Diagnosa']
+        
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+        
         # Inisialisasi model SVM
         model = SVC(kernel='linear', C=1, random_state=0)
+        
         # Latih model pada data latih
         model.fit(X_train, y_train)
     
