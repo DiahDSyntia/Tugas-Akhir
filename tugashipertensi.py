@@ -108,17 +108,15 @@ def classify_SVM(data):
     f1 = f1_score(y_test, y_pred, average='micro')
 
     # Confusion Matrix
-    conf_matrix = confusion_matrix(y_test, Y_prediction)
+    conf_matrix = confusion_matrix(y_test, y_pred)
 
     # Plot confusion matrix dalam bentuk heatmap
     fig, ax = plt.subplots(figsize=(5, 3))
-    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
-                xticklabels=['Predicted Positive', 'Predicted Negative'],
-                yticklabels=['Actual Positive', 'Actual Negative'])
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
-    st.pyplot(fig) 
+    st.pyplot(plt.gcf())
 
     return y_test, y_pred, accuracy, fig, plt.gcf()
 
@@ -203,6 +201,9 @@ def main():
                 plt.title('Confusion Matrix')
                 #st.pyplot()
                 st.pyplot(plt.gcf())  # Pass the current figure to st.pyplot()
+
+                # Clear the current plot to avoid displaying it multiple times
+                plt.clf()
 
                 st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
                 st.write(f'Precision: {precision:.2f}')
