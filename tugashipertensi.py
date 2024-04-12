@@ -5,7 +5,6 @@ from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 import numpy as np
-import keras
 from sklearn.model_selection import KFold
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -15,6 +14,7 @@ from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split, cross_val_score, KFold
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
 from sklearn.preprocessing import OneHotEncoder
+from PIL import Image
 
 
 def preprocess_data(data): 
@@ -135,6 +135,8 @@ def main():
     if selected == 'Home':
         st.markdown('<h1 style="text-align: center;"> Selamat Data di Website Klasifikasi Hipertensi </h1>', unsafe_allow_html=True)
         st.markdown('<h3 style="text-align: left;"> Hipertensi </h1>', unsafe_allow_html=True)
+        img = Image.open('hipertensikemenkes.jpg')
+        st.image(img, use_column_width=False)
         st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
         st.write('Faktor Faktor Resiko Hipertensi')
         st.write("""
