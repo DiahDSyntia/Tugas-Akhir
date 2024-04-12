@@ -193,11 +193,11 @@ def main():
                 y_true, y_pred, accuracy, fig = classify_SVM(normalized_data)
 
                 # Generate confusion matrix
-                cm = confusion_matrix(y_true, y_pred)
+                conf_matrix = confusion_matrix(y_test, y_pred)
         
                 # Plot confusion matrix
                 plt.figure(figsize=(8, 6))
-                sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+                sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
                 plt.xlabel('Predicted')
                 plt.ylabel('True')
                 plt.title('Confusion Matrix')
