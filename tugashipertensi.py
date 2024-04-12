@@ -107,11 +107,6 @@ def classify_SVM(data):
     recall = recall_score(y_test, y_pred, average='micro')
     f1 = f1_score(y_test, y_pred, average='micro')
 
-    st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
-    st.write(f'Precision: {precision:.2f}')
-    st.write(f'Recall: {recall:.2f}')
-    st.write(f'F1 Score: {f1:.2f}')
-
     # Confusion Matrix
     conf_matrix = confusion_matrix(y_test, Y_prediction)
 
@@ -210,6 +205,11 @@ def main():
                 plt.title('Confusion Matrix')
                 plt.show()
                 st.pyplot(fig)
+
+                st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
+                st.write(f'Precision: {precision:.2f}')
+                st.write(f'Recall: {recall:.2f}')
+                st.write(f'F1 Score: {f1:.2f}')
         
                 # Generate classification report
                 with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
