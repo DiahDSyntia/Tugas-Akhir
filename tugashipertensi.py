@@ -61,6 +61,49 @@ def normalize_data(data):
     data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
     return data
 
+def classify_SVM(data):
+    # Pisahkan fitur dan target
+    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'JK_L', 'JK_P']]
+    y = data['Diagnosa']
+
+    # Bagi dataset menjadi data latih dan data uji
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+    # Inisialisasi model SVM
+    model = SVC(kernel='linear', C=1, random_state=0)
+
+    # Latih model pada data latih
+    model.fit(X_train, y_train)
+
+    # Menguji model pada data uji
+    y_pred = model.predict(X_test)
+
+    # Mengukur akurasi pada data uji
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average='micro')
+    recall = recall_score(y_test, y_pred, average='micro')
+    f1 = f1_score(y_test, y_pred, average='micro')
+
+    print(f'Accuracy Menggunakan data uji: {accuracy * 100:.2f}%')
+    print(f'Presisi: {precision * 100:.2f}%')
+    print(f'Recall: {recall * 100:.2f}%')
+    print(f'F1-score: {f1 * 100:.2f}%')
+
+    # Membuat confusion matrix
+    conf_matrix = confusion_matrix(y_test, y_pred)
+
+    # Plot confusion matrix dalam bentuk heatmap
+    plt.figure(figsize=(5, 3))
+    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
+                xticklabels=['Predicted Positive', 'Predicted Negative'],
+                yticklabels=['Actual Positive', 'Actual Negative'])
+    plt.xlabel('Predicted')
+    plt.ylabel('True')
+    plt.title('Confusion Matrix')
+    plt.show()
+
+    return y_test, y_pred, accuracy
+
 def main():
     with st.sidebar:
         selected = option_menu(
