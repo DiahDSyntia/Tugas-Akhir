@@ -184,13 +184,13 @@ def main():
                     st.dataframe(normalized_data)
     
     elif selected == 'Klasifikasi SVM':
-        st.write("Berikut merupakan hasil klasifikasi yang di dapat dari pemodelan SVM")
+        st.write("Hasil klasifikasi yang di dapat dari pemodelan SVM")
     
         if upload_file is not None:
             df = pd.read_csv(upload_file)
             if 'preprocessed_data' in st.session_state:  # Check if preprocessed_data exists in session state
                 normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
-                y_true, y_pred, accuracy = classify_SVM(normalized_data)  # Assuming classify_MLP also returns loss
+                y_true, y_pred, accuracy, fig, plt.gcf()  = classify_SVM(normalized_data)
                 
                 # Generate confusion matrix
                 conf_matrix = confusion_matrix(y_true, y_pred)
