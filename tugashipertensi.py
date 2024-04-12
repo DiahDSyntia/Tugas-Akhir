@@ -11,6 +11,18 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 def preprocess_data(data): 
+    def preprocess_text(text):
+        text = re.sub(r'[^A-Za-z0-9\s]', '', text)
+        text = re.sub(r'[A-Za-z]', '', text)
+        text = re.sub(r'\s+', ' ', text)
+        text = text.strip()
+        return text
+    
+    def preprocess_numerical(text):
+        text = re.sub(r'[^0-9\s]', '', text)
+        text = re.sub(r'\s+', ' ', text)
+        text = text.strip()
+        return text
     # Replace commas with dots and convert numerical columns to floats
     numerical_columns = ['IMT']
     data[numerical_columns] = data[numerical_columns].replace({',': '.'}, regex=True).astype(float)
@@ -64,14 +76,23 @@ def main():
             df = pd.read_csv(upload_file)
             st.dataframe(df)
             st.markdown('<h3 style="text-align: left;"> Melakukan Transformation Data </h1>', unsafe_allow_html=True)
-            if st.button("Transformation Data"):  # Check if button is clicked
-                preprocessed_data = preprocess_data(df)
-                st.write("Transformation completed.")
-                st.dataframe(preprocessed_data)
-                st.session_state.preprocessed_data = preprocessed_data  # Store preprocessed data in session state
+            if st.button("Clean Data"):
+                # Load your data
+                cleaned_data = preprocess_data(df)
+                st.write("Data cleaning completed.")
+                st.dataframe(cleaned_data)
+                st.session_state.cleaned_data = cleaned_data
+
+            st.markdown('<h3 style="text-align: left;"> Transformasi Data </h3>', unsafe_allow_html=True)
+            if 'cleaned_data' in st.session_state:
+                if st.button("Transform Data"):
+                    transformed_data = transform_data(st.session_state.cleaned_data.copy())
+                    st.write("Data transformation completed.")
+                    st.dataframe(transformed_data)
+                    st.session_state.transformed_data = transformed_data  # Store preprocessed data in session state
     
             st.markdown('<h3 style="text-align: left;"> Melakukan Normalisasi Data </h1>', unsafe_allow_html=True)
-            if 'preprocessed_data' in st.session_state:  # Check if preprocessed_data exists in session state
+            if 'transformed_data' in st.session_state:  # Check if preprocessed_data exists in session state
                 if st.button("Normalize Data"):
                     normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
                     st.write("Normalization completed.")
