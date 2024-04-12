@@ -74,8 +74,19 @@ def main():
         upload_file = st.sidebar.file_uploader("Masukkan file csv disini", key=1)
     
     if selected == 'Home':
-        st.markdown('<h1 style="text-align: center;"> Website Klasifikasi Hipertensi </h1>', unsafe_allow_html=True)
+        st.markdown('<h1 style="text-align: center;"> Selamat Data di Website Klasifikasi Hipertensi </h1>', unsafe_allow_html=True)
         st.markdown('<h3 style="text-align: left;"> Hipertensi </h1>', unsafe_allow_html=True)
+        st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
+        st.write('Faktor Faktor Resiko Hipertensi')
+        st.write("""
+        1. Jenis Kelamin
+        2. Usia
+        3. Indeks Massa Tubuh
+        4. Sistolik
+        5. Diastolik
+        6. Nafas
+        7. Detak Nadi
+        """)
         st.markdown('<h3 style="text-align: left;"> View Data </h1>', unsafe_allow_html=True)
         if upload_file is not None:
             df = pd.read_csv(upload_file)
@@ -89,14 +100,14 @@ def main():
         if upload_file is not None:
             df = pd.read_csv(upload_file)
             st.dataframe(df)
-            st.markdown('<h3 style="text-align: left;"> Melakukan Transformation Data </h1>', unsafe_allow_html=True)
+            st.markdown('<h3 style="text-align: left;"> Lakukan Cleaning Data </h1>', unsafe_allow_html=True)
             if st.button("Clean Data"):
                 cleaned_data = preprocess_data(df)
                 st.write("Cleaning Data Selesai.")
                 st.dataframe(cleaned_data)
                 st.session_state.cleaned_data = cleaned_data
 
-            st.markdown('<h3 style="text-align: left;"> Transformasi Data </h3>', unsafe_allow_html=True)
+            st.markdown('<h3 style="text-align: left;"> Lakukan Transformasi Data </h3>', unsafe_allow_html=True)
             if 'cleaned_data' in st.session_state:
                 if st.button("Transformasi Data"):
                     transformed_data = transform_data(st.session_state.cleaned_data.copy())
@@ -104,7 +115,7 @@ def main():
                     st.dataframe(transformed_data)
                     st.session_state.transformed_data = transformed_data  # Store preprocessed data in session state
     
-            st.markdown('<h3 style="text-align: left;"> Melakukan Normalisasi Data </h1>', unsafe_allow_html=True)
+            st.markdown('<h3 style="text-align: left;"> Lakukan Normalisasi Data </h1>', unsafe_allow_html=True)
             if 'transformed_data' in st.session_state:  # Check if preprocessed_data exists in session state
                 if st.button("Normalisasi Data"):
                     normalized_data = normalize_data(st.session_state.transformed_data.copy())
