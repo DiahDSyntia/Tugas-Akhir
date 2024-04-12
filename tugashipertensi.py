@@ -246,66 +246,57 @@ def main():
                 st.markdown(html_code, unsafe_allow_html=True)
     
     elif selected == 'Uji Coba':
-        if upload_file is not None:
-            df = pd.read_csv(upload_file)
-            if 'preprocessed_data' in st.session_state:  # Check if preprocessed_data exists in session state
-                normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
-                y_true, y_pred, accuracy, fig = classify_SVM(normalized_data)
-                # Pisahkan fitur dan target
-                X = data.drop('Diagnosa', axis=1)  # Fitur (input)
-                y = data['Diagnosa']
-                
-                # Bagi dataset menjadi data latih dan data uji
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+        # Pisahkan fitur dan target
+        X = data.drop('Diagnosa', axis=1)  # Fitur (input)
+        y = data['Diagnosa']
         
-                # Normalisasi data
-                X_train = normalize_data(X_train)
-                X_test = normalize_data(X_test)
-                
-                # Inisialisasi model SVM
-                model = SVC(kernel='linear', C=1, random_state=0)
-                
-                # Latih model pada data latih
-                model.fit(X_train, y_train)
-            
-                # Menguji model pada data uji
-                y_pred = model.predict(X_test)
-            
-                # Mengukur akurasi pada data uji
-                conf_matrix = confusion_matrix(y_test, y_pred)
-                accuracy = accuracy_score(y_test, y_pred)
-                precision = precision_score(y_test, y_pred, average='micro')
-                recall = recall_score(y_test, y_pred, average='micro')
-                f1 = f1_score(y_test, y_pred, average='micro')
-                st.title("Uji Coba")
-                st.write("Masukkan nilai untuk pengujian:")
-            
-                # Input fields
-                Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
-                IMT = st.number_input("IMT", min_value=0.0, max_value=100.0, step=0.1)
-                Sistole = st.number_input("Sistole", min_value=0, max_value=300, step=1)
-                Diastole = st.number_input("Diastole", min_value=0, max_value=200, step=1)
-                Nafas = st.number_input("Nafas", min_value=0, max_value=100, step=1)
-                Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1)
-                Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
-                # Convert gender to binary
-                gender_binary = 1 if Jenis_Kelamin == "Perempuan" else 0
-                submit = st.button('Uji Coba')
-                
-                # Button for testing
-                if submit:
-                    X_new = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
+        # Bagi dataset menjadi data latih dan data uji
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
         
-                    # Prediction using SVM
-                    prediction = model.predict(X_new)
-                    
-                    # Output the prediction result
-                    if prediction[0] == 0:
-                        st.write("# Tidak Hipertensi")
-                    elif prediction[0] == 1:
-                        st.write("# Hipertensi 1")
-                    else:
-                        st.write("# Hipertensi 2")
+        # Inisialisasi model SVM
+        model = SVC(kernel='linear', C=1, random_state=0)
+        
+        # Latih model pada data latih
+        model.fit(X_train, y_train)
+    
+        # Menguji model pada data uji
+        y_pred = model.predict(X_test)
+    
+        # Mengukur akurasi pada data uji
+        conf_matrix = confusion_matrix(y_test, y_pred)
+        accuracy = accuracy_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred, average='micro')
+        recall = recall_score(y_test, y_pred, average='micro')
+        f1 = f1_score(y_test, y_pred, average='micro')
+        st.title("Uji Coba")
+        st.write("Masukkan nilai untuk pengujian:")
+    
+        # Input fields
+        Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
+        IMT = st.number_input("IMT", min_value=0.0, max_value=100.0, step=0.1)
+        Sistole = st.number_input("Sistole", min_value=0, max_value=300, step=1)
+        Diastole = st.number_input("Diastole", min_value=0, max_value=200, step=1)
+        Nafas = st.number_input("Nafas", min_value=0, max_value=100, step=1)
+        Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1)
+        Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
+        # Convert gender to binary
+        gender_binary = 1 if Jenis_Kelamin == "Perempuan" else 0
+        submit = st.button('Uji Coba')
+        
+        # Button for testing
+        if submit:
+            X_new = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
+
+            # Prediction using SVM
+            prediction = model.predict(X_new)
+            
+            # Output the prediction result
+            if prediction[0] == 0:
+                st.write("# Tidak Hipertensi")
+            elif prediction[0] == 1:
+                st.write("# Hipertensi 1")
+            else:
+                st.write("# Hipertensi 2")
             
 if __name__ == "__main__":
     main()
