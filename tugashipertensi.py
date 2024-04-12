@@ -173,7 +173,7 @@ def main():
                 cm = confusion_matrix(y_true, y_pred)
         
                  # Tampilkan visualisasi confusion matrix menggunakan heatmap
-                fig, ax = plt.subplots(figsize=(5, 3))
+                fig, ax = plt.subplots(figsize=(8, 6))
                 sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
                             xticklabels=['Predict Positive', 'Predict Negative'],
                             yticklabels=['Actual Positive', 'Actual Negative'])
