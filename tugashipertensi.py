@@ -56,6 +56,7 @@ def transform_data(data):
     return data
     
 def normalize_data(data):
+    data = df.drop('Jenis Kelamin_P', axis=1)
     scaler = MinMaxScaler()
     columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
     data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
@@ -242,9 +243,9 @@ def main():
                 st.markdown(html_code, unsafe_allow_html=True)
     
     elif selected == 'Uji Coba':
-        data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/hasilnormalisasi.csv', sep=';')
+        data = pd.read_csv(upload_file)
         # Pisahkan fitur dan target
-        X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
+        X = data.drop('Diagnosa', axis=1)  # Fitur (input)
         y = data['Diagnosa']
         
         # Bagi dataset menjadi data latih dan data uji
