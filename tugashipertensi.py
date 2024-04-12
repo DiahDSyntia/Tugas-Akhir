@@ -36,6 +36,9 @@ def preprocess_data(data):
     columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
     for col in columns_to_clean:
         data[col] = data[col].apply(preprocess_text)
+    return data
+
+def transform_data(data):
     # One-hot encoding for 'Jenis Kelamin'
     one_hot_encoder = OneHotEncoder()
     encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
@@ -50,10 +53,6 @@ def preprocess_data(data):
     data = data.drop('Jenis Kelamin', axis=1)    
     # Concatenate encoded 'Jenis Kelamin' and transformed 'Diagnosa' with original data
     data = pd.concat([data, encoded_gender], axis=1)
-    return data
-
-def transform_data(data):
-    # Add transformation steps here
     return data
     
 def normalize_data(data):
