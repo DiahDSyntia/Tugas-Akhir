@@ -137,11 +137,16 @@ def main():
         st.markdown('<h3 style="text-align: left;"> Hipertensi </h1>', unsafe_allow_html=True)
         # Buka gambar
         img = Image.open('hipertensikemenkes.png')
+        
         # Atur ukuran gambar
-        width = 400  # Lebar gambar
-        height = 300  # Tinggi gambar
-        # Tampilkan gambar dengan ukuran yang telah ditentukan
-        st.image(img, width=width, height=height)
+        target_width = 400  # Lebar gambar yang diinginkan
+        
+        # Menghitung proporsi tinggi berdasarkan lebar asli gambar
+        width_percent = (target_width / float(img.size[0]))
+        height_size = int((float(img.size[1]) * float(width_percent)))
+        
+        # Menampilkan gambar dengan ukuran yang dihitung
+        st.image(img, width=target_width, height=height_size)
         st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
         st.write('Faktor Faktor Resiko Hipertensi')
         st.write("""
