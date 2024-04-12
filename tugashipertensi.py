@@ -251,7 +251,7 @@ def main():
         Sistole = st.number_input("Sistole", min_value=0, max_value=300, step=1)
         Diastole = st.number_input("Diastole", min_value=0, max_value=200, step=1)
         Nafas = st.number_input("Nafas", min_value=0, max_value=100, step=1)
-        Detak nadi = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1)
+        Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1)
         Jenis Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
         # Convert gender to binary
         gender_binary = 1 if gender == "Perempuan" else 0
@@ -259,7 +259,7 @@ def main():
         
         # Button for testing
         if submit:
-            X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, gender_binary]])
+            X_new = np.array([[usia, IMT, sistole, diastole, nafas, Detak_nadi, gender_binary]])
 
             # Prediction using SVM
             prediction = model.predict(X_new)
