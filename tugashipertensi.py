@@ -254,7 +254,7 @@ def main():
         Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1)
         Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
         # Convert gender to binary
-        gender_binary = 1 if gender == "Perempuan" else 0
+        gender_binary = 1 if Jenis_Kelamin == "Perempuan" else 0
         submit = st.button('Uji Coba')
         
         # Button for testing
