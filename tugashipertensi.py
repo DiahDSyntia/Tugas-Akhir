@@ -84,11 +84,6 @@ def classify_SVM(data):
     recall = recall_score(y_test, y_pred, average='micro')
     f1 = f1_score(y_test, y_pred, average='micro')
 
-    print(f'Accuracy Menggunakan data uji: {accuracy * 100:.2f}%')
-    print(f'Presisi: {precision * 100:.2f}%')
-    print(f'Recall: {recall * 100:.2f}%')
-    print(f'F1-score: {f1 * 100:.2f}%')
-
     # Membuat confusion matrix
     conf_matrix = confusion_matrix(y_test, y_pred)
 
@@ -172,7 +167,7 @@ def main():
             df = pd.read_csv(upload_file)
             if 'preprocessed_data' in st.session_state:  # Check if preprocessed_data exists in session state
                 normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
-                y_true, y_pred, loss = classify_MLP(normalized_data)  # Assuming classify_MLP also returns loss
+                y_true, y_pred, accuracy = classify_SVM(normalized_data)  # Assuming classify_MLP also returns loss
                 
                 # Generate confusion matrix
                 cm = confusion_matrix(y_true, y_pred)
