@@ -185,31 +185,71 @@ def main():
     
     elif selected == 'Klasifikasi SVM':
         st.write("Hasil klasifikasi yang di dapat dari pemodelan SVM")
+        dataset = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/hasilnormalisasi.csv', sep=';')
+        st.write(dataset)
+        # Pisahkan fitur dan target
+        X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
+        y = dataset['Diagnosa']  # Target (output)
     
-        if upload_file is not None:
-            df = pd.read_csv(upload_file)
-            if 'preprocessed_data' in st.session_state:  # Check if preprocessed_data exists in session state
-                normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
-                y_true, y_pred, accuracy, fig = classify_SVM(normalized_data)
-
-                # Generate confusion matrix
-                conf_matrix = confusion_matrix(y_test, y_pred)
+        # Bagi dataset menjadi data latih dan data uji
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    
+        # Inisialisasi model SVM
+        svm = SVC(kernel='linear', C=1)
+        svm.fit(X_train, y_train)
         
-                # Plot confusion matrix
-                plt.figure(figsize=(8, 6))
-                sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
-                plt.xlabel('Predicted')
-                plt.ylabel('True')
-                plt.title('Confusion Matrix')
-                #st.pyplot()
-                st.pyplot(plt.gcf())  # Pass the current figure to st.pyplot()
+        # K-Fold Cross Validation
+        k_fold = 5
+        cv_scores = cross_val_score(svm, X_train, y_train, cv=k_fold)
+    
+        # Melatih model pada data latih
+        # svm.fit(X_train, y_train)
         
-                # Clear the current plot to avoid displaying it multiple times
-                plt.clf()
+        # Mengevaluasi model SVM
+        Y_prediction = svm.predict(X_test)
+        accuracy_svm = round(accuracy_score(y_test, Y_prediction) * 100, 2)
+        acc_svm = round(svm.score(X_train, y_train) * 100, 2)
         
-                # Generate classification report
-                with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
-                    report = classification_report(y_true, y_pred, zero_division=0)
+        cm = confusion_matrix(y_test, Y_prediction)
+        accuracy = accuracy_score(y_test, Y_prediction)
+        precision = precision_score(y_test, Y_prediction, average='micro')
+        recall = recall_score(y_test, Y_prediction, average='micro')
+        f1 = f1_score(y_test, Y_prediction, average='micro')
+    
+        # Mengukur akurasi pada data uji
+        accuracy = accuracy_score(y_test, Y_prediction)
+        st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
+        
+        # Hitung metrik evaluasi
+        precision = precision_score(y_test, Y_prediction, average='micro')
+        recall = recall_score(y_test, Y_prediction, average='micro')
+        f1 = f1_score(y_test, Y_prediction, average='micro')
+        
+        st.write(f'Precision: {precision:.2f}')
+        st.write(f'Recall: {recall:.2f}')
+        st.write(f'F1 Score: {f1:.2f}')
+    
+        # Confusion Matrix
+        conf_matrix = confusion_matrix(y_test, Y_prediction)
+        
+        # Hitung metrik evaluasi
+        accuracy = accuracy_score(y_test, Y_prediction)
+        
+        # Tampilkan visualisasi confusion matrix menggunakan heatmap
+        fig, ax = plt.subplots(figsize=(5, 3))
+        sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
+                    xticklabels=['Predict Positive', 'Predict Negative'],
+                    yticklabels=['Actual Positive', 'Actual Negative'])
+        plt.xlabel('Predicted')
+        plt.ylabel('True')
+        plt.title('Confusion Matrix')
+        st.pyplot(fig) 
+    
+        # Membuat DataFrame untuk menampilkan metrik evaluasi dalam bentuk tabel
+        metrics_data = {'Metric': ['Akurasi','Precision', 'Recall', 'F1 Score'],
+                        'Nilai': [accuracy, precision, recall, f1]}
+        metrics_df = pd.DataFrame(metrics_data)
+        st.write(metrics_df)
                 
     
     elif selected == 'Uji Coba':
