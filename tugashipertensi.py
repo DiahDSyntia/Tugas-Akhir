@@ -182,9 +182,6 @@ def main():
                 plt.title('Confusion Matrix')
                 st.pyplot(fig) 
         
-                # Clear the current plot to avoid displaying it multiple times
-                plt.clf()
-        
                 # Generate classification report
                 with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
                     report = classification_report(y_true, y_pred, zero_division=0)
