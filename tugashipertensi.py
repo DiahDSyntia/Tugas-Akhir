@@ -56,10 +56,6 @@ def transform_data(data):
     return data
     
 def normalize_data(data):
-    # Menghapus kolom 'Jenis Kelamin' (sebelum normalisasi)
-    data = data.drop('Jenis Kelamin_P', axis=1)
-    # Mengubah nama kolom 'Jenis Kelamin_L' menjadi 'Jenis Kelamin'
-    data.rename(columns={'Jenis Kelamin_L': 'Jenis Kelamin'}, inplace=True)
     scaler = MinMaxScaler()
     columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
     data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
@@ -115,7 +111,7 @@ def classify_SVM(data):
     conf_matrix = confusion_matrix(y_test, y_pred)
 
     # Plot confusion matrix dalam bentuk heatmap
-    fig, ax = plt.subplots(figsize=(5, 3))
+    fig, ax = plt.subplots(figsize=(8, 6))
     sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
                 xticklabels=['Predict Positive', 'Predict Negative'],
                 yticklabels=['Actual Positive', 'Actual Negative'])
@@ -124,7 +120,7 @@ def classify_SVM(data):
     plt.title('Confusion Matrix')
     st.pyplot(fig) 
 
-    return y_test, y_pred, accuracy, fig, plt.gcf()
+    return y_test, y_pred, accuracy, fig
 
 def main():
     with st.sidebar:
@@ -200,7 +196,7 @@ def main():
                 conf_matrix = confusion_matrix(y_true, y_pred)
         
                 # Plot confusion matrix
-                fig, ax = plt.subplots(figsize=(5, 3))
+                fig, ax = plt.subplots(figsize=(8, 6))
                 sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
                             xticklabels=['Predict Positive', 'Predict Negative'],
                             yticklabels=['Actual Positive', 'Actual Negative'])
@@ -246,7 +242,6 @@ def main():
                 st.markdown(html_code, unsafe_allow_html=True)
     
     elif selected == 'Uji Coba':
-        data_normalized = normalize_data(upload_file)
         # Pisahkan fitur dan target dari data yang sudah dinormalisasi
         X = data_normalized.drop('Diagnosa', axis=1)  # Fitur (input)
         y = data_normalized['Diagnosa']
