@@ -259,7 +259,7 @@ def main():
         
         # Button for testing
         if submit:
-            X_new = np.array([[usia, IMT, sistole, diastole, nafas, Detak_nadi, gender_binary]])
+            X_new = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
 
             # Prediction using SVM
             prediction = model.predict(X_new)
