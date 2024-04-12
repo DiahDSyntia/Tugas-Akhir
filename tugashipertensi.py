@@ -242,28 +242,6 @@ def main():
                 st.markdown(html_code, unsafe_allow_html=True)
     
     elif selected == 'Uji Coba':
-        # Pisahkan fitur dan target dari data yang sudah dinormalisasi
-        X = data.drop('Diagnosa', axis=1)  # Fitur (input)
-        y = data['Diagnosa']
-        
-        # Bagi dataset menjadi data latih dan data uji
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-        
-        # Inisialisasi model SVM
-        model = SVC(kernel='linear', C=1, random_state=0)
-        
-        # Latih model pada data latih
-        model.fit(X_train, y_train)
-    
-        # Menguji model pada data uji
-        y_pred = model.predict(X_test)
-    
-        # Mengukur akurasi pada data uji
-        conf_matrix = confusion_matrix(y_test, y_pred)
-        accuracy = accuracy_score(y_test, y_pred)
-        precision = precision_score(y_test, y_pred, average='micro')
-        recall = recall_score(y_test, y_pred, average='micro')
-        f1 = f1_score(y_test, y_pred, average='micro')
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
     
