@@ -190,7 +190,7 @@ def main():
             df = pd.read_csv(upload_file)
             if 'preprocessed_data' in st.session_state:  # Check if preprocessed_data exists in session state
                 normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
-                y_true, y_pred, accuracy, fig, plt.gcf()  = classify_SVM(normalized_data)
+                y_true, y_pred, accuracy, fig = classify_SVM(normalized_data)
                 
                 # Generate confusion matrix
                 conf_matrix = confusion_matrix(y_true, y_pred)
