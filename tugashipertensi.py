@@ -246,7 +246,7 @@ def main():
                 st.markdown(html_code, unsafe_allow_html=True)
     
     elif selected == 'Uji Coba':
-        data_normalized = normalize_data(data_sebelumnya)
+        data_normalized = normalize_data(data)
         # Pisahkan fitur dan target dari data yang sudah dinormalisasi
         X = data_normalized.drop('Diagnosa', axis=1)  # Fitur (input)
         y = data_normalized['Diagnosa']
