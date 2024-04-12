@@ -50,13 +50,12 @@ def transform_data(data):
     # Mapping for 'Hipertensi'
     data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0})
     # Drop the original 'Jenis Kelamin' feature
-    data = data.drop('Jenis Kelamin', axis=1)    
+    data = data.drop('Jenis Kelamin_P', axis=1)    
     # Concatenate encoded 'Jenis Kelamin' and transformed 'Diagnosa' with original data
     data = pd.concat([data, encoded_gender], axis=1)
     return data
     
 def normalize_data(data):
-    data = df.drop('Jenis Kelamin_P', axis=1)
     scaler = MinMaxScaler()
     columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
     data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
