@@ -120,38 +120,61 @@ def classify_SVM(data):
 
     return y_test, y_pred, accuracy, fig
 
-# Membuat fungsi untuk menampilkan diagram
-def show_accuracy_comparison(svm_accuracy, bagging_accuracy):
-    # Label untuk setiap metode
-    labels = ['SVM tanpa Bagging', 'SVM dengan Bagging']
+def run_svm_bagging(data):
+    # Split data fitur, target
+    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi', 'JK_L', 'JK_P']]  # Fitur (input)
+    y = data['Diagnosa']  # Target (output)
 
-    # Indeks untuk setiap metode
-    x = range(len(labels))
+    # Split data menjadi training dan testing sets
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
+    
+    bagging_iterations = [5, 10]
+    accuracies_all_iterations = []
+    
+    for iteration in bagging_iterations:
+        print("######## ITERATION - {} ########".format(iteration))
+        accuracies_per_iteration = []  # List untuk menyimpan akurasi untuk iterasi saat ini
 
-    # Membuat diagram batang
+        for i in range(iteration):
+            print("Training model {} of {}...".format(i+1, iteration))
+            # Bagging: secara acak mengambil sampel dengan penggantian
+            indices = np.random.choice(len(x_train), len(x_train), replace=True)
+            x_bag = x_train.iloc[indices]
+            y_bag = y_train.iloc[indices]
+
+            # Inisialisasi model SVM
+            base_model = SVC(kernel='linear', C=1, random_state=0)
+
+            # Inisialisasi BaggingClassifier dengan model SVM
+            bagging_model = BaggingClassifier(base_model, n_estimators=1, random_state=0)
+
+            # Latih model
+            bagging_model.fit(x_bag, y_bag)
+
+            print("Model {} training complete.".format(i+1))
+
+            # Hitung akurasi untuk model saat ini
+            accuracy = bagging_model.score(x_test, y_test)  # Menggunakan skor akurasi bawaan dari BaggingClassifier
+            accuracies_per_iteration.append(accuracy)
+            
+        # Hitung rata-rata akurasi untuk iterasi saat ini
+        avg_accuracy = np.mean(accuracies_per_iteration)
+        accuracies_all_iterations.append(avg_accuracy)
+
+    # Plotting akurasi
     plt.figure(figsize=(8, 6))
-    plt.bar(x, svm_accuracy, width=0.4, label='SVM tanpa Bagging')
-    plt.bar([i + 0.4 for i in x], bagging_accuracy, width=0.4, label='SVM dengan Bagging')
-
-    # Menambahkan label pada sumbu x
-    plt.xlabel('Metode', fontsize=12)
-    plt.ylabel('Akurasi (%)', fontsize=12)
-    plt.xticks([i + 0.2 for i in x], labels, fontsize=10)
-
-    # Menambahkan label pada setiap batang
-    for i in range(len(x)):
-        plt.text(i, svm_accuracy[i] + 1, f'{svm_accuracy[i]:.2f}%', ha='center')
-        plt.text(i + 0.4, bagging_accuracy[i] + 1, f'{bagging_accuracy[i]:.2f}%', ha='center')
-
-    # Menambahkan judul diagram
-    plt.title('Perbandingan Akurasi SVM tanpa dan dengan Bagging', fontsize=14)
-
-    # Menambahkan legenda
-    plt.legend()
-
-    # Menampilkan diagram
-    st.pyplot(plt)
-
+    bars = plt.bar(bagging_iterations, accuracies_all_iterations)
+    plt.title('Average Accuracy vs Bagging Iterations')
+    plt.xlabel('Number of Bagging Iterations')
+    plt.ylabel('Average Accuracy')
+    plt.xticks(bagging_iterations)
+    plt.grid(axis='y')
+    # Menambahkan label teks di atas setiap batang
+    for bar, acc in zip(bars, accuracies_all_iterations):
+        plt.text(bar.get_x() + bar.get_width()/2, bar.get_height(), '{:.2f}%'.format(acc * 100),
+                 ha='center', va='bottom')
+            
+    return plt.gcf(), bagging_iterations, accuracies_all_iterations  # Mengembalikan akurasi bersama dengan objek gambar
 
 def main():
     with st.sidebar:
@@ -218,18 +241,17 @@ def main():
         st.write("Hasil klasifikasi yang di dapat dari pemodelan SVM")
         if upload_file is not None:
             df = pd.read_csv(upload_file)
-            st.write(df)
             if 'preprocessed_data' in st.session_state:  # Check if preprocessed_data exists in session state
                 normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
-                y_true, y_pred, accuracy, fig = show_accuracy_comparison(normalized_data)
-
-                # Akurasi dari SVM tanpa Bagging
-                svm_accuracy = [cv_scores.mean() * 100, accuracy * 100]
-                # Akurasi dari SVM dengan Bagging
-                bagging_accuracy = [avg_accuracy * 100, test_accuracy * 100]
-            
-                # Menampilkan diagram
-                show_accuracy_comparison(svm_accuracy, bagging_accuracy)
+                # Perform ERNN + Bagging classification
+                y_test, y_pred, fig, bagging_iterations, accuracies_all_iterations = run_svm_bagging(normalized_data)
+                
+                # Display the plot and accuracies
+                st.pyplot(fig)  # Pass the figure object to st.pyplot()
+                
+                st.write("Average accuracies for each bagging iteration:")
+                for iteration, accuracy in zip(bagging_iterations, accuracies_all_iterations):
+                    st.write(f"Iteration {iteration}: {accuracy:.2f}%")
                 
     
     elif selected == 'Uji Coba':
