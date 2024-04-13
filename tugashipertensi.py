@@ -334,10 +334,10 @@ def main():
                     <td style="text-align: center;"><h5>F1- Score</h5></td>
                 </tr>
                 <tr>
-                    <td style="text-align: center;">{accuracy:.2f}%</td>
-                    <td style="text-align: center;">{precision:.2f}%</td>
-                    <td style="text-align: center;">{recall:.2f}%</td>
-                    <td style="text-align: center;">{f1:.2f}%</td>
+                    <td style="text-align: center;">{accuracy:.0f}%</td>
+                    <td style="text-align: center;">{precision:.0f}%</td>
+                    <td style="text-align: center;">{recall:.0f}%</td>
+                    <td style="text-align: center;">{f1:.0f}%</td>
                 </tr>
             </table>
             """
