@@ -306,10 +306,10 @@ def main():
         st.write(f'F1-score: {f1 * 100:.2f}%')
     
         # Confusion Matrix
-        conf_matrix = confusion_matrix(y_test, Y_prediction)
+        conf_matrix = confusion_matrix(y_test, y_pred)
         
         # Hitung metrik evaluasi
-        accuracy = accuracy_score(y_test, Y_prediction)
+        accuracy = accuracy_score(y_test, y_pred)
         
         # Tampilkan visualisasi confusion matrix menggunakan heatmap
         fig, ax = plt.subplots(figsize=(5, 3))
