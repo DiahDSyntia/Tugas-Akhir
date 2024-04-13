@@ -346,6 +346,7 @@ def main():
                 recall = float(lines[3].split()[1]) * 100
             else:
                 recall = 0.0  # Set recall to a default value
+
         
             # Display the metrics
             html_code = f"""
