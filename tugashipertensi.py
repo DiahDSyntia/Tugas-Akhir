@@ -323,6 +323,24 @@ def main():
         # Generate classification report
         with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
             report = classification_report(y_test, y_pred)
+
+            # Display the metrics K-Fold
+            html_code = f"""
+            <table style="margin: auto;">
+                <tr>
+                    <td style="text-align: center;"><h5>Accuracy</h5></td>
+                    <td style="text-align: center;"><h5>Precision</h5></td>
+                    <td style="text-align: center;"><h5>Recall</h5></td>
+                    <td style="text-align: center;"><h5>F1- Score</h5></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">{accuracy_fold * 100:.2f}%</td>
+                    <td style="text-align: center;">{precision * 100:.2f}%</td>
+                    <td style="text-align: center;">{recall * 100:.2f}%</td>
+                    <td style="text-align: center;">{f1 * 100:.2f}%</td>
+                </tr>
+            </table>
+            """
         
             # Display the metrics
             html_code = f"""
@@ -334,10 +352,10 @@ def main():
                     <td style="text-align: center;"><h5>F1- Score</h5></td>
                 </tr>
                 <tr>
-                    <td style="text-align: center;">{accuracy:100.2f}%</td>
-                    <td style="text-align: center;">{precision:100.2f}%</td>
+                    <td style="text-align: center;">{accuracy * 100:.2f}%</td>
+                    <td style="text-align: center;">{precision * 100:.2f}%</td>
                     <td style="text-align: center;">{recall * 100:.2f}%</td>
-                    <td style="text-align: center;">{f1:100.2f}%</td>
+                    <td style="text-align: center;">{f1 * 100:.2f}%</td>
                 </tr>
             </table>
             """
