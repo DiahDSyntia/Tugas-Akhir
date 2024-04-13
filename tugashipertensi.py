@@ -61,6 +61,10 @@ def normalize_data(data):
     scaler = MinMaxScaler()
     columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
     data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
+    # Menghapus baris dengan nilai yang hilang (NaN)
+    data = data.dropna()
+    # Menghapus duplikat data
+    data = data.drop_duplicates()
     return data
 
 def classify_SVM(data):
@@ -245,11 +249,6 @@ def main():
         processed_data = preprocess_data(dataset)
         transformed_data = transform_data(processed_data)
         normalized_data = normalize_data(transformed_data)
-
-        # Menghapus baris dengan nilai yang hilang (NaN)
-        data = dataset.dropna()
-        # Menghapus duplikat data
-        data = dataset.drop_duplicates()
             
         # Memisahkan fitur dan target
         X = normalized_data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
