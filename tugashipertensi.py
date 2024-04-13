@@ -361,7 +361,7 @@ def main():
 
         # K-Fold Cross Validation
         k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
-        cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
+        cv_scores = cross_val_score(model_svm, X_train, y_train, cv=k_fold)
         
         # Menampilkan akurasi K-Fold Cross Validation
         #print(f'K-Fold Cross Validation Scores: {cv_scores}')
