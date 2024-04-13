@@ -245,9 +245,9 @@ def main():
         normalized_data = normalize_data(transformed_data)
 
         # Menghapus baris dengan nilai yang hilang (NaN)
-        data = data.dropna()
+        data = dataset.dropna()
         # Menghapus duplikat data
-        data = data.drop_duplicates()
+        data = dataset.drop_duplicates()
             
         # Memisahkan fitur dan target
         X = normalized_data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]
