@@ -67,121 +67,6 @@ def normalize_data(data):
     data = data.drop_duplicates()
     return data
 
-def classify_SVM(data):
-    # Pisahkan fitur dan target
-    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'JK_L', 'JK_P']]
-    y = data['Diagnosa']
-
-    # Bagi dataset menjadi data latih dan data uji
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
-    # Inisialisasi model SVM
-    model = SVC(kernel='linear', C=1, random_state=0)
-
-    # K-Fold Cross Validation
-    k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
-    cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
-    
-    # Menyimpan nilai akurasi dari setiap lipatan
-    accuracies = []
-    
-    # Melakukan validasi silang dan menyimpan akurasi dari setiap iterasi
-    for i, (train_index, test_index) in enumerate(k_fold.split(X_train)):
-        X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[test_index]
-        y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
-    
-        # Melatih model
-        model.fit(X_train_fold, y_train_fold)
-    
-        # Menguji model
-        y_pred_fold = model.predict(X_val_fold)
-    
-        # Mengukur akurasi
-        accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
-        accuracies.append(accuracy_fold)
-
-    # Latih model pada data latih
-    model.fit(X_train, y_train)
-
-    # Menguji model pada data uji
-    y_pred = model.predict(X_test)
-
-    # Mengukur akurasi pada data uji
-    conf_matrix = confusion_matrix(y_test, y_pred)
-    accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, average='micro')
-    recall = recall_score(y_test, y_pred, average='micro')
-    f1 = f1_score(y_test, y_pred, average='micro')
-
-    # Confusion Matrix
-    conf_matrix = confusion_matrix(y_test, y_pred)
-
-    # Plot confusion matrix dalam bentuk heatmap
-    plt.figure(figsize=(8, 6))
-    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
-    plt.xlabel('Predicted')
-    plt.ylabel('True')
-    plt.title('Confusion Matrix')
-    st.pyplot()
-
-    return y_test, y_pred, accuracy, fig
-
-def run_svm_bagging(data):
-    # Split data fitur, target
-    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi', 'JK_L', 'JK_P']]  # Fitur (input)
-    y = data['Diagnosa']  # Target (output)
-
-    # Split data menjadi training dan testing sets
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
-    
-    bagging_iterations = [5, 10]
-    accuracies_all_iterations = []
-    
-    for iteration in bagging_iterations:
-        print("######## ITERATION - {} ########".format(iteration))
-        accuracies_per_iteration = []  # List untuk menyimpan akurasi untuk iterasi saat ini
-
-        for i in range(iteration):
-            print("Training model {} of {}...".format(i+1, iteration))
-            # Bagging: secara acak mengambil sampel dengan penggantian
-            indices = np.random.choice(len(x_train), len(x_train), replace=True)
-            x_bag = x_train.iloc[indices]
-            y_bag = y_train.iloc[indices]
-
-            # Inisialisasi model SVM
-            base_model = SVC(kernel='linear', C=1, random_state=0)
-
-            # Inisialisasi BaggingClassifier dengan model SVM
-            bagging_model = BaggingClassifier(base_model, n_estimators=1, random_state=0)
-
-            # Latih model
-            bagging_model.fit(x_bag, y_bag)
-
-            print("Model {} training complete.".format(i+1))
-
-            # Hitung akurasi untuk model saat ini
-            accuracy = bagging_model.score(x_test, y_test)  # Menggunakan skor akurasi bawaan dari BaggingClassifier
-            accuracies_per_iteration.append(accuracy)
-            
-        # Hitung rata-rata akurasi untuk iterasi saat ini
-        avg_accuracy = np.mean(accuracies_per_iteration)
-        accuracies_all_iterations.append(avg_accuracy)
-
-    # Plotting akurasi
-    plt.figure(figsize=(8, 6))
-    bars = plt.bar(bagging_iterations, accuracies_all_iterations)
-    plt.title('Average Accuracy vs Bagging Iterations')
-    plt.xlabel('Number of Bagging Iterations')
-    plt.ylabel('Average Accuracy')
-    plt.xticks(bagging_iterations)
-    plt.grid(axis='y')
-    # Menambahkan label teks di atas setiap batang
-    for bar, acc in zip(bars, accuracies_all_iterations):
-        plt.text(bar.get_x() + bar.get_width()/2, bar.get_height(), '{:.2f}%'.format(acc * 100),
-                 ha='center', va='bottom')
-            
-    return plt.gcf(), bagging_iterations, accuracies_all_iterations  # Mengembalikan akurasi bersama dengan objek gambar
-
 def main():
     with st.sidebar:
         selected = option_menu(
@@ -259,7 +144,7 @@ def main():
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
     
         # Inisialisasi model SVM
-        model = SVC(kernel='linear', C=10, random_state=0)
+        model = SVC(kernel='linear', C=1, random_state=0)
 
         # K-Fold Cross Validation
         k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
