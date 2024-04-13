@@ -319,11 +319,6 @@ def main():
         plt.ylabel('True')
         plt.title('Confusion Matrix')
         st.pyplot(fig) 
-    
-        # Membuat DataFrame untuk menampilkan metrik evaluasi dalam bentuk tabel
-        metrics_data = {'Metric': ['Akurasi','Precision', 'Recall', 'F1 Score'],
-                        'Nilai': [accuracy, precision, recall, f1]}
-        metrics_df = pd.DataFrame(metrics_data)
         
         st.write(metrics_df)
         # Generate classification report
@@ -340,10 +335,10 @@ def main():
                     <td style="text-align: center;"><h5>F1- Score</h5></td>
                 </tr>
                 <tr>
-                    <td style="text-align: center;">{accuracy:.2f}%</td>
-                    <td style="text-align: center;">{precision:.2f}%</td>
-                    <td style="text-align: center;">{recall:.2f}%</td>
-                    <td style="text-align: center;">{f1:.2f}</td>
+                    <td style="text-align: center;">{accuracy:100:.2f}%</td>
+                    <td style="text-align: center;">{precision:100:.2f}%</td>
+                    <td style="text-align: center;">{recall:100:.2f}%</td>
+                    <td style="text-align: center;">{f1:100:.2f}%</td>
                 </tr>
             </table>
             """
