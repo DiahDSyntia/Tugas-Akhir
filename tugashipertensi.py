@@ -357,15 +357,15 @@ def main():
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
     
         # Inisialisasi model SVM
-        model = SVC(kernel='linear', C=1, random_state=0)
+        model_svm = SVC(kernel='linear', C=1, random_state=0)
 
         # K-Fold Cross Validation
         k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
         cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
         
         # Menampilkan akurasi K-Fold Cross Validation
-        print(f'K-Fold Cross Validation Scores: {cv_scores}')
-        print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
+        #print(f'K-Fold Cross Validation Scores: {cv_scores}')
+        #print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
         
         # Menyimpan nilai akurasi dari setiap lipatan
         accuracies = []
@@ -376,10 +376,10 @@ def main():
             y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
         
             # Melatih model
-            model.fit(X_train_fold, y_train_fold)
+            model_svm.fit(X_train_fold, y_train_fold)
         
             # Menguji model
-            y_pred_fold = model.predict(X_val_fold)
+            y_pred_fold = model_svm.predict(X_val_fold)
         
             # Mengukur akurasi
             accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
@@ -388,10 +388,10 @@ def main():
             #st.write(f'Accuracy di fold {i+1}: {accuracy_fold * 100:.2f}%')
 
         # Melatih model pada data latih
-        model.fit(X_train, y_train)
+        model_svm.fit(X_train, y_train)
 
         # Menguji model pada data uji
-        y_pred = model.predict(X_test)
+        y_pred = model_svm.predict(X_test)
 
         # Mengukur akurasi pada data uji
         accuracy = accuracy_score(y_test, y_pred)
