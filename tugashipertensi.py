@@ -232,11 +232,10 @@ def main():
         # Proses preprocessing, transformasi, dan normalisasi data
         processed_data = preprocess_data(dataset)
         transformed_data = transform_data(processed_data)
-        normalized_data = normalize_data(transformed_data)
             
         # Memisahkan fitur dan target
-        X = normalized_data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
-        y = normalized_data['Diagnosa']
+        X = transformed_data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin_L','Jenis Kelamin_P']]
+        y = transformed_data['Diagnosa']
     
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
