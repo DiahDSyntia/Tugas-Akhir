@@ -213,34 +213,6 @@ def main():
         # Inisialisasi model SVM
         model_svm = SVC(kernel='linear', C=1, random_state=0)
 
-        # K-Fold Cross Validation
-        k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
-        cv_scores = cross_val_score(model_svm, X_train, y_train, cv=k_fold)
-        
-        # Menampilkan akurasi K-Fold Cross Validation
-        #print(f'K-Fold Cross Validation Scores: {cv_scores}')
-        #print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
-        
-        # Menyimpan nilai akurasi dari setiap lipatan
-        accuracies = []
-        
-        # Melakukan validasi silang dan menyimpan akurasi dari setiap iterasi
-        for i, (train_index, test_index) in enumerate(k_fold.split(X_train)):
-            X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[test_index]
-            y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
-        
-            # Melatih model
-            model_svm.fit(X_train_fold, y_train_fold)
-        
-            # Menguji model
-            y_pred_fold = model_svm.predict(X_val_fold)
-        
-            # Mengukur akurasi
-            accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
-            accuracies.append(accuracy_fold)
-        
-            #st.write(f'Accuracy di fold {i+1}: {accuracy_fold * 100:.2f}%')
-
         # Melatih model pada data latih
         model_svm.fit(X_train, y_train)
 
