@@ -360,7 +360,7 @@ def main():
             submit = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
 
             # Prediction using SVM
-            prediction = model.predict(X_new)
+            prediction = model.predict(submit)
             
             # Output the prediction result
             if prediction[0] == 0:
