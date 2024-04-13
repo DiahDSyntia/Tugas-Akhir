@@ -419,10 +419,8 @@ def main():
             # Output the prediction result
             if prediction == 0:
                 st.write("Tidak Hipertensi")
-            elif prediction == 1:
-                st.write("Hipertensi 1, Silahkan ke dokter")
             else:
-                st.write("Hipertensi 2, silahkan ke dokter")
+                st.write("Hipertensi 1, silahkan ke dokter")
             
 if __name__ == "__main__":
     main()
