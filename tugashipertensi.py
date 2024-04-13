@@ -252,7 +252,7 @@ def main():
         data = dataset.drop_duplicates()
             
         # Memisahkan fitur dan target
-        X = normalized_data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]
+        X = normalized_data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
         y = normalized_data['Diagnosa']
     
         # Bagi dataset menjadi data latih dan data uji
