@@ -320,7 +320,6 @@ def main():
         plt.title('Confusion Matrix')
         st.pyplot(fig) 
         
-        st.write(metrics_df)
         # Generate classification report
         with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
             report = classification_report(y_test, y_pred)
