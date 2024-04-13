@@ -398,12 +398,6 @@ def main():
         precision = precision_score(y_test, y_pred, average='micro')
         recall = recall_score(y_test, y_pred, average='micro')
         f1 = f1_score(y_test, y_pred, average='micro')
-    
-        # Confusion Matrix
-        conf_matrix = confusion_matrix(y_test, y_pred)
-        
-        # Hitung metrik evaluasi
-        accuracy = accuracy_score(y_test, y_pred)
         
         # Input fields
         Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
@@ -425,12 +419,12 @@ def main():
             prediction = model.predict(submit)
             
             # Output the prediction result
-            if prediction[0] == 0:
-                st.write("# Tidak Hipertensi")
-            elif prediction[0] == 1:
-                st.write("# Hipertensi 1")
+            if prediction == 0:
+                st.write("Tidak Hipertensi")
+            elif prediction == 1:
+                st.write("Hipertensi 1, Silahkan ke dokter")
             else:
-                st.write("# Hipertensi 2")
+                st.write("Hipertensi 2, silahkan ke dokter")
             
 if __name__ == "__main__":
     main()
