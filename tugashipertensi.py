@@ -238,49 +238,66 @@ def main():
                     st.dataframe(normalized_data)
     
     elif selected == 'Klasifikasi SVM':
-        dataset = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/hasilnormalisasi.csv', sep=';')
-        st.write(dataset)
-        # Pisahkan fitur dan target
-        X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
-        y = dataset['Diagnosa']  # Target (output)
+        dataset = pd.read_csv(upload_file)
+        # Proses preprocessing, transformasi, dan normalisasi data
+        processed_data = preprocess_data(dataset)
+        transformed_data = transform_data(processed_data)
+        normalized_data = normalize_data(transformed_data)
+            
+        # Memisahkan fitur dan target
+        X = normalized_data.drop('Diagnosa', axis=1)
+        y = normalized_data['Diagnosa']
     
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
     
         # Inisialisasi model SVM
-        svm = SVC(kernel='linear', C=1)
-        svm.fit(X_train, y_train)
-        
+        model = SVC(kernel='linear', C=1, random_state=0)
+
         # K-Fold Cross Validation
-        k_fold = 5
-        cv_scores = cross_val_score(svm, X_train, y_train, cv=k_fold)
-    
+        k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
+        cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
+        
+        # Menampilkan akurasi K-Fold Cross Validation
+        print(f'K-Fold Cross Validation Scores: {cv_scores}')
+        print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
+        
+        # Menyimpan nilai akurasi dari setiap lipatan
+        accuracies = []
+        
+        # Melakukan validasi silang dan menyimpan akurasi dari setiap iterasi
+        for i, (train_index, test_index) in enumerate(k_fold.split(X_train)):
+            X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[test_index]
+            y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
+        
+            # Melatih model
+            model.fit(X_train_fold, y_train_fold)
+        
+            # Menguji model
+            y_pred_fold = model.predict(X_val_fold)
+        
+            # Mengukur akurasi
+            accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
+            accuracies.append(accuracy_fold)
+        
+            st.write(f'Accuracy di fold {i+1}: {accuracy_fold * 100:.2f}%')
+
         # Melatih model pada data latih
-        # svm.fit(X_train, y_train)
-        
-        # Mengevaluasi model SVM
-        Y_prediction = svm.predict(X_test)
-        accuracy_svm = round(accuracy_score(y_test, Y_prediction) * 100, 2)
-        acc_svm = round(svm.score(X_train, y_train) * 100, 2)
-        
-        cm = confusion_matrix(y_test, Y_prediction)
-        accuracy = accuracy_score(y_test, Y_prediction)
-        precision = precision_score(y_test, Y_prediction, average='micro')
-        recall = recall_score(y_test, Y_prediction, average='micro')
-        f1 = f1_score(y_test, Y_prediction, average='micro')
-    
+        model.fit(X_train, y_train)
+
+        # Menguji model pada data uji
+        y_pred = model.predict(X_test)
+
         # Mengukur akurasi pada data uji
-        accuracy = accuracy_score(y_test, Y_prediction)
-        st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
+        accuracy = accuracy_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred, average='micro')
+        recall = recall_score(y_test, y_pred, average='micro')
+        f1 = f1_score(y_test, y_pred, average='micro')
         
-        # Hitung metrik evaluasi
-        precision = precision_score(y_test, Y_prediction, average='micro')
-        recall = recall_score(y_test, Y_prediction, average='micro')
-        f1 = f1_score(y_test, Y_prediction, average='micro')
-        
-        st.write(f'Precision: {precision:.2f}')
-        st.write(f'Recall: {recall:.2f}')
-        st.write(f'F1 Score: {f1:.2f}')
+        st.write(f'Accuracy Menggunakan data uji: {accuracy * 100:.2f}%')
+        st.write(f'Presisi: {precision * 100:.2f}%')
+        st.write(f'Recall: {recall * 100:.2f}%')
+        st.write(f'F1-score: {f1 * 100:.2f}%')
     
         # Confusion Matrix
         conf_matrix = confusion_matrix(y_test, Y_prediction)
@@ -290,9 +307,7 @@ def main():
         
         # Tampilkan visualisasi confusion matrix menggunakan heatmap
         fig, ax = plt.subplots(figsize=(5, 3))
-        sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
-                    xticklabels=['Predict Positive', 'Predict Negative'],
-                    yticklabels=['Actual Positive', 'Actual Negative'])
+        sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
         plt.xlabel('Predicted')
         plt.ylabel('True')
         plt.title('Confusion Matrix')
