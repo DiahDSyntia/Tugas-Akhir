@@ -332,9 +332,20 @@ def main():
         
             # Extract metrics from the classification report
             lines = report.split('\n')
-            accuracy = float(lines[5].split()[1]) * 100
-            precision = float(lines[2].split()[1]) * 100
-            recall = float(lines[3].split()[1]) * 100
+            if len(lines) >= 6:  # Check if lines has at least 6 elements
+                accuracy = float(lines[5].split()[1]) * 100
+            else:
+                accuracy = 0.0  # Set accuracy to a default value
+        
+            if len(lines) >= 3:  # Check if lines has at least 3 elements
+                precision = float(lines[2].split()[1]) * 100
+            else:
+                precision = 0.0  # Set precision to a default value
+        
+            if len(lines) >= 4:  # Check if lines has at least 4 elements
+                recall = float(lines[3].split()[1]) * 100
+            else:
+                recall = 0.0  # Set recall to a default value
         
             # Display the metrics
             html_code = f"""
