@@ -330,38 +330,20 @@ def main():
         with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
             report = classification_report(y_test, y_pred)
         
-            # Extract metrics from the classification report
-            lines = report.split('\n')
-            if len(lines) >= 6:  # Check if lines has at least 6 elements
-                accuracy = float(lines[5].split()[1]) * 100
-            else:
-                accuracy = 0.0  # Set accuracy to a default value
-        
-            if len(lines) >= 3:  # Check if lines has at least 3 elements
-                precision = float(lines[2].split()[1]) * 100
-            else:
-                precision = 0.0  # Set precision to a default value
-        
-            if len(lines) >= 4:  # Check if lines has at least 4 elements
-                recall = float(lines[3].split()[1]) * 100
-            else:
-                recall = 0.0  # Set recall to a default value
-
-        
             # Display the metrics
             html_code = f"""
             <table style="margin: auto;">
                 <tr>
-                    <td style="text-align: center;"><h5>Loss</h5></td>
                     <td style="text-align: center;"><h5>Accuracy</h5></td>
                     <td style="text-align: center;"><h5>Precision</h5></td>
                     <td style="text-align: center;"><h5>Recall</h5></td>
+                    <td style="text-align: center;"><h5>F1- Score</h5></td>
                 </tr>
                 <tr>
-                    <td style="text-align: center;">{loss:.4f}</td>
                     <td style="text-align: center;">{accuracy:.2f}%</td>
                     <td style="text-align: center;">{precision:.2f}%</td>
                     <td style="text-align: center;">{recall:.2f}%</td>
+                    <td style="text-align: center;">{f1:.2f}</td>
                 </tr>
             </table>
             """
