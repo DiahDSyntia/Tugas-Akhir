@@ -243,7 +243,7 @@ def main():
         # Button for testing
         if submit:
             # Prediction using SVM
-            prediction = model_svm.predict([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
+            prediction = model.predict([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
             
             # Output the prediction result
             if prediction == 0:
