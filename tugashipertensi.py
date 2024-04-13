@@ -228,15 +228,10 @@ def main():
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
 
-        dataset = pd.read_csv(upload_file)
-        # Proses preprocessing, transformasi, dan normalisasi data
-        processed_data = preprocess_data(dataset)
-        transformed_data = transform_data(processed_data)
-        normalized_data = normalize_data(transformed_data)
-            
+        dataset = pd.read_csv(upload_file) 
         # Memisahkan fitur dan target
-        X = normalized_data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
-        y = normalized_data['Diagnosa']
+        X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
+        y = dataset['Diagnosa']
     
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
@@ -293,7 +288,7 @@ def main():
         Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1)
         Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
         # Convert gender to binary
-        gender_binary = 1 if Jenis_Kelamin == "Perempuan" else 0
+        gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
         submit = st.button('Uji Coba')
         
         # Button for testing
@@ -304,8 +299,10 @@ def main():
             # Output the prediction result
             if prediction == 0:
                 st.write("Tidak Hipertensi")
+            elif prediction[0] == 1:
+                st.write("# Hipertensi 1, Silahkan ke dokter")
             else:
-                st.write("Hipertensi 1, silahkan ke dokter")
+                st.write("Hipertensi 2, silahkan ke dokter")
             
 if __name__ == "__main__":
     main()
