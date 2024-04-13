@@ -244,6 +244,7 @@ def main():
                     st.dataframe(normalized_data)
     
     elif selected == 'Klasifikasi SVM':
+        st.write("Hasil Akurasi, Presisi, Recall, F1- Score Metode SVM")
         dataset = pd.read_csv(upload_file)
         # Proses preprocessing, transformasi, dan normalisasi data
         processed_data = preprocess_data(dataset)
@@ -323,7 +324,37 @@ def main():
         metrics_data = {'Metric': ['Akurasi','Precision', 'Recall', 'F1 Score'],
                         'Nilai': [accuracy, precision, recall, f1]}
         metrics_df = pd.DataFrame(metrics_data)
+        
         st.write(metrics_df)
+        # Generate classification report
+        with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
+            report = classification_report(y_true, y_pred, zero_division=0)
+        
+            # Extract metrics from the classification report
+            lines = report.split('\n')
+            accuracy = float(lines[5].split()[1]) * 100
+            precision = float(lines[2].split()[1]) * 100
+            recall = float(lines[3].split()[1]) * 100
+        
+            # Display the metrics
+            html_code = f"""
+            <table style="margin: auto;">
+                <tr>
+                    <td style="text-align: center;"><h5>Loss</h5></td>
+                    <td style="text-align: center;"><h5>Accuracy</h5></td>
+                    <td style="text-align: center;"><h5>Precision</h5></td>
+                    <td style="text-align: center;"><h5>Recall</h5></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">{loss:.4f}</td>
+                    <td style="text-align: center;">{accuracy:.2f}%</td>
+                    <td style="text-align: center;">{precision:.2f}%</td>
+                    <td style="text-align: center;">{recall:.2f}%</td>
+                </tr>
+            </table>
+            """
+                
+            st.markdown(html_code, unsafe_allow_html=True)
 
     elif selected == 'Uji Coba':
         st.title("Uji Coba")
