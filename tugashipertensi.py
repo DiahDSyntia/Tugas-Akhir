@@ -120,6 +120,39 @@ def classify_SVM(data):
 
     return y_test, y_pred, accuracy, fig
 
+# Membuat fungsi untuk menampilkan diagram
+def show_accuracy_comparison(svm_accuracy, bagging_accuracy):
+    # Label untuk setiap metode
+    labels = ['SVM tanpa Bagging', 'SVM dengan Bagging']
+
+    # Indeks untuk setiap metode
+    x = range(len(labels))
+
+    # Membuat diagram batang
+    plt.figure(figsize=(8, 6))
+    plt.bar(x, svm_accuracy, width=0.4, label='SVM tanpa Bagging')
+    plt.bar([i + 0.4 for i in x], bagging_accuracy, width=0.4, label='SVM dengan Bagging')
+
+    # Menambahkan label pada sumbu x
+    plt.xlabel('Metode', fontsize=12)
+    plt.ylabel('Akurasi (%)', fontsize=12)
+    plt.xticks([i + 0.2 for i in x], labels, fontsize=10)
+
+    # Menambahkan label pada setiap batang
+    for i in range(len(x)):
+        plt.text(i, svm_accuracy[i] + 1, f'{svm_accuracy[i]:.2f}%', ha='center')
+        plt.text(i + 0.4, bagging_accuracy[i] + 1, f'{bagging_accuracy[i]:.2f}%', ha='center')
+
+    # Menambahkan judul diagram
+    plt.title('Perbandingan Akurasi SVM tanpa dan dengan Bagging', fontsize=14)
+
+    # Menambahkan legenda
+    plt.legend()
+
+    # Menampilkan diagram
+    st.pyplot(plt)
+
+
 def main():
     with st.sidebar:
         selected = option_menu(
@@ -188,18 +221,15 @@ def main():
             st.write(df)
             if 'preprocessed_data' in st.session_state:  # Check if preprocessed_data exists in session state
                 normalized_data = normalize_data(st.session_state.preprocessed_data.copy())
-                y_true, y_pred, accuracy, fig = classify_SVM(normalized_data)
+                y_true, y_pred, accuracy, fig = show_accuracy_comparison(normalized_data)
 
-                # Confusion Matrix
-                conf_matrix = confusion_matrix(y_test, y_pred)
+                # Akurasi dari SVM tanpa Bagging
+                svm_accuracy = [cv_scores.mean() * 100, accuracy * 100]
+                # Akurasi dari SVM dengan Bagging
+                bagging_accuracy = [avg_accuracy * 100, test_accuracy * 100]
             
-                # Plot confusion matrix dalam bentuk heatmap
-                plt.figure(figsize=(8, 6))
-                sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
-                plt.xlabel('Predicted')
-                plt.ylabel('True')
-                plt.title('Confusion Matrix')
-                st.pyplot()
+                # Menampilkan diagram
+                show_accuracy_comparison(svm_accuracy, bagging_accuracy)
                 
     
     elif selected == 'Uji Coba':
