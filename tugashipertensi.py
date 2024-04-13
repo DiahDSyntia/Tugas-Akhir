@@ -56,7 +56,7 @@ def transform_data(data):
     return data
     
 def normalize_data(data):
-    data.drop(columns=['JK_P'], inplace=True)
+    data.drop(columns=['Jenis Kelamin_P'], inplace=True)
     data.rename(columns={'Jenis Kelamin_L': 'Jenis Kelamin'}, inplace=True)
     scaler = MinMaxScaler()
     columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
