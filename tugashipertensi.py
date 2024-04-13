@@ -229,13 +229,10 @@ def main():
         st.write("Masukkan nilai untuk pengujian:")
 
         dataset = pd.read_csv(upload_file)
-        # Proses preprocessing, transformasi, dan normalisasi data
-        processed_data = preprocess_data(dataset)
-        transformed_data = transform_data(processed_data)
             
         # Memisahkan fitur dan target
-        X = transformed_data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin_L','Jenis Kelamin_P']]
-        y = transformed_data['Diagnosa']
+        X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin_L','Jenis Kelamin_P']]
+        y = dataset['Diagnosa']
     
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
