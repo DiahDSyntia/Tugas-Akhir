@@ -231,7 +231,8 @@ def main():
         dataset = pd.read_csv(upload_file)
             
         # Memisahkan fitur dan target
-        X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin'']]
+        # Pisahkan fitur dan target
+        X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi', 'Jenis Kelamin']]  # Fitur (input)
         y = dataset['Diagnosa']
     
         # Bagi dataset menjadi data latih dan data uji
