@@ -336,7 +336,7 @@ def main():
                 <tr>
                     <td style="text-align: center;">{accuracy:100.2f}%</td>
                     <td style="text-align: center;">{precision:100.2f}%</td>
-                    <td style="text-align: center;">{recall:100.2f}%</td>
+                    <td style="text-align: center;">{recall * 100:.2f}%</td>
                     <td style="text-align: center;">{f1:100.2f}%</td>
                 </tr>
             </table>
