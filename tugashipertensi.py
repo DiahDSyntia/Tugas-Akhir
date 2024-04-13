@@ -413,10 +413,8 @@ def main():
         
         # Button for testing
         if submit:
-            submit = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
-
             # Prediction using SVM
-            prediction = model.predict(submit)
+            prediction = model_svm.predict([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
             
             # Output the prediction result
             if prediction == 0:
