@@ -144,7 +144,7 @@ def main():
         n_estimators = 5
 
         # Inisialisasi model SVM sebagai base estimator
-        base_model = SVC(kernel='linear', C=0.1, random_state=0)
+        base_model = SVC(kernel='linear', C=1, random_state=0)
 
         # Inisialisasi BaggingClassifier dengan model SVM
         bagging_model = BaggingClassifier(base_model, n_estimators=n_estimators, random_state=0)
