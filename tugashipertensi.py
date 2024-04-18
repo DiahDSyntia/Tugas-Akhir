@@ -236,7 +236,7 @@ def main():
         model = SVC(kernel='linear', C=1, random_state=0)
 
         # K-Fold Cross Validation
-        k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
+        k_fold = KFold(n_splits=7, shuffle=True, random_state=0)
         cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
         
         # Menampilkan akurasi K-Fold Cross Validation
