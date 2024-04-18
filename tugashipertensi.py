@@ -127,7 +127,7 @@ def main():
 
         data.drop(columns=['JK_P'], inplace=True)
         data.rename(columns={'JK_L': 'Jenis Kelamin'}, inplace=True)
-        
+    
         # Memisahkan fitur dan target
         X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
         y = data['Diagnosa']
