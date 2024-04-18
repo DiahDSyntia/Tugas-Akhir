@@ -47,7 +47,9 @@ def transform_data(data):
     # Menghapus duplikat data
     data = data.drop_duplicates()
     # Mapping for 'Hipertensi'
-    data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0})  
+    data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0}) 
+    # Drop the original 'Jenis Kelamin' feature
+    data = data.drop('Jenis Kelamin', axis=1)   
     # Concatenate encoded 'Jenis Kelamin' and transformed 'Diagnosa' with original data
     data = pd.concat([data, encoded_gender], axis=1)
     return data
