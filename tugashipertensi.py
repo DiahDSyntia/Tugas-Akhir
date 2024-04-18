@@ -128,7 +128,7 @@ def main():
         processed_data = preprocess_data(dataset)
         transformed_data = transform_data(processed_data)
         normalized_data = normalize_data(transformed_data)
-            
+        
         # Memisahkan fitur dan target
         X = normalized_data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
         y = normalized_data['Diagnosa']
