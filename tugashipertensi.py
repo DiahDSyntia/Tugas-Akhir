@@ -268,6 +268,12 @@ def main():
         # Melatih model pada data latih
         model.fit(X_train, y_train)
 
+        # Inisialisasi objek scaler
+        scaler = StandardScaler()
+        
+        # Fitting objek scaler pada data latih
+        scaler.fit(X_train)
+
         # Normalisasi data uji dengan menggunakan transformasi yang sama dengan data latih
         X_test_normalized = scaler.transform(X_test)
         
