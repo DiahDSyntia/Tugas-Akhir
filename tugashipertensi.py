@@ -268,14 +268,17 @@ def main():
         # Melatih model pada data latih
         model.fit(X_train, y_train)
 
-        # Menguji model pada data uji
-        y_pred = model.predict(X_test)
+        # Normalisasi data uji dengan menggunakan transformasi yang sama dengan data latih
+        X_test_normalized = scaler.transform(X_test)
+        
+        # Memasukkan data uji yang sudah dinormalisasi ke dalam model untuk prediksi
+        y_pred_test = model.predict(X_test_normalized)
         
         # Mengukur akurasi pada data uji
-        accuracy = accuracy_score(y_test, y_pred)
-        precision = precision_score(y_test, y_pred, average='micro')
-        recall = recall_score(y_test, y_pred, average='micro')
-        f1 = f1_score(y_test, y_pred, average='micro')
+        accuracy_test = accuracy_score(y_test, y_pred_test)
+        precision_test = precision_score(y_test, y_pred_test, average='micro')
+        recall_test = recall_score(y_test, y_pred_test, average='micro')
+        f1_test = f1_score(y_test, y_pred_test, average='micro')
         
         # Input fields
         Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
@@ -291,14 +294,17 @@ def main():
         
         # Button for testing
         if submit:
-            # Prediction using SVM
-            prediction = model.predict([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
+            # Normalisasi data input
+            input_data_normalized = scaler.transform([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
+
+            # Lakukan prediksi pada data input yang sudah dinormalisasi
+            prediction = model.predict(input_data_normalized)
             
             # Output the prediction result
             if prediction == 0:
                 st.write("Tidak Hipertensi")
             elif prediction[0] == 1:
-                st.write("# Hipertensi 1, Silahkan ke dokter")
+                st.write("Hipertensi 1, Silahkan ke dokter")
             else:
                 st.write("Hipertensi 2, silahkan ke dokter")
             
