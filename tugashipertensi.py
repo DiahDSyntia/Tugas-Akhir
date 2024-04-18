@@ -18,15 +18,13 @@ from sklearn.ensemble import BaggingClassifier
 
 def preprocess_data(data): 
     def preprocess_text(text):
+        # Menghilangkan karakter yang tidak diinginkan, seperti huruf dan tanda baca
         text = re.sub(r'[^A-Za-z0-9\s]', '', text)
+        # Menghilangkan semua huruf (A-Z, a-z)
         text = re.sub(r'[A-Za-z]', '', text)
+        # Mengganti spasi ganda dengan spasi tunggal
         text = re.sub(r'\s+', ' ', text)
-        text = text.strip()
-        return text
-    
-    def preprocess_numerical(text):
-        text = re.sub(r'[^0-9\s]', '', text)
-        text = re.sub(r'\s+', ' ', text)
+        # Menghapus spasi di awal dan akhir teks
         text = text.strip()
         return text
     # Replace commas with dots and convert numerical columns to floats
@@ -38,16 +36,12 @@ def preprocess_data(data):
     return data
 
 def transform_data(data):
+    # Mapping for 'Hipertensi'
+    data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0}) 
     # One-hot encoding for 'Jenis Kelamin'
     one_hot_encoder = OneHotEncoder()
     encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
     encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['Jenis Kelamin']))  
-    # Menghapus baris dengan nilai yang hilang (NaN)
-    data = data.dropna()
-    # Menghapus duplikat data
-    data = data.drop_duplicates()
-    # Mapping for 'Hipertensi'
-    data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0}) 
     # Drop the original 'Jenis Kelamin' feature
     data = data.drop('Jenis Kelamin', axis=1)   
     # Concatenate encoded 'Jenis Kelamin' and transformed 'Diagnosa' with original data
@@ -142,64 +136,62 @@ def main():
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-        # Jumlah estimators untuk bagging
-        n_estimators = 5
-
         # Inisialisasi model SVM sebagai base estimator
-        base_model = SVC(kernel='linear', C=1, random_state=0)
+        model = SVC(kernel='linear', C=1, random_state=0)
 
-        # Inisialisasi BaggingClassifier dengan model SVM
-        bagging_model = BaggingClassifier(base_model, n_estimators=n_estimators, random_state=0)
-
-        # Melatih dan menghitung akurasi setiap model bagging
+        # K-Fold Cross Validation
+        k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
+        cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
+        
+        # Menampilkan akurasi K-Fold Cross Validation
+        print(f'K-Fold Cross Validation Scores: {cv_scores}')
+        print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
+        
+        # Menyimpan nilai akurasi dari setiap lipatan
         accuracies = []
-        for i in range(n_estimators):
+        
+        # Melakukan validasi silang dan menyimpan akurasi dari setiap iterasi
+        for i, (train_index, test_index) in enumerate(k_fold.split(X_train)):
+            X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[test_index]
+            y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
+        
             # Melatih model
-            bagging_model.fit(X_train, y_train)
+            model.fit(X_train_fold, y_train_fold)
         
-            # Memprediksi label pada data uji
-            y_pred = bagging_model.estimators_[i].predict(X_test)
+            # Menguji model
+            y_pred_fold = model.predict(X_val_fold)
         
-            # Menghitung akurasi
-            accuracy = accuracy_score(y_test, y_pred)
-            accuracies.append(accuracy)
-            st.write("Akurasi Bagging ke-{}: {:.2f}%".format(i+1, accuracy * 100))
+            # Mengukur akurasi
+            accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
+            accuracies.append(accuracy_fold)
         
-        # Rata-rata akurasi
-        avg_accuracy = sum(accuracies) / len(accuracies)
-        print("Rata-rata Akurasi Bagging: {:.2f}%".format(avg_accuracy * 100))
+            print(f'Accuracy di fold {i+1}: {accuracy_fold * 100:.2f}%')
+        
+        # Menampilkan rata-rata akurasi dari setiap lipatan
+        print(f'Mean Accuracy of K-Fold Cross Validation: {np.mean(accuracies) * 100:.2f}%')
 
-        # Inisialisasi BaggingClassifier dengan model SVM
-        bagging_model = BaggingClassifier(base_model, n_estimators=n_estimators, random_state=0)
+        # Melatih model pada data latih
+        model.fit(X_train, y_train)
 
-        # Melatih model Bagging dengan data latih
-        bagging_model.fit(X_train, y_train)
-
-        # Prediksi untuk setiap estimator dalam Bagging
-        y_test_preds = np.array([estimator.predict(X_test) for estimator in bagging_model.estimators_])
-
-        # Hitung akurasi setiap estimator pada data uji
-        accuracies = [accuracy_score(y_test, y_pred) for y_pred in y_test_preds]
-
-        # Pilih model terbaik berdasarkan akurasi
-        best_estimator_index = np.argmax(accuracies)
-        best_estimator = bagging_model.estimators_[best_estimator_index]
+        # Menguji model pada data uji
+        y_pred = model.predict(X_test)
 
         # Gunakan model terbaik untuk prediksi pada data uji
         y_test_pred = best_estimator.predict(X_test)
         
         # Mengukur akurasi pada data uji
-        accuracy = accuracy_score(y_test, y_test_pred)
-        st.write(f'Accuracy pada data uji menggunakan model terbaik bagging: {accuracy * 100:.2f}%')
+        accuracy = accuracy_score(y_test, y_pred)
         precision = precision_score(y_test, y_pred, average='micro')
         recall = recall_score(y_test, y_pred, average='micro')
         f1 = f1_score(y_test, y_pred, average='micro')
-    
+        
+        print(f'Accuracy Menggunakan data uji: {accuracy * 100:.2f}%')
+        print(f'Presisi: {precision * 100:.2f}%')
+        print(f'Recall: {recall * 100:.2f}%')
+        print(f'F1-score: {f1 * 100:.2f}%')
+
         # Confusion Matrix
         conf_matrix = confusion_matrix(y_test, y_pred)
-        
-        # Hitung metrik evaluasi
-        accuracy = accuracy_score(y_test, y_pred)
         
         # Tampilkan visualisasi confusion matrix menggunakan heatmap
         fig, ax = plt.subplots(figsize=(5, 3))
