@@ -124,6 +124,7 @@ def main():
     elif selected == 'Klasifikasi SVM':
         st.write("Hasil Akurasi, Presisi, Recall, F1- Score Metode SVM")
         data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv')
+        st.write(data.head())
     
         # Memisahkan fitur dan target
         X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
