@@ -175,9 +175,6 @@ def main():
 
         # Menguji model pada data uji
         y_pred = model.predict(X_test)
-
-        # Gunakan model terbaik untuk prediksi pada data uji
-        y_test_pred = best_estimator.predict(X_test)
         
         # Mengukur akurasi pada data uji
         accuracy = accuracy_score(y_test, y_pred)
@@ -185,10 +182,10 @@ def main():
         recall = recall_score(y_test, y_pred, average='micro')
         f1 = f1_score(y_test, y_pred, average='micro')
         
-        print(f'Accuracy Menggunakan data uji: {accuracy * 100:.2f}%')
-        print(f'Presisi: {precision * 100:.2f}%')
-        print(f'Recall: {recall * 100:.2f}%')
-        print(f'F1-score: {f1 * 100:.2f}%')
+        st.write(f'Accuracy Menggunakan data uji: {accuracy * 100:.2f}%')
+        st.write(f'Presisi: {precision * 100:.2f}%')
+        st.write(f'Recall: {recall * 100:.2f}%')
+        st.write(f'F1-score: {f1 * 100:.2f}%')
 
         # Confusion Matrix
         conf_matrix = confusion_matrix(y_test, y_pred)
