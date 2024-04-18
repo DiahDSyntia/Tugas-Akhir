@@ -123,15 +123,14 @@ def main():
     
     elif selected == 'Klasifikasi SVM':
         st.write("Hasil Akurasi, Presisi, Recall, F1- Score Metode SVM")
-        dataset = pd.read_csv(upload_file)
-        # Proses preprocessing, transformasi, dan normalisasi data
-        processed_data = preprocess_data(dataset)
-        transformed_data = transform_data(processed_data)
-        normalized_data = normalize_data(transformed_data)
+        data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi.csv')
+
+        data.drop(columns=['JK_P'], inplace=True)
+        data.rename(columns={'JK_L': 'Jenis Kelamin'}, inplace=True)
         
         # Memisahkan fitur dan target
-        X = normalized_data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
-        y = normalized_data['Diagnosa']
+        X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
+        y = data['Diagnosa']
     
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
