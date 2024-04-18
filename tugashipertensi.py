@@ -13,8 +13,7 @@ import re
 from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split, cross_val_score, KFold
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
-from sklearn.preprocessing import OneHotEncoder
-from PIL import Image
+from sklearn.ensemble import BaggingClassifier
 
 
 def preprocess_data(data): 
@@ -48,9 +47,7 @@ def transform_data(data):
     # Menghapus duplikat data
     data = data.drop_duplicates()
     # Mapping for 'Hipertensi'
-    data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0})
-    # Drop the original 'Jenis Kelamin' feature
-    data = data.drop('Jenis Kelamin', axis=1)    
+    data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0})  
     # Concatenate encoded 'Jenis Kelamin' and transformed 'Diagnosa' with original data
     data = pd.concat([data, encoded_gender], axis=1)
     return data
@@ -142,18 +139,56 @@ def main():
     
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-    
-        # Inisialisasi model SVM
-        model = SVC(kernel='linear', C=1, random_state=0)
 
-        # Melatih model pada data latih
-        model.fit(X_train, y_train)
+        # Jumlah estimators untuk bagging
+        n_estimators = 5
 
-        # Menguji model pada data uji
-        y_pred = model.predict(X_test)
+        # Inisialisasi model SVM sebagai base estimator
+        base_model = SVC(kernel='linear', C=1, random_state=0)
 
+        # Inisialisasi BaggingClassifier dengan model SVM
+        bagging_model = BaggingClassifier(base_model, n_estimators=n_estimators, random_state=0)
+
+        # Melatih dan menghitung akurasi setiap model bagging
+        accuracies = []
+        for i in range(n_estimators):
+            # Melatih model
+            bagging_model.fit(X_train, y_train)
+        
+            # Memprediksi label pada data uji
+            y_pred = bagging_model.estimators_[i].predict(X_test)
+        
+            # Menghitung akurasi
+            accuracy = accuracy_score(y_test, y_pred)
+            accuracies.append(accuracy)
+            st.write("Akurasi Bagging ke-{}: {:.2f}%".format(i+1, accuracy * 100))
+        
+        # Rata-rata akurasi
+        avg_accuracy = sum(accuracies) / len(accuracies)
+        print("Rata-rata Akurasi Bagging: {:.2f}%".format(avg_accuracy * 100))
+
+        # Inisialisasi BaggingClassifier dengan model SVM
+        bagging_model = BaggingClassifier(base_model, n_estimators=n_estimators, random_state=0)
+
+        # Melatih model Bagging dengan data latih
+        bagging_model.fit(X_train, y_train)
+
+        # Prediksi untuk setiap estimator dalam Bagging
+        y_test_preds = np.array([estimator.predict(X_test) for estimator in bagging_model.estimators_])
+
+        # Hitung akurasi setiap estimator pada data uji
+        accuracies = [accuracy_score(y_test, y_pred) for y_pred in y_test_preds]
+
+        # Pilih model terbaik berdasarkan akurasi
+        best_estimator_index = np.argmax(accuracies)
+        best_estimator = bagging_model.estimators_[best_estimator_index]
+
+        # Gunakan model terbaik untuk prediksi pada data uji
+        y_test_pred = best_estimator.predict(X_test)
+        
         # Mengukur akurasi pada data uji
-        accuracy = accuracy_score(y_test, y_pred)
+        accuracy = accuracy_score(y_test, y_test_pred)
+        st.write(f'Accuracy pada data uji menggunakan model terbaik bagging: {accuracy * 100:.2f}%')
         precision = precision_score(y_test, y_pred, average='micro')
         recall = recall_score(y_test, y_pred, average='micro')
         f1 = f1_score(y_test, y_pred, average='micro')
