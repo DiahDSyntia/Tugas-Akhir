@@ -265,55 +265,34 @@ def main():
     
             # Normalize the data
             def normalize_data1(data):
-                try:
-                    scaler = MinMaxScaler()
-                    columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
-                    
-                    # Lakukan normalisasi jika data valid
-                    data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
-                    return data
-                except Exception as e:
-                    st.error(f"Terjadi kesalahan saat normalisasi data: {str(e)}")
-                    return None
+                scaler = MinMaxScaler()
+                columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
+                data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
+                # Menghapus baris dengan nilai yang hilang (NaN)
+                data = data.dropna()
+                # Menghapus duplikat data
+                data = data.drop_duplicates()
+                return data
                     
             input_data_df = normalize_data1(input_data_df)
             st.write("Nama Kolom Setelah Normalisasi:", input_data_df)
 
-            # Cek jika input_data_df berhasil dinormalisasi
-            if input_data_df is not None:
-                # Ubah DataFrame menjadi array numpy
-                input_data_array = input_data_df.values
-            
-                # Load the SVM model
-                model = load_svm_model()
-            
-                # Prediction using SVM
-                prediction = model.predict(input_data_array)
-            
-                # Output the prediction result
-                if prediction == 1:
-                    st.write("# Hipertensi 1, Silahkan ke dokter")
-                elif prediction[0] == 2:
-                    st.write("# Hipertensi 2, Silahkan ke dokter")
-                else:
-                    st.write("Tidak Hipertensi")
-
             # Ubah DataFrame menjadi array numpy
-            #input_data_array = input_data_df.values
+            input_data_array = input_data_df.values
 
             # Load the SVM model
-            #model = load_svm_model()
+            model = load_svm_model()
 
             # Prediction using SVM
             #prediction = model.predict(input_data_df)
             
             # Output the prediction result
-            #if prediction == 1:
-                #st.write("# Hipertensi 1, Silahkan ke dokter")
-            #elif prediction[0] == 2:
-                #st.write("# Hipertensi 2, Silahkan ke dokter")
-            #else:
-                #st.write("Tidak Hipertensi")
+            if prediction == 1:
+                st.write("# Hipertensi 1, Silahkan ke dokter")
+            elif prediction[0] == 2:
+                st.write("# Hipertensi 2, Silahkan ke dokter")
+            else:
+                st.write("Tidak Hipertensi")
             
 if __name__ == "__main__":
     main()
