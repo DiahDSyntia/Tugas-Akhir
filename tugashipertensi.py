@@ -245,6 +245,7 @@ def main():
                 'Jenis Kelamin': [gender_binary]
             }
             X_test = pd.DataFrame(data_input)
+            st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
         
             # Transformasi data baru (perhatikan perubahan ini)
             def transform_data(data):
