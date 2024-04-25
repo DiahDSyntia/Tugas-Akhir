@@ -271,6 +271,7 @@ def main():
                 return data
         
             X_test = normalize_data(X_test)
+            st.write("Nama Kolom Setelah Normalisasi:", X_test.columns)
 
             # Prediction using SVM
             prediction = model.predict(X_test)
