@@ -246,25 +246,25 @@ def main():
                 'Jenis Kelamin': [gender_binary]
             }
             X_test = pd.DataFrame(data_input)
-            #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
-    
-            # Normalize the data
-            def normalize_data1(data):
-                scaler = MinMaxScaler()
-                columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
-                data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
-                # Menghapus baris dengan nilai yang hilang (NaN)
-                data = data.dropna()
-                # Menghapus duplikat data
-                data = data.drop_duplicates()
-                return data
-            X_test = normalize_data1(X_test)
-            st.write("Nama Kolom Setelah Normalisasi:", X_test.columns)
+            st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
             st.write("Hasil Kolom Jenis Kelamin setelah Normalisasi:", X_test['Jenis Kelamin'])
             # Menampilkan semua hasil kolom setelah normalisasi
-            st.write("Hasil Kolom Setelah Normalisasi:")
+            st.write("Hasil Kolom Sebelum Normalisasi:")
             st.write(X_test)
+            #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
+    
+            # Normalize the data
+            #def normalize_data1(data):
+                #scaler = MinMaxScaler()
+                #columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
+                #data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
+                # Menghapus baris dengan nilai yang hilang (NaN)
+                #data = data.dropna()
+                # Menghapus duplikat data
+                #data = data.drop_duplicates()
+                #return data
+            #X_test = normalize_data1(X_test)
 
             def load_svm_model():
                 # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
