@@ -229,7 +229,7 @@ def main():
         submit = st.button('Uji Coba')
 
         # Variabel untuk menyimpan data input
-        input_data = []
+        X_test = []
         
         # Button for testing
         if submit:
@@ -249,19 +249,18 @@ def main():
                 model = joblib.load('model.pkl')
                 return model
                 
-            # Masukkan data baru ke dalam bentuk array
-            data_baru = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
+            X_test.append(data_input)
 
-            # Tambahkan data baru ke X_test
-            X_test = np.append([X_test, data_baru])
+            # Ubah list X_test menjadi DataFrame
+            X_test_df = pd.DataFrame(X_test)
             
-            st.write("Nama Kolom Sebelum Normalisasi:", input_data_df.columns)
+            st.write("Nama Kolom Sebelum Normalisasi:", X_test_df.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
-            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test_baru['Jenis Kelamin'])
+            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test_df['Jenis Kelamin'])
             # Menampilkan semua hasil kolom setelah normalisasi
             st.write("Hasil Kolom Sebelum Normalisasi:")
-            st.write(X_test_baru)
-            #st.write("Nama Kolom Sebelum Normalisasi:", X_test_baru.columns)
+            st.write(X_test_df)
+            #st.write("Nama Kolom Sebelum Normalisasi:", X_test_df.columns)
     
             # Normalize the data
             def normalize_data1(data):
@@ -274,14 +273,14 @@ def main():
                 data = data.drop_duplicates()
                 return data
                     
-            input_data_df = normalize_data1(X_test_baru)
-            st.write("Nama Kolom Setelah Normalisasi:", X_test_baru)
+            X_test_df = normalize_data1(X_test_df)
+            st.write("Nama Kolom Setelah Normalisasi:", X_test_df)
 
             # Load the SVM model
             model = load_svm_model()
 
             # Prediction using SVM
-            #prediction = model.predict(X_test_baru)
+            #prediction = model.predict(X_test_df)
             
             # Output the prediction result
             if prediction == 1:
