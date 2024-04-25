@@ -259,6 +259,7 @@ def main():
                 data = pd.concat([data, encoded_gender], axis=1)
                 return data
             X_test = transform_data1(X_test)
+            st.write("Nama Kolom Setelah di Transform:", X_test.columns)
     
             # Normalize the data
             def normalize_data1(data):
