@@ -234,7 +234,7 @@ def main():
         
         # Button for testing
         if submit:
-            data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
+            data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv', sep=';')
             # Proses preprocessing, transformasi, dan normalisasi data
             processed_data = preprocess_data(data)
             transformed_data = transform_data(processed_data)
