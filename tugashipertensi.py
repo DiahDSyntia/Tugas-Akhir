@@ -249,19 +249,19 @@ def main():
                 'Jenis Kelamin': [gender_binary]
             }
 
-            # Tambahkan dictionary ke dalam list input_data
-            input_data.append(data_input)
+            # Masukkan data baru ke dalam bentuk array
+            data_baru = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
 
-            # Ubah list input_data menjadi DataFrame
-            input_data_df = pd.DataFrame(input_data)
+            # Tambahkan data baru ke X_test
+            X_test_baru = np.append(X_test, data_baru, axis=0)
             
             st.write("Nama Kolom Sebelum Normalisasi:", input_data_df.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
-            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", input_data_df['Jenis Kelamin'])
+            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test_baru['Jenis Kelamin'])
             # Menampilkan semua hasil kolom setelah normalisasi
             st.write("Hasil Kolom Sebelum Normalisasi:")
-            st.write(input_data_df)
-            #st.write("Nama Kolom Sebelum Normalisasi:", input_data_df.columns)
+            st.write(X_test_baru)
+            #st.write("Nama Kolom Sebelum Normalisasi:", X_test_baru.columns)
     
             # Normalize the data
             def normalize_data1(data):
@@ -274,17 +274,14 @@ def main():
                 data = data.drop_duplicates()
                 return data
                     
-            input_data_df = normalize_data1(input_data_df)
-            st.write("Nama Kolom Setelah Normalisasi:", input_data_df)
-
-            # Ubah DataFrame menjadi array numpy
-            input_data_array = input_data_df.values
+            input_data_df = normalize_data1(X_test_baru)
+            st.write("Nama Kolom Setelah Normalisasi:", X_test_baru)
 
             # Load the SVM model
             model = load_svm_model()
 
             # Prediction using SVM
-            #prediction = model.predict(input_data_df)
+            #prediction = model.predict(X_test_baru)
             
             # Output the prediction result
             if prediction == 1:
