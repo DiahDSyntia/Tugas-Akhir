@@ -279,22 +279,41 @@ def main():
             input_data_df = normalize_data1(input_data_df)
             st.write("Nama Kolom Setelah Normalisasi:", input_data_df)
 
+            # Cek jika input_data_df berhasil dinormalisasi
+            if input_data_df is not None:
+                # Ubah DataFrame menjadi array numpy
+                input_data_array = input_data_df.values
+            
+                # Load the SVM model
+                model = load_svm_model()
+            
+                # Prediction using SVM
+                prediction = model.predict(input_data_array)
+            
+                # Output the prediction result
+                if prediction == 1:
+                    st.write("# Hipertensi 1, Silahkan ke dokter")
+                elif prediction[0] == 2:
+                    st.write("# Hipertensi 2, Silahkan ke dokter")
+                else:
+                    st.write("Tidak Hipertensi")
+
             # Ubah DataFrame menjadi array numpy
-            input_data_array = input_data_df.values
+            #input_data_array = input_data_df.values
 
             # Load the SVM model
-            model = load_svm_model()
+            #model = load_svm_model()
 
             # Prediction using SVM
-            prediction = model.predict(input_data_df)
+            #prediction = model.predict(input_data_df)
             
             # Output the prediction result
-            if prediction == 1:
-                st.write("# Hipertensi 1, Silahkan ke dokter")
-            elif prediction[0] == 2:
-                st.write("# Hipertensi 2, Silahkan ke dokter")
-            else:
-                st.write("Tidak Hipertensi")
+            #if prediction == 1:
+                #st.write("# Hipertensi 1, Silahkan ke dokter")
+            #elif prediction[0] == 2:
+                #st.write("# Hipertensi 2, Silahkan ke dokter")
+            #else:
+                #st.write("Tidak Hipertensi")
             
 if __name__ == "__main__":
     main()
