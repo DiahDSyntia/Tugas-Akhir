@@ -255,13 +255,13 @@ def main():
             # Ubah list input_data menjadi DataFrame
             input_data_df = pd.DataFrame(input_data)
             
-            st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
+            st.write("Nama Kolom Sebelum Normalisasi:", input_data_df.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
-            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
+            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", input_data_df['Jenis Kelamin'])
             # Menampilkan semua hasil kolom setelah normalisasi
             st.write("Hasil Kolom Sebelum Normalisasi:")
-            st.write(X_test)
-            #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
+            st.write(input_data_df)
+            #st.write("Nama Kolom Sebelum Normalisasi:", input_data_df.columns)
     
             # Normalize the data
             def normalize_data1(data):
