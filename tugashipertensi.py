@@ -240,7 +240,7 @@ def main():
                 'Detak Nadi': [Detak_nadi],
                 'Jenis Kelamin': [gender_binary]
             }
-            XX_test.append(data_input)
+            X_test.append(data_input)
             st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
             st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
