@@ -270,7 +270,7 @@ def main():
                 # Menghapus duplikat data
                 #data = data.drop_duplicates()
                 return data
-           input_data_df = normalize_data1(input_data_df)
+            input_data_df = normalize_data1(input_data_df)
             st.write("Nama Kolom Setelah Normalisasi:", X_test)
 
             # Load the SVM model
