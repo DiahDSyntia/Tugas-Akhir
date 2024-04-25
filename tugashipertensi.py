@@ -277,7 +277,7 @@ def main():
             model = load_svm_model()
 
             # Prediction using SVM
-            #prediction = model.predict(X_test)
+            prediction = model.predict(X_test)
             
             # Output the prediction result
             if prediction == 1:
