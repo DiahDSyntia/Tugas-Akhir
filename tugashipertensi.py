@@ -247,6 +247,16 @@ def main():
             X_test = pd.DataFrame(data_input)
         
             # Preprocessing data baru
+            def preprocess_text(text):
+                # Menghilangkan karakter yang tidak diinginkan, seperti huruf dan tanda baca
+                text = re.sub(r'[^A-Za-z0-9\s.]', '', text)  # Menambahkan titik untuk mengabaikan tanda desimal
+                # Menghilangkan semua huruf (A-Z, a-z)
+                text = re.sub(r'[A-Za-z]', '', text)
+                # Mengganti spasi ganda dengan spasi tunggal
+                text = re.sub(r'\s+', ' ', text)
+                # Menghapus spasi di awal dan akhir teks
+                text = text.strip()
+                return text
             X_test = preprocess_data(X_test)
         
             # Transformasi data baru (perhatikan perubahan ini)
