@@ -246,19 +246,6 @@ def main():
             }
             X_test = pd.DataFrame(data_input)
         
-            # Preprocessing data baru
-            def preprocess_text(text):
-                # Menghilangkan karakter yang tidak diinginkan, seperti huruf dan tanda baca
-                text = re.sub(r'[^A-Za-z0-9\s.]', '', text)  # Menambahkan titik untuk mengabaikan tanda desimal
-                # Menghilangkan semua huruf (A-Z, a-z)
-                text = re.sub(r'[A-Za-z]', '', text)
-                # Mengganti spasi ganda dengan spasi tunggal
-                text = re.sub(r'\s+', ' ', text)
-                # Menghapus spasi di awal dan akhir teks
-                text = text.strip()
-                return text
-            X_test = preprocess_data(X_test)
-        
             # Transformasi data baru (perhatikan perubahan ini)
             def transform_data(data):
                 # One-hot encoding for 'Jenis Kelamin'
@@ -274,6 +261,14 @@ def main():
             X_test = transform_data(X_test)
         
             # Normalisasi data baru
+            def normalize_data(data):
+                data.drop(columns=['Jenis Kelamin_0'], inplace=True)  # Drop the unused gender column
+                data.rename(columns={'Jenis Kelamin_1': 'Jenis Kelamin'}, inplace=True)  # Rename the gender column
+                scaler = MinMaxScaler()
+                columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
+                data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
+                return data
+        
             X_test = normalize_data(X_test)
 
             # Prediction using SVM
