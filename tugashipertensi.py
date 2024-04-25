@@ -234,62 +234,40 @@ def main():
         
         # Button for testing
         if submit:
-            data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
-            # Pisahkan fitur dan target
-            X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]  # Fitur (input)
-            y = data['Diagnosa']  # Target (output)
-
-            # Bagi dataset menjadi data latih dan data uji
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-            # Inisialisasi model SVM
-            model = SVC(kernel='linear', C=1)
-
-            # K-Fold Cross Validation
-            k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
-            cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
-            
-            # Menampilkan akurasi K-Fold Cross Validation
-            print(f'K-Fold Cross Validation Scores: {cv_scores}')
-            print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
-            
-            # Menyimpan nilai akurasi dari setiap lipatan
-            accuracies = []
-            
-            # Melakukan validasi silang dan menyimpan akurasi dari setiap iterasi
-            for i, (train_index, test_index) in enumerate(k_fold.split(X_train)):
-                X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[test_index]
-                y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
-            
-                # Melatih model
-                model.fit(X_train_fold, y_train_fold)
-            
-                # Menguji model
-                y_pred_fold = model.predict(X_val_fold)
-            
-                # Mengukur akurasi
-                accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
-                accuracies.append(accuracy_fold)
-            
-                print(f'Accuracy di fold {i+1}: {accuracy_fold * 100:.2f}%')
-            
-            # Menampilkan rata-rata akurasi dari setiap lipatan
-            print(f'Mean Accuracy of K-Fold Cross Validation: {np.mean(accuracies) * 100:.2f}%')
-
-            # Melatih model pada data latih
-            model.fit(X_train, y_train)
-
-            # Menguji model pada data uji
-            y_pred = model.predict(X_test)
-
-            # Mengukur akurasi pada data uji
-            accuracy = accuracy_score(y_test, y_pred)
-            precision = precision_score(y_test, y_pred, average='micro')
-            recall = recall_score(y_test, y_pred, average='micro')
-            f1 = f1_score(y_test, y_pred, average='micro')
+            # Masukkan data input pengguna ke dalam DataFrame
+            data_input = {
+                'Usia': [Usia],
+                'IMT': [IMT],
+                'Sistole': [Sistole],
+                'Diastole': [Diastole],
+                'Nafas': [Nafas],
+                'Detak Nadi': [Detak_nadi],
+                'Jenis Kelamin': [gender_binary]
+            }
+            X_test = pd.DataFrame(data_input)
+        
+            # Preprocessing data baru
+            X_test = preprocess_data(X_test)
+        
+            # Transformasi data baru (perhatikan perubahan ini)
+            def transform_data(data):
+                # One-hot encoding for 'Jenis Kelamin'
+                one_hot_encoder = OneHotEncoder()
+                encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
+                encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['Jenis Kelamin']))  
+                # Drop the original 'Jenis Kelamin' feature
+                data = data.drop('Jenis Kelamin', axis=1)   
+                # Concatenate encoded 'Jenis Kelamin' with original data
+                data = pd.concat([data, encoded_gender], axis=1)
+                return data
+        
+            X_test = transform_data(X_test)
+        
+            # Normalisasi data baru
+            X_test = normalize_data(X_test)
 
             # Prediction using SVM
-            prediction = model.predict([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
+            prediction = model.predict(X_test)
             
             # Output the prediction result
             if prediction == 0:
