@@ -19,7 +19,7 @@ def preprocess_data(data):
         # Menghilangkan karakter yang tidak diinginkan, seperti huruf dan tanda baca
         text = re.sub(r'[^A-Za-z0-9\s]', '', text)
         # Menghilangkan semua huruf (A-Z, a-z)
-        # text = re.sub(r'[A-Za-z]', '', text)
+        text = re.sub(r'[A-Za-z]', '', text)
         # Mengganti spasi ganda dengan spasi tunggal
         text = re.sub(r'\s+', ' ', text)
         # Menghapus spasi di awal dan akhir teks
@@ -246,9 +246,6 @@ def main():
             }
             X_test = pd.DataFrame(data_input)
             st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
-
-            # Preprocess the data
-            X_test = preprocess_data(X_test)
     
             # Transform the data
             X_test = transform_data(X_test)
