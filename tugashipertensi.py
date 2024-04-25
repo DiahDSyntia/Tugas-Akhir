@@ -259,7 +259,9 @@ def main():
                 data = data.drop_duplicates()
                 return data
             X_test = normalize_data1(X_test)
-            #st.write("Nama Kolom Setelah Normalisasi:", X_test.columns)
+            st.write("Nama Kolom Setelah Normalisasi:", X_test.columns)
+            # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
+            st.write("Hasil Kolom Jenis Kelamin setelah Normalisasi:", X_test['Jenis Kelamin'])
 
             def load_svm_model():
                 # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
