@@ -247,20 +247,6 @@ def main():
             X_test = pd.DataFrame(data_input)
             st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
     
-            # Transform the data
-            def transform_data1(data):
-                # One-hot encoding for 'Jenis Kelamin'
-                one_hot_encoder = OneHotEncoder()
-                encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
-                encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['Jenis Kelamin']))  
-                # Drop the original 'Jenis Kelamin' feature
-                data = data.drop('Jenis Kelamin', axis=1)   
-                # Concatenate encoded 'Jenis Kelamin' with original data
-                data = pd.concat([data, encoded_gender], axis=1)
-                return data
-            X_test = transform_data1(X_test)
-            st.write("Nama Kolom Setelah di Transform:", X_test.columns)
-    
             # Normalize the data
             def normalize_data1(data):
                 scaler = MinMaxScaler()
