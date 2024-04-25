@@ -261,7 +261,6 @@ def main():
                 return data
             X_test = normalize_data1(X_test)
             st.write("Nama Kolom Setelah Normalisasi:", X_test)
-            st.write(X_test)
 
             def load_svm_model():
                 # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
