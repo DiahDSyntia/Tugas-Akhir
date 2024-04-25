@@ -216,6 +216,11 @@ def main():
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
 
+        def load_svm_model():
+            # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
+            model = joblib.load('model.pkl')
+            return model
+
         # Input fields
         Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
         IMT = st.number_input("IMT", min_value=0.0, max_value=100.0, step=0.1)
@@ -243,24 +248,16 @@ def main():
                 'Detak Nadi': [Detak_nadi],
                 'Jenis Kelamin': [gender_binary]
             }
-
-            def load_svm_model():
-                # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
-                model = joblib.load('model.pkl')
-                return model
                 
-            X_test.append(data_input)
-
-            # Ubah list X_test menjadi DataFrame
-            X_test_df = pd.DataFrame(X_test)
+            X_test = pd.DataFrame(data_input)
             
-            st.write("Nama Kolom Sebelum Normalisasi:", X_test_df.columns)
+            st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
-            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test_df['Jenis Kelamin'])
+            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
             # Menampilkan semua hasil kolom setelah normalisasi
             st.write("Hasil Kolom Sebelum Normalisasi:")
-            st.write(X_test_df)
-            #st.write("Nama Kolom Sebelum Normalisasi:", X_test_df.columns)
+            st.write(X_test)
+            #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
     
             # Normalize the data
             def normalize_data1(data):
@@ -273,14 +270,14 @@ def main():
                 data = data.drop_duplicates()
                 return data
                     
-            X_test_df = normalize_data1(X_test_df)
-            st.write("Nama Kolom Setelah Normalisasi:", X_test_df)
+            X_test = normalize_data1(X_test)
+            st.write("Nama Kolom Setelah Normalisasi:", X_test)
 
             # Load the SVM model
             model = load_svm_model()
 
             # Prediction using SVM
-            #prediction = model.predict(X_test_df)
+            #prediction = model.predict(X_test)
             
             # Output the prediction result
             if prediction == 1:
