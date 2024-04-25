@@ -12,6 +12,7 @@ from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split, cross_val_score, KFold
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, precision_score, recall_score, f1_score
 from sklearn.ensemble import BaggingClassifier
+import joblib
 
 
 def preprocess_data(data): 
