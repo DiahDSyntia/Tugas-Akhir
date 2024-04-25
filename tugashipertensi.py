@@ -232,6 +232,9 @@ def main():
             # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
             model = joblib.load('model.pkl')
             return model
+
+        # Variabel untuk menyimpan data input
+        input_data = []
         
         # Button for testing
         if submit:
