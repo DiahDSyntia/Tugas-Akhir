@@ -227,6 +227,11 @@ def main():
         # Convert gender to binary
         gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
         submit = st.button('Uji Coba')
+
+        def load_svm_model():
+            # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
+            model = joblib.load('model.pkl')
+            return model
         
         # Button for testing
         if submit:
@@ -240,10 +245,12 @@ def main():
                 'Detak Nadi': [Detak_nadi],
                 'Jenis Kelamin': [gender_binary]
             }
-            X_test.append(data_input)
-    
-            # Ubah list X_test menjadi DataFrame
-            X_test_df = pd.DataFrame(X_test)
+
+            # Tambahkan dictionary ke dalam list input_data
+            input_data.append(data_input)
+
+            # Ubah list input_data menjadi DataFrame
+            input_data_df = pd.DataFrame(input_data)
             
             st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
@@ -263,13 +270,8 @@ def main():
                 # Menghapus duplikat data
                 #data = data.drop_duplicates()
                 return data
-            X_test_df = normalize_data1(X_test_df)
+           input_data_df = normalize_data1(input_data_df)
             st.write("Nama Kolom Setelah Normalisasi:", X_test)
-
-            def load_svm_model():
-                # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
-                model = joblib.load('model.pkl')
-                return model
 
             # Load the SVM model
             model = load_svm_model()
