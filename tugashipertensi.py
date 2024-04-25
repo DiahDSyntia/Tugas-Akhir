@@ -228,11 +228,6 @@ def main():
         gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
         submit = st.button('Uji Coba')
 
-        def load_svm_model():
-            # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
-            model = joblib.load('model.pkl')
-            return model
-
         # Variabel untuk menyimpan data input
         input_data = []
         
@@ -249,6 +244,11 @@ def main():
                 'Jenis Kelamin': [gender_binary]
             }
 
+            def load_svm_model():
+                # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
+                model = joblib.load('model.pkl')
+                return model
+                
             # Masukkan data baru ke dalam bentuk array
             data_baru = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
 
