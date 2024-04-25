@@ -262,6 +262,9 @@ def main():
             st.write("Nama Kolom Setelah Normalisasi:", X_test.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
             st.write("Hasil Kolom Jenis Kelamin setelah Normalisasi:", X_test['Jenis Kelamin'])
+            # Menampilkan semua hasil kolom setelah normalisasi
+            st.write("Hasil Kolom Setelah Normalisasi:")
+            st.write(X_test)
 
             def load_svm_model():
                 # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
