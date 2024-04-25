@@ -234,6 +234,7 @@ def main():
         
         # Button for testing
         if submit:
+            dataset = pd.read_csv(upload_file)
             # Proses preprocessing, transformasi, dan normalisasi data
             processed_data = preprocess_data(dataset)
             transformed_data = transform_data(processed_data)
