@@ -19,7 +19,7 @@ def preprocess_data(data):
         # Menghilangkan karakter yang tidak diinginkan, seperti huruf dan tanda baca
         text = re.sub(r'[^A-Za-z0-9\s]', '', text)
         # Menghilangkan semua huruf (A-Z, a-z)
-        text = re.sub(r'[A-Za-z]', '', text)
+        # text = re.sub(r'[A-Za-z]', '', text)
         # Mengganti spasi ganda dengan spasi tunggal
         text = re.sub(r'\s+', ' ', text)
         # Menghapus spasi di awal dan akhir teks
