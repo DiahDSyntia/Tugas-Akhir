@@ -236,7 +236,7 @@ def main():
         if submit:
             data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
             # Proses preprocessing, transformasi, dan normalisasi data
-            processed_data = preprocess_data(dataset)
+            processed_data = preprocess_data(data)
             transformed_data = transform_data(processed_data)
             normalized_data = normalize_data(transformed_data)
 
