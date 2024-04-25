@@ -263,7 +263,7 @@ def main():
                 # Menghapus duplikat data
                 #data = data.drop_duplicates()
                 return data
-            X_test = normalize_data1(X_test)
+            X_test_df = normalize_data1(X_test_df)
             st.write("Nama Kolom Setelah Normalisasi:", X_test)
 
             def load_svm_model():
