@@ -247,53 +247,14 @@ def main():
             X_test = pd.DataFrame(data_input)
             st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
 
-            def preprocess_data(data): 
-                def preprocess_text(text):
-                    # Menghilangkan karakter yang tidak diinginkan, seperti huruf dan tanda baca
-                    text = re.sub(r'[^A-Za-z0-9\s]', '', text)
-                    # Menghilangkan semua huruf (A-Z, a-z)
-                    text = re.sub(r'[A-Za-z]', '', text)
-                    # Mengganti spasi ganda dengan spasi tunggal
-                    text = re.sub(r'\s+', ' ', text)
-                    # Menghapus spasi di awal dan akhir teks
-                    text = text.strip()
-                    return text
-                
-                # Replace commas with dots and convert numerical columns to floats
-                numerical_columns = ['IMT']
-                data[numerical_columns] = data[numerical_columns].replace({',': '.'}, regex=True).astype(float)
-                
-                columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
-                for col in columns_to_clean:
-                    data[col] = data[col].apply(preprocess_text)
-                
-                # Preprocess gender_binary
-                data['Jenis Kelamin'] = data['Jenis Kelamin'].astype(int)  # Ensure it's integer type
-                
-                return data
-        
-            # Transformasi data baru (perhatikan perubahan ini)
-            def transform_data(data):
-                # One-hot encoding for 'Jenis Kelamin'
-                one_hot_encoder = OneHotEncoder()
-                encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
-                encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['Jenis Kelamin']))  
-                # Drop the original 'Jenis Kelamin' feature
-                data = data.drop('Jenis Kelamin', axis=1)   
-                # Concatenate encoded 'Jenis Kelamin' with original data
-                data = pd.concat([data, encoded_gender], axis=1)
-                return data
-        
+            # Preprocess the data
+            X_test = preprocess_data(X_test)
+    
+            # Transform the data
             X_test = transform_data(X_test)
-        
-            # Normalisasi data baru
-            def normalize_data(data):
-                data.drop(columns=['Jenis Kelamin_0'], inplace=True)  # Drop the unused gender column
-                data.rename(columns={'Jenis Kelamin_1': 'Jenis Kelamin'}, inplace=True)  # Rename the gender column
-                scaler = MinMaxScaler()
-                columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
-                data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
-                return data
+    
+            # Normalize the data
+            X_test = normalize_data(X_test)
         
             X_test = normalize_data(X_test)
             st.write("Nama Kolom Setelah Normalisasi:", X_test.columns)
