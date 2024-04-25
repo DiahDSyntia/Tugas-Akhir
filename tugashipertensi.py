@@ -269,9 +269,9 @@ def main():
                 columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
                 data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
                 # Menghapus baris dengan nilai yang hilang (NaN)
-                #data = data.dropna()
+                data = data.dropna()
                 # Menghapus duplikat data
-                #data = data.drop_duplicates()
+                data = data.drop_duplicates()
                 return data
             input_data_df = normalize_data1(input_data_df)
             st.write("Nama Kolom Setelah Normalisasi:", X_test)
