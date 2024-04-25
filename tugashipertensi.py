@@ -265,16 +265,23 @@ def main():
     
             # Normalize the data
             def normalize_data1(data):
-                scaler = MinMaxScaler()
-                columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
-                data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
-                # Menghapus baris dengan nilai yang hilang (NaN)
-                data = data.dropna()
-                # Menghapus duplikat data
-                data = data.drop_duplicates()
-                return data
+                try:
+                    scaler = MinMaxScaler()
+                    columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
+                    
+                    # Cek apakah data memiliki nilai yang valid
+                    if data[columns_to_normalize].isnull().values.any():
+                        st.error("Data yang dimasukkan memiliki nilai yang tidak valid. Harap periksa kembali.")
+                        return None
+                    
+                    # Lakukan normalisasi jika data valid
+                    data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
+                    return data
+                except Exception as e:
+                    st.error(f"Terjadi kesalahan saat normalisasi data: {str(e)}")
+                    return None
             input_data_df = normalize_data1(input_data_df)
-            st.write("Nama Kolom Setelah Normalisasi:", X_test)
+            st.write("Nama Kolom Setelah Normalisasi:", input_data_df)
 
             # Load the SVM model
             model = load_svm_model()
