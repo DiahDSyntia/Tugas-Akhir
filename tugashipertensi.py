@@ -267,12 +267,7 @@ def main():
             def normalize_data1(data):
                 try:
                     scaler = MinMaxScaler()
-                    columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
-                    
-                    # Cek apakah data memiliki nilai yang valid
-                    if data[columns_to_normalize].isnull().values.any():
-                        st.error("Data yang dimasukkan memiliki nilai yang tidak valid. Harap periksa kembali.")
-                        return None
+                    columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
                     
                     # Lakukan normalisasi jika data valid
                     data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
@@ -280,6 +275,7 @@ def main():
                 except Exception as e:
                     st.error(f"Terjadi kesalahan saat normalisasi data: {str(e)}")
                     return None
+                    
             input_data_df = normalize_data1(input_data_df)
             st.write("Nama Kolom Setelah Normalisasi:", input_data_df)
 
