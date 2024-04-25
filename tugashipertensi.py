@@ -260,6 +260,14 @@ def main():
             X_test = normalize_data1(X_test)
             st.write("Nama Kolom Setelah Normalisasi:", X_test.columns)
 
+            def load_svm_model():
+                # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
+                model = joblib.load('model.pkl')
+                return model
+
+            # Load the SVM model
+            model = load_svm_model()
+
             # Prediction using SVM
             prediction = model.predict(X_test)
             
