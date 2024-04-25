@@ -279,6 +279,9 @@ def main():
             input_data_df = normalize_data1(input_data_df)
             st.write("Nama Kolom Setelah Normalisasi:", input_data_df)
 
+            # Ubah DataFrame menjadi array numpy
+            input_data_array = input_data_df.values
+
             # Load the SVM model
             model = load_svm_model()
 
