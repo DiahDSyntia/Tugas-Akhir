@@ -129,10 +129,10 @@ def main():
         y = data['Diagnosa']
     
         # Bagi dataset menjadi data latih dan data uji
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
         # Inisialisasi model SVM sebagai base estimator
-        model = SVC(kernel='rbf', C=1, random_state=0)
+        model = SVC(kernel='rbf', C=1)
 
         # K-Fold Cross Validation
         k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
