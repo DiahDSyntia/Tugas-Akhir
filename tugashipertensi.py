@@ -242,9 +242,6 @@ def main():
 
             data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
 
-            data.drop(columns=['JK_P'], inplace=True)
-            data.rename(columns={'JK_L': 'Jenis Kelamin'}, inplace=True)
-
             # Pisahkan fitur dan target
             X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]  # Fitur (input)
             y = data['Diagnosa']  # Target (output)
