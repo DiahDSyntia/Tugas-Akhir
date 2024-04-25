@@ -253,7 +253,7 @@ def main():
             data_baru = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
 
             # Tambahkan data baru ke X_test
-            X_test_baru = np.append(X_test, data_baru, axis=0)
+            X_test_baru = np.vstack([X_test, data_baru])
             
             st.write("Nama Kolom Sebelum Normalisasi:", input_data_df.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
