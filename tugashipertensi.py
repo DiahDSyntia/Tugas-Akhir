@@ -249,7 +249,7 @@ def main():
                 'Jenis Kelamin': [gender_binary]
             }
                 
-            X_test.append(pd.DataFrame(data_input), inplace=True)
+            X_test = X_test.append(data_input)
     
             st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
