@@ -256,7 +256,7 @@ def main():
             # Tambahkan data baru ke X_test
             X_test.append(pd.DataFrame(data_input))
     
-            st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
+            #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
             st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
             # Menampilkan semua hasil kolom setelah normalisasi
