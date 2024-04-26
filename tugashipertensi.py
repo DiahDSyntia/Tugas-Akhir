@@ -217,15 +217,15 @@ def main():
                 
             st.markdown(html_code, unsafe_allow_html=True)
 
-     elif selected == 'Uji Coba':
+    elif selected == 'Uji Coba':
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
-
+    
         def load_svm_model():
             # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
             model = joblib.load('model.pkl')
             return model
-
+    
         # Input fields
         Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
         IMT = st.number_input("IMT", min_value=0.0, max_value=100.0, step=0.1)
@@ -237,7 +237,7 @@ def main():
         # Convert gender to binary
         gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
         submit = st.button('Uji Coba')
-
+    
         # Variabel untuk menyimpan data input
         X_test = []
         
@@ -277,10 +277,10 @@ def main():
                     
             X_test = normalize_data1(X_test)
             st.write("Nama Kolom Setelah Normalisasi:", X_test)
-
+    
             # Load the SVM model
             model = load_svm_model()
-
+    
             # Prediction using SVM
             prediction = model.predict(X_test)
             
