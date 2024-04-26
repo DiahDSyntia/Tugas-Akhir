@@ -217,12 +217,13 @@ def main():
                 
             st.markdown(html_code, unsafe_allow_html=True)
 
-    elif selected == 'Uji Coba':
+     elif selected == 'Uji Coba':
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
+
         def load_svm_model():
             # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
-            model = joblib.load('modelbagging.pkl')
+            model = joblib.load('model.pkl')
             return model
 
         # Input fields
@@ -253,15 +254,14 @@ def main():
                 'Jenis Kelamin': [gender_binary]
             }
                 
-            # Tambahkan data baru ke X_test
-            X_test = X_test.append(pd.DataFrame(data_input))
-    
-            #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
+            X_test = pd.DataFrame(data_input)
+            
+            st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
-            #st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
+            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
             # Menampilkan semua hasil kolom setelah normalisasi
-            #st.write("Hasil Kolom Sebelum Normalisasi:")
-            #st.write(X_test)
+            st.write("Hasil Kolom Sebelum Normalisasi:")
+            st.write(X_test)
             #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
     
             # Normalize the data
@@ -285,12 +285,11 @@ def main():
             prediction = model.predict(X_test)
             
             # Output the prediction result
-            if prediction[-1] == 1:
+            if prediction == 1:
                 st.write("# Hipertensi 1, Silahkan ke dokter")
-            elif prediction[-1] == 2:
+            elif prediction[0] == 2:
                 st.write("# Hipertensi 2, Silahkan ke dokter")
             else:
                 st.write("Tidak Hipertensi")
-            
 if __name__ == "__main__":
     main()
