@@ -220,6 +220,10 @@ def main():
     elif selected == 'Uji Coba':
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
+        def load_svm_model():
+            # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
+            model = joblib.load('modelbagging.pkl')
+            return model
 
         # Input fields
         Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
