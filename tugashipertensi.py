@@ -285,7 +285,7 @@ def main():
             prediction = model.predict(X_test)
             
             # Output the prediction result
-            if prediction == 1:
+            if prediction[0] == 1:
                 st.write("# Hipertensi 1, Silahkan ke dokter")
             elif prediction[0] == 2:
                 st.write("# Hipertensi 2, Silahkan ke dokter")
