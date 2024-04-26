@@ -254,15 +254,15 @@ def main():
             }
                 
             # Tambahkan data baru ke X_test
-            X_test.append(pd.DataFrame(data_input))
+            X_test = X_test.append(pd.DataFrame(data_input))
     
             #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
-            #st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
+            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
             # Menampilkan semua hasil kolom setelah normalisasi
-            #st.write("Hasil Kolom Sebelum Normalisasi:")
-            #st.write(X_test)
-            #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
+            st.write("Hasil Kolom Sebelum Normalisasi:")
+            st.write(X_test)
+            st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
     
             # Normalize the data
             def normalize_data1(data):
