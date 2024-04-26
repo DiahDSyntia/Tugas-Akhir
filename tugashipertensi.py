@@ -218,7 +218,7 @@ def main():
 
         def load_svm_model():
             # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
-            model = joblib.load('model.pkl')
+            model = joblib.load('modelbagging.pkl')
             return model
 
         # Input fields
@@ -249,8 +249,9 @@ def main():
                 'Jenis Kelamin': [gender_binary]
             }
                 
-            X_test = pd.DataFrame(data_input)
-            
+            # Tambahkan data baru ke X_test
+            X_test = X_test.append(pd.DataFrame(data_input), ignore_index=True)
+    
             st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
             # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
             st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
@@ -280,9 +281,9 @@ def main():
             prediction = model.predict(X_test)
             
             # Output the prediction result
-            if prediction == 1:
+            if prediction[-1] == 1:
                 st.write("# Hipertensi 1, Silahkan ke dokter")
-            elif prediction[0] == 2:
+            elif prediction[-1] == 2:
                 st.write("# Hipertensi 2, Silahkan ke dokter")
             else:
                 st.write("Tidak Hipertensi")
