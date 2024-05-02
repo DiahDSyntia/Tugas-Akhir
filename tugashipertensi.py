@@ -199,12 +199,6 @@ def main():
             #print("Recall: ", recall_results[i])
             #print("F1-score: ", f1_results[i])
             #print()
-            
-        # Mengukur akurasi pada data uji
-        accuracy = accuracy_score(y_test, y_pred)
-        precision = precision_score(y_test, y_pred, average='micro')
-        recall = recall_score(y_test, y_pred, average='micro')
-        f1 = f1_score(y_test, y_pred, average='micro')
 
         # Confusion Matrix
         conf_matrix = confusion_matrix(y_test, y_pred)
