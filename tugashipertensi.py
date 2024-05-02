@@ -299,6 +299,9 @@ def main():
         # Variabel untuk menyimpan data input
         X_test = []
         
+        # Load the SVM model
+        model = load_svm_model()
+        
         # Button for testing
         if submit:
             # Masukkan data input pengguna ke dalam DataFrame
@@ -331,14 +334,12 @@ def main():
                 #columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
                 #return data
                     
-            X_test = normalize_data1(X_test)
-            st.write("Nama Kolom Setelah Normalisasi:", X_test)
-    
-            # Load the SVM model
-            model = load_svm_model()
+            # Normalize the data
+            X_test_normalized = normalize_data1(X_test)
+            st.write("Nama Kolom Setelah Normalisasi:", X_test_normalized)
     
             # Prediction using SVM
-            prediction = model.predict(X_test)
+            prediction = model.predict(X_test_normalized)
             
             # Output the prediction result
             if prediction[0] == 1:
