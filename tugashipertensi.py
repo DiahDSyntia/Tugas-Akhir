@@ -216,7 +216,7 @@ def main():
         
         # Generate classification report
         with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
-            report = classification_report(y_test, y_pred)
+            report = classification_report(y_test, majority_voted_predictions)
         
             # Display the metrics
             html_code = f"""
