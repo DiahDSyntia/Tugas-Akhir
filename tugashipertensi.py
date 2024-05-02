@@ -251,9 +251,9 @@ def main():
             
             # Melakukan validasi silang dan menyimpan akurasi dari setiap iterasi
             for i, (train_index, test_index) in enumerate(k_fold.split(X_train)):
-            X_train_fold, X_val_fold = X_train[train_index], X_train[test_index]
-            y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
-            
+                X_train_fold, X_val_fold = X_train[train_index], X_train[test_index]
+                y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
+                
                 # Melatih model
                 model.fit(X_train_fold, y_train_fold)
             
