@@ -220,6 +220,18 @@ def main():
     elif selected == 'Uji Coba':
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
+        # Fungsi untuk memprediksi data baru
+        def predict_new_data(new_data):
+            # Normalisasi data baru
+            new_data = scaler.transform([new_data])
+            # Lakukan prediksi
+            prediction = model.predict(new_data)
+            return prediction
+        
+        # Fungsi untuk mendapatkan input pengguna
+        def get_user_input():
+            input_data = [Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]
+            return input_data
 
         data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
     
@@ -279,14 +291,6 @@ def main():
         precision = precision_score(y_test, y_pred, average='weighted')
         recall = recall_score(y_test, y_pred, average='weighted')
         f1 = f1_score(y_test, y_pred, average='weighted')
-
-        # Fungsi untuk memprediksi data baru
-        def predict_new_data(new_data):
-            # Normalisasi data baru
-            new_data = scaler.transform([new_data])
-            # Lakukan prediksi
-            prediction = model.predict(new_data)
-            return prediction
             
         # Input fields
         Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
@@ -299,9 +303,9 @@ def main():
         # Convert gender to binary
         gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
         submit = st.button('Uji Coba')
-        # Prediksi hipertensi untuk data input pengguna
         
-        if st.button('Uji Coba'):
+        # Prediksi hipertensi untuk data input pengguna
+        if submit:
             user_input = get_user_input()
             prediction = predict_new_data(user_input)
         
