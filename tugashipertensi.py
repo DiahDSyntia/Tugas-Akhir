@@ -337,7 +337,7 @@ def main():
                 return data
                     
             # Normalize the data
-            X_test_normalized = normalize_data1(X_test)
+            X_test_normalized = normalize_data(X_test)
             st.write("Nama Kolom Setelah Normalisasi:", X_test_normalized)
     
             # Prediction using SVM
