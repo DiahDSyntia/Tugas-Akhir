@@ -329,7 +329,8 @@ def main():
             def normalize_data1(data):
                 # Normalisasi fitur menggunakan Min-Max Scaler
                 scaler = MinMaxScaler()
-                X = scaler.fit_transform(X)
+                X_normalized = scaler.fit_transform(data)
+                return X_normalized
                 #scaler = MinMaxScaler()
                 #columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
                 #return data
