@@ -136,87 +136,66 @@ def main():
         # Bagi dataset menjadi data latih dan data uji
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-        # Define X and Y
-        X = np.array(X_train)  # Assuming x_train is defined elsewhere
-        Y = np.array(y_train)  # Assuming y_train is defined elsewhere
-        
-        bagging_iterations = [5]
-        
-        accuracy_results = []
-        precision_results = []  # Menambah definisi variabel precision_results
-        recall_results = []  # Menambah definisi variabel recall_results
-        f1_results = []  # Menambah definisi variabel f1_results
-        
-        # Classification Process
-        for iteration in bagging_iterations:
-            print("######## ITERATION - {} ########".format(iteration))
-            models = []
-        
-            for i in range(iteration):
-                print("Training model {} of {}...".format(i+1, iteration))
-                # Randomly sample with replacement
-                indices = np.random.choice(len(X), len(X), replace=True)
-                x_bag = X[indices]
-                y_bag = Y[indices]
-        
-                model = SVC(kernel='rbf', C=1)
-                model.fit(x_bag, y_bag)
-                models.append(model)
-        
-                print("Model {} training complete.".format(i+1))
-        
-            # Perform majority voting
-            def majority_voting(models, x_test):
-                all_predictions = np.array([model.predict(x_test) for model in models])
-                majority_voted_predictions = np.round(np.mean(all_predictions, axis=0))
-                return majority_voted_predictions
-        
-            # Make predictions using majority voting
-            majority_voted_predictions = majority_voting(models, X_test)
-        
-            # Evaluate accuracy of majority voted predictions
-            accuracy = np.mean(majority_voted_predictions == y_test)
-            accuracy_results.append(accuracy)
-            #print("Accuracy of majority voted predictions for {} bagging iterations: {}".format(iteration, accuracy))
-        
-            # Calculate precision, recall, and F1-score
-            precision = precision_score(y_test, majority_voted_predictions, average='weighted')
-            recall = recall_score(y_test, majority_voted_predictions, average='weighted')
-            f1 = f1_score(y_test, majority_voted_predictions, average='weighted')
-        
-            # Store precision, recall, and F1-score
-            precision_results.append(precision)
-            recall_results.append(recall)
-            f1_results.append(f1)
-        
-            # Print precision, recall, and F1-score
-            print("Precision: ", precision)
-            print("Recall: ", recall)
-            print("F1-score: ", f1)
-        
-        # Print accuracy, precision, recall, and F1-score results for each number of bagging iterations
-        for i, iteration in enumerate(bagging_iterations):
-            #print("Metrics for {} bagging iterations:".format(iteration))
-            #print("Accuracy: ", accuracy_results[i])
-            #print("Precision: ", precision_results[i])
-            #print("Recall: ", recall_results[i])
-            #print("F1-score: ", f1_results[i])
-            #print()
+        # Inisialisasi model SVM sebagai base estimator
+        model = SVC(kernel='rbf', C=1)
 
-            # Confusion Matrix
-            conf_matrix = confusion_matrix(y_test, majority_voted_predictions)
-            
-            # Tampilkan visualisasi confusion matrix menggunakan heatmap
-            fig, ax = plt.subplots(figsize=(5, 3))
-            sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
-            plt.xlabel('Predicted')
-            plt.ylabel('True')
-            plt.title('Confusion Matrix')
-            st.pyplot(fig) 
+        # K-Fold Cross Validation
+        k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
+        cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
+        
+        # Menampilkan akurasi K-Fold Cross Validation
+        print(f'K-Fold Cross Validation Scores: {cv_scores}')
+        print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
+        
+        # Menyimpan nilai akurasi dari setiap lipatan
+        accuracies = []
+        
+        # Melakukan validasi silang dan menyimpan akurasi dari setiap iterasi
+        for i, (train_index, test_index) in enumerate(k_fold.split(X_train)):
+            X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[test_index]
+            y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
+        
+            # Melatih model
+            model.fit(X_train_fold, y_train_fold)
+        
+            # Menguji model
+            y_pred_fold = model.predict(X_val_fold)
+        
+            # Mengukur akurasi
+            accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
+            accuracies.append(accuracy_fold)
+        
+            print(f'Accuracy di fold {i+1}: {accuracy_fold * 100:.2f}%')
+        
+        # Menampilkan rata-rata akurasi dari setiap lipatan
+        print(f'Mean Accuracy of K-Fold Cross Validation: {np.mean(accuracies) * 100:.2f}%')
+
+        # Melatih model pada data latih
+        model.fit(X_train, y_train)
+
+        # Menguji model pada data uji
+        y_pred = model.predict(X_test)
+        
+        # Mengukur akurasi pada data uji
+        accuracy = accuracy_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred, average='weighted')
+        recall = recall_score(y_test, y_pred, average='weighted')
+        f1 = f1_score(y_test, y_pred, average='weighted')
+
+        # Confusion Matrix
+        conf_matrix = confusion_matrix(y_test, y_pred)
+        
+        # Tampilkan visualisasi confusion matrix menggunakan heatmap
+        fig, ax = plt.subplots(figsize=(5, 3))
+        sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+        plt.xlabel('Predicted')
+        plt.ylabel('True')
+        plt.title('Confusion Matrix')
+        st.pyplot(fig) 
         
         # Generate classification report
         with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
-            report = classification_report(y_test, majority_voted_predictions)
+            report = classification_report(y_test, y_pred)
         
             # Display the metrics
             html_code = f"""
