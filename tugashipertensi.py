@@ -200,16 +200,16 @@ def main():
             #print("F1-score: ", f1_results[i])
             #print()
 
-        # Confusion Matrix
-        conf_matrix = confusion_matrix(y_test, y_pred)
-        
-        # Tampilkan visualisasi confusion matrix menggunakan heatmap
-        fig, ax = plt.subplots(figsize=(5, 3))
-        sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
-        plt.xlabel('Predicted')
-        plt.ylabel('True')
-        plt.title('Confusion Matrix')
-        st.pyplot(fig) 
+            # Confusion Matrix
+            conf_matrix = confusion_matrix(y_test, y_pred)
+            
+            # Tampilkan visualisasi confusion matrix menggunakan heatmap
+            fig, ax = plt.subplots(figsize=(5, 3))
+            sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+            plt.xlabel('Predicted')
+            plt.ylabel('True')
+            plt.title('Confusion Matrix')
+            st.pyplot(fig) 
         
         # Generate classification report
         with np.errstate(divide='ignore', invalid='ignore'):  # Suppress division by zero warning
