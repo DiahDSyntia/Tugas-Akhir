@@ -333,6 +333,7 @@ def main():
                 #return X_normalized
                 scaler = MinMaxScaler()
                 columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
+                data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
                 return data
                     
             # Normalize the data
