@@ -331,14 +331,13 @@ def main():
                 #scaler = MinMaxScaler()
                 #X_normalized = scaler.fit_transform(data)
                 #return X_normalized
+                
                 scaler = MinMaxScaler()
                 columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
                 # Salin DataFrame agar tidak memodifikasi data asli
                 normalized_data = data.copy()
-                
                 # Normalisasi kolom-kolom yang dipilih
                 normalized_data[columns_to_normalize] = scaler.fit_transform(normalized_data[columns_to_normalize])
-                
                 return normalized_data
                     
             # Normalize the data
