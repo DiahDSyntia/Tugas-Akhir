@@ -220,7 +220,7 @@ def main():
     elif selected == 'Uji Coba':
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
-         def load_svm_model():
+        def load_svm_model():
             # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
             model = joblib.load('model.pkl')
             return model
