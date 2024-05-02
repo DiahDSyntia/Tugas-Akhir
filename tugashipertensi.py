@@ -143,6 +143,9 @@ def main():
         bagging_iterations = [5]
         
         accuracy_results = []
+        precision_results = []  # Menambah definisi variabel precision_results
+        recall_results = []  # Menambah definisi variabel recall_results
+        f1_results = []  # Menambah definisi variabel f1_results
         
         # Classification Process
         for iteration in bagging_iterations:
