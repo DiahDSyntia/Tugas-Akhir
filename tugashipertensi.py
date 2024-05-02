@@ -204,7 +204,7 @@ def main():
             #print()
 
             # Confusion Matrix
-            conf_matrix = confusion_matrix(y_test, y_pred)
+            conf_matrix = confusion_matrix(y_test, majority_voted_predictions)
             
             # Tampilkan visualisasi confusion matrix menggunakan heatmap
             fig, ax = plt.subplots(figsize=(5, 3))
