@@ -333,11 +333,16 @@ def main():
                 #return X_normalized
                 scaler = MinMaxScaler()
                 columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
-                data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
-                return data
+                # Salin DataFrame agar tidak memodifikasi data asli
+                normalized_data = data.copy()
+                
+                # Normalisasi kolom-kolom yang dipilih
+                normalized_data[columns_to_normalize] = scaler.fit_transform(normalized_data[columns_to_normalize])
+                
+                return normalized_data
                     
             # Normalize the data
-            X_test_normalized = normalize_data(X_test)
+            X_test_normalized = normalize_data1(X_test)
             st.write("Nama Kolom Setelah Normalisasi:", X_test_normalized)
     
             # Prediction using SVM
