@@ -220,76 +220,99 @@ def main():
     elif selected == 'Uji Coba':
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
+
+        data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
     
-        def load_svm_model():
-            # Di sini Anda harus mengganti 'nama_model.pkl' dengan nama file yang sesuai dengan model SVM Anda
-            model = joblib.load('model.pkl')
-            return model
+        # Memisahkan fitur dan target
+        X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
+        y = data['Diagnosa']
+
+        # Normalisasi fitur menggunakan Min-Max Scaler
+        scaler = MinMaxScaler()
+        X = scaler.fit_transform(X)
     
-        # Input fields
-        Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
-        IMT = st.number_input("IMT", min_value=0.0, max_value=100.0, step=0.1)
-        Sistole = st.number_input("Sistole", min_value=0, max_value=300, step=1)
-        Diastole = st.number_input("Diastole", min_value=0, max_value=200, step=1)
-        Nafas = st.number_input("Nafas", min_value=0, max_value=100, step=1)
-        Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1)
-        Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
-        # Convert gender to binary
-        gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
-        submit = st.button('Uji Coba')
-    
-        # Variabel untuk menyimpan data input
-        X_test = []
+        # Bagi dataset menjadi data latih dan data uji
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+        # Inisialisasi model SVM sebagai base estimator
+        model = SVC(kernel='rbf', C=1)
+
+        # K-Fold Cross Validation
+        k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
+        cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
         
-        # Button for testing
-        if submit:
-            # Masukkan data input pengguna ke dalam DataFrame
-            data_input = {
-                'Usia': [Usia],
-                'IMT': [IMT],
-                'Sistole': [Sistole],
-                'Diastole': [Diastole],
-                'Nafas': [Nafas],
-                'Detak Nadi': [Detak_nadi],
-                'Jenis Kelamin': [gender_binary]
-            }
-                
-            X_test = pd.DataFrame(data_input)
-            
-            st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
-            # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
-            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
-            # Menampilkan semua hasil kolom setelah normalisasi
-            st.write("Hasil Kolom Sebelum Normalisasi:")
-            st.write(X_test)
-            #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
+        # Menampilkan akurasi K-Fold Cross Validation
+        print(f'K-Fold Cross Validation Scores: {cv_scores}')
+        print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
+        
+        # Menyimpan nilai akurasi dari setiap lipatan
+        accuracies = []
+        
+        # Melakukan validasi silang dan menyimpan akurasi dari setiap iterasi
+        for i, (train_index, test_index) in enumerate(k_fold.split(X_train)):
+            X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[test_index]
+            y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
+        
+            # Melatih model
+            model.fit(X_train_fold, y_train_fold)
+        
+            # Menguji model
+            y_pred_fold = model.predict(X_val_fold)
+        
+            # Mengukur akurasi
+            accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
+            accuracies.append(accuracy_fold)
+        
+            print(f'Accuracy di fold {i+1}: {accuracy_fold * 100:.2f}%')
+        
+        # Menampilkan rata-rata akurasi dari setiap lipatan
+        print(f'Mean Accuracy of K-Fold Cross Validation: {np.mean(accuracies) * 100:.2f}%')
+
+        # Melatih model pada data latih
+        model.fit(X_train, y_train)
+
+        # Menguji model pada data uji
+        y_pred = model.predict(X_test)
+        
+        # Mengukur akurasi pada data uji
+        accuracy = accuracy_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred, average='weighted')
+        recall = recall_score(y_test, y_pred, average='weighted')
+        f1 = f1_score(y_test, y_pred, average='weighted')
+
+        # Fungsi untuk memprediksi data baru
+        def predict_new_data(new_data):
+            # Normalisasi data baru
+            new_data = scaler.transform([new_data])
+            # Lakukan prediksi
+            prediction = model.predict(new_data)
+            return prediction
+
+        def get_user_input():
+            input_data = []
+            # Input fields
+            Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
+            IMT = st.number_input("IMT", min_value=0.0, max_value=100.0, step=0.1)
+            Sistole = st.number_input("Sistole", min_value=0, max_value=300, step=1)
+            Diastole = st.number_input("Diastole", min_value=0, max_value=200, step=1)
+            Nafas = st.number_input("Nafas", min_value=0, max_value=100, step=1)
+            Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1)
+            Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
+            # Convert gender to binary
+            gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
+            return [Umur, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]
     
-            # Normalize the data
-            def normalize_data1(data):
-                scaler = MinMaxScaler()
-                columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
-                data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
-                # Menghapus baris dengan nilai yang hilang (NaN)
-                data = data.dropna()
-                # Menghapus duplikat data
-                data = data.drop_duplicates()
-                return data
-                    
-            X_test = normalize_data1(X_test)
-            st.write("Nama Kolom Setelah Normalisasi:", X_test)
-    
-            # Load the SVM model
-            model = load_svm_model()
-    
-            # Prediction using SVM
-            prediction = model.predict(X_test)
-            
-            # Output the prediction result
-            if prediction[0] == 1:
-                st.write("# Hipertensi 1, Silahkan ke dokter")
-            elif prediction[0] == 2:
-                st.write("# Hipertensi 2, Silahkan ke dokter")
-            else:
+        # Prediksi hipertensi untuk data input pengguna
+        if st.button('Uji Coba'):
+            user_input = get_user_input()
+            prediction = predict_new_data(user_input)
+        
+            # Tampilkan hasil prediksi
+            if prediction == 0:
                 st.write("Tidak Hipertensi")
+            elif prediction == 1:
+                st.write("Hipertensi 1")
+            elif prediction == 2:
+                st.write("Hipertensi 2")
 if __name__ == "__main__":
     main()
