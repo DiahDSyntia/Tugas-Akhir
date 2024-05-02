@@ -303,6 +303,16 @@ def main():
         # Convert gender to binary
         gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
         submit = st.button('Uji Coba')
+
+        # Menampilkan nama kolom sebelum normalisasi
+        st.write("Nama Kolom Sebelum Normalisasi:", data.columns)
+        
+        # Menampilkan hasil kolom "Jenis Kelamin" sebelum normalisasi
+        st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", data['Jenis Kelamin'])
+        
+        # Menampilkan semua hasil kolom sebelum normalisasi
+        st.write("Hasil Kolom Sebelum Normalisasi:")
+        st.write(data)
         
         # Prediksi hipertensi untuk data input pengguna
         if submit:
