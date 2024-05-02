@@ -321,14 +321,12 @@ def main():
             #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
     
             # Normalize the data
-            #def normalize_data1(data):
+            def normalize_data1(data):
+                # Normalisasi fitur menggunakan Min-Max Scaler
+                scaler = MinMaxScaler()
+                X = scaler.fit_transform(X)
                 #scaler = MinMaxScaler()
                 #columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
-                #data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
-                # Menghapus baris dengan nilai yang hilang (NaN)
-                #data = data.dropna()
-                # Menghapus duplikat data
-                #data = data.drop_duplicates()
                 #return data
                     
             X_test = normalize_data1(X_test)
