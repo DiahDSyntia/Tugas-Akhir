@@ -235,7 +235,7 @@ def main():
             X = scaler.fit_transform(X)
         
             # Bagi dataset menjadi data latih dan data uji
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
     
             # Inisialisasi model SVM sebagai base estimator
             model = SVC(kernel='rbf', C=1)
@@ -284,6 +284,23 @@ def main():
             f1 = f1_score(y_test, y_pred, average='weighted')
             
             return model
+        def predict(model, Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, Jenis_Kelamin):
+            # Mengubah jenis kelamin menjadi biner
+            gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
+            
+            # Membuat prediksi berdasarkan input
+            input_data = [[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]]
+            prediction = model.predict(input_data)
+            
+            # Mengembalikan label yang sesuai dengan deskripsi
+            if prediction[0] == 1:
+                return "Hipertensi 1"
+            elif prediction[0] == 2:
+                return "Hipertensi 2"
+            else:
+                return "Tidak Hipertensi"
+        # Load the SVM model
+        model = load_svm_model()
         
         # Input fields
         Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
@@ -293,65 +310,11 @@ def main():
         Nafas = st.number_input("Nafas", min_value=0, max_value=100, step=1)
         Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300, step=1)
         Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
-        # Convert gender to binary
-        gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
-        submit = st.button('Uji Coba')
+
+        # Perform prediction when the button is clicked
+        if st.button('Uji Coba'):
+            prediction = predict(model, Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, Jenis_Kelamin)
+            st.write('Hasil Prediksi:', prediction)
     
-        # Variabel untuk menyimpan data input
-        X_test = []
-        
-        # Load the SVM model
-        model = load_svm_model()
-        
-        # Button for testing
-        if submit:
-            # Masukkan data input pengguna ke dalam DataFrame
-            data_input = {
-                'Usia': [Usia],
-                'IMT': [IMT],
-                'Sistole': [Sistole],
-                'Diastole': [Diastole],
-                'Nafas': [Nafas],
-                'Detak Nadi': [Detak_nadi],
-                'Jenis Kelamin': [gender_binary]
-            }
-                
-            X_test = pd.DataFrame(data_input)
-            
-            st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
-            # Menampilkan semua hasil kolom setelah normalisasi
-            st.write("Hasil Kolom Sebelum Normalisasi:")
-            st.write(X_test)
-            #st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
-    
-            # Normalize the data
-            def normalize_data1(data):
-                # Normalisasi fitur menggunakan Min-Max Scaler
-                #scaler = MinMaxScaler()
-                #X_normalized = scaler.fit_transform(data)
-                #return X_normalized
-                
-                scaler = MinMaxScaler()
-                columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
-                # Salin DataFrame agar tidak memodifikasi data asli
-                normalized_data = data.copy()
-                # Normalisasi kolom-kolom yang dipilih
-                normalized_data[columns_to_normalize] = scaler.fit_transform(normalized_data[columns_to_normalize])
-                return normalized_data
-                    
-            # Normalize the data
-            X_test_normalized = normalize_data1(X_test)
-            st.write("Nama Kolom Setelah Normalisasi:", X_test_normalized)
-    
-            # Prediction using SVM
-            prediction = model.predict(X_test_normalized)
-            
-            # Output the prediction result
-            if prediction[0] == 1:
-                st.write("# Hipertensi 1, Silahkan ke dokter")
-            elif prediction[0] == 2:
-                st.write("# Hipertensi 2, Silahkan ke dokter")
-            else:
-                st.write("Tidak Hipertensi")
 if __name__ == "__main__":
     main()
