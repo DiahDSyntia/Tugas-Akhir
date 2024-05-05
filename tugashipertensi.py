@@ -282,8 +282,9 @@ def main():
             f1 = f1_score(y_test, y_pred, average='weighted')
             
             return model
-
-    
+        test = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi', sep=';')
+        st.dataframe(test)
+        
         # Input fields
         Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
         IMT = st.number_input("IMT", min_value=0.0, max_value=100.0, step=0.1)
@@ -318,8 +319,6 @@ def main():
             X_test = pd.DataFrame(data_input)
             
             st.write("Nama Kolom Sebelum Normalisasi:", X_test.columns)
-            # Menampilkan hasil kolom "Jenis Kelamin" setelah normalisasi
-            st.write("Hasil Kolom Jenis Kelamin sebelum Normalisasi:", X_test['Jenis Kelamin'])
             # Menampilkan semua hasil kolom setelah normalisasi
             st.write("Hasil Kolom Sebelum Normalisasi:")
             st.write(X_test)
