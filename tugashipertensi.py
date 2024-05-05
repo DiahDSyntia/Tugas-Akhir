@@ -220,6 +220,8 @@ def main():
     elif selected == 'Uji Coba':
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
+        test = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi', sep=';')
+        st.dataframe(test)
         
         def load_svm_model():
             data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
@@ -282,8 +284,6 @@ def main():
             f1 = f1_score(y_test, y_pred, average='weighted')
             
             return model
-        test = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi', sep=';')
-        st.dataframe(test)
         
         # Input fields
         Usia = st.number_input("Umur", min_value=0, max_value=150, step=1)
