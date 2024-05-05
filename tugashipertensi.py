@@ -220,7 +220,7 @@ def main():
     elif selected == 'Uji Coba':
         st.title("Uji Coba")
         st.write("Masukkan nilai untuk pengujian:")
-        test = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi.csv', sep=';')
+        test = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi.csv')
         st.dataframe(test)
         
         def load_svm_model():
