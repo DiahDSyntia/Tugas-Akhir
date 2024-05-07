@@ -239,6 +239,7 @@ if selected == "Modelling":
 
 if selected == "Implementation":
     data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
+    X_test = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi.csv')
         
     #st.write("Dataset Hipertensi : ", data)
     
@@ -318,8 +319,8 @@ if selected == "Implementation":
         prediksi = model.predict(X_new_normalized)
     
         if prediksi == 1 :
-            st.write("""## Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
+            st.write("""# Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
         elif prediksi == 2:
             st.write("# Hipertensi 2, Silahkan ke dokter")
         else:
-            st.write("Tidak Hipertensi")
+            st.write("# Tidak Hipertensi")
