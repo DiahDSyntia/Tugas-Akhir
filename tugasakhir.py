@@ -239,7 +239,6 @@ if selected == "Modelling":
 
 if selected == "Implementation":
     data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
-    X_test = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi.csv')
         
     #st.write("Dataset Hipertensi : ", data)
     
