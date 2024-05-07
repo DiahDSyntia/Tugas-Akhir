@@ -298,7 +298,7 @@ if selected == "Implementation":
         
         if prediksi == 1 :
             st.write("""## Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
-        elif prediction == 2:
+        elif prediksi == 2:
                 st.write("# Hipertensi 2, Silahkan ke dokter")
         else:
             st.write("Tidak Hipertensi")
