@@ -281,24 +281,17 @@ if selected == "Implementation":
     Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300)
     submit = st.button("Submit")
     
-    if submit :
-        def normalize_data(data):
-            data.drop(columns=['Jenis Kelamin_P'], inplace=True)
-            data.rename(columns={'Jenis Kelamin_L': 'Jenis Kelamin'}, inplace=True)
-            scaler = MinMaxScaler()
-            columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
-            data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
-            # Menghapus baris dengan nilai yang hilang (NaN)
-            data = data.dropna()
-            # Menghapus duplikat data
-            data = data.drop_duplicates()
-            return data
-        X_new = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
-        prediksi = SVM.predict(X_new)
-        
+    if submit:
+        # Normalisasi data input
+        scaler = MinMaxScaler()
+        X_new_normalized = scaler.fit_transform(np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]]))
+    
+        # Lakukan prediksi dengan model
+        prediksi = SVM.predict(X_new_normalized)
+    
         if prediksi == 1 :
             st.write("""## Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
         elif prediksi == 2:
-                st.write("# Hipertensi 2, Silahkan ke dokter")
+            st.write("# Hipertensi 2, Silahkan ke dokter")
         else:
             st.write("Tidak Hipertensi")
