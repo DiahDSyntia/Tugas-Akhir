@@ -315,7 +315,7 @@ if selected == "Implementation":
         X_new_normalized = scaler.fit_transform(np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]]))
     
         # Lakukan prediksi dengan model
-        prediksi = SVM.predict(X_new_normalized)
+        prediksi = model.predict(X_new_normalized)
     
         if prediksi == 1 :
             st.write("""## Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
