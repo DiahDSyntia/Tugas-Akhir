@@ -238,7 +238,7 @@ if selected == "Modelling":
 
 
 if selected == "Implementation":
-    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
+    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv', sep=';')
     def preprocess_data(data): 
         def preprocess_text(text):
             # Menghilangkan karakter yang tidak diinginkan, seperti huruf dan tanda baca
@@ -311,17 +311,17 @@ if selected == "Implementation":
     print('f1-score_SVM : %.3f' %f1)
         
     st.write("""
-            ### Input Data :"""
-            )
+    ### Input Data :"""
+    )
+    Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
+    # Convert gender to binary
+    gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
     Usia = st.number_input("Umur", min_value=0, max_value=150)
     IMT = st.number_input("IMT", min_value=0.0, max_value=100.0)
     Sistole = st.number_input("Sistole", min_value=0, max_value=300)
     Diastole = st.number_input("Diastole", min_value=0, max_value=200)
     Nafas = st.number_input("Nafas", min_value=0, max_value=100)
     Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300)
-    Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
-    # Convert gender to binary
-    gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
     submit = st.button("Submit")
     
     if submit :
