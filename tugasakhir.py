@@ -145,56 +145,19 @@ if selected == "Pre-Processing":
 
 
 if selected == "Modelling":
-    st.title(f"{selected}")
-    st.write(""" ### Decision Tree, Random Forest, SVM """)
-    data_hf = pd.read_csv("https://raw.githubusercontent.com/AmandaCaecilia/datamining/main/heart_failure_clinical_records_dataset.csv")
-    X=data_hf.iloc[:,0:12].values 
-    y=data_hf.iloc[:,12].values
+    data_hf = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
+    X=data_hf.iloc[:,0:7].values 
+    y=data_hf.iloc[:,7].values
+    
     from sklearn.preprocessing import LabelEncoder
     le = LabelEncoder()
     y = le.fit_transform(y)
 
     #Train and Test split
-    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.3,random_state=0)
-    
-    # Decision Tree
-    decision_tree = DecisionTreeClassifier() 
-    decision_tree.fit(X_train, y_train)  
-    Y_pred = decision_tree.predict(X_test) 
-    accuracy_dt=round(accuracy_score(y_test,Y_pred)* 100, 2)
-    acc_decision_tree = round(decision_tree.score(X_train, y_train) * 100, 2)
-    
-    cm = confusion_matrix(y_test, Y_pred)
-    accuracy = accuracy_score(y_test,Y_pred)
-    precision =precision_score(y_test, Y_pred,average='micro')
-    recall =  recall_score(y_test, Y_pred,average='micro')
-    f1 = f1_score(y_test,Y_pred,average='micro')
-    print('Confusion matrix for DecisionTree\n',cm)
-    print('accuracy_DecisionTree: %.3f' %accuracy)
-    print('precision_DecisionTree: %.3f' %precision)
-    print('recall_DecisionTree: %.3f' %recall)
-    print('f1-score_DecisionTree : %.3f' %f1)
-    
-    # Random Forest
-    random_forest = RandomForestClassifier(n_estimators=100)
-    random_forest.fit(X_train, y_train)
-    Y_prediction = random_forest.predict(X_test)
-    accuracy_rf=round(accuracy_score(y_test,Y_prediction)* 100, 2)
-    acc_random_forest = round(random_forest.score(X_train, y_train) * 100, 2)
-    
-    cm = confusion_matrix(y_test, Y_prediction)
-    accuracy = accuracy_score(y_test,Y_prediction)
-    precision =precision_score(y_test, Y_prediction,average='micro')
-    recall =  recall_score(y_test, Y_prediction,average='micro')
-    f1 = f1_score(y_test,Y_prediction,average='micro')
-    print('Confusion matrix for Random Forest\n',cm)
-    print('accuracy_random_Forest : %.3f' %accuracy)
-    print('precision_random_Forest : %.3f' %precision)
-    print('recall_random_Forest : %.3f' %recall)
-    print('f1-score_random_Forest : %.3f' %f1)
+    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=0)
     
     #SVM
-    SVM = svm.SVC(kernel='linear') 
+    SVM = svm.SVC(kernel='linear', C=1) 
     SVM.fit(X_train, y_train)
     Y_prediction = SVM.predict(X_test)
     accuracy_SVM=round(accuracy_score(y_test,Y_pred)* 100, 2)
@@ -202,9 +165,9 @@ if selected == "Modelling":
     
     cm = confusion_matrix(y_test, Y_pred)
     accuracy = accuracy_score(y_test,Y_pred)
-    precision =precision_score(y_test, Y_pred,average='micro')
-    recall =  recall_score(y_test, Y_pred,average='micro')
-    f1 = f1_score(y_test,Y_pred,average='micro')
+    precision =precision_score(y_test, Y_pred,average='weighted')
+    recall =  recall_score(y_test, Y_pred,average='weighted')
+    f1 = f1_score(y_test,Y_pred,average='weighted')
     print('Confusion matrix for SVM\n',cm)
     print('accuracy_SVM : %.3f' %accuracy)
     print('precision_SVM : %.3f' %precision)
@@ -212,10 +175,6 @@ if selected == "Modelling":
     print('f1-score_SVM : %.3f' %f1)
     st.write("""
     #### Akurasi:""" )
-    results = pd.DataFrame({
-        'Model': ['Decision Tree','Random Forest','SVM'],
-        'Score': [ acc_decision_tree,acc_random_forest, acc_SVM ],
-        'Accuracy_score':[accuracy_dt,accuracy_rf,accuracy_SVM]})
     
     result_df = results.sort_values(by='Accuracy_score', ascending=False)
     result_df = result_df.reset_index(drop=True)
