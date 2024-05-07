@@ -283,18 +283,15 @@ if selected == "Implementation":
         data = data.drop_duplicates()
         return data
     
-    X=data_hf.iloc[:,0:7].values 
-    y=data_hf.iloc[:,7].values
-    
-    from sklearn.preprocessing import LabelEncoder
-    le = LabelEncoder()
-    y = le.fit_transform(y)
+    # Memisahkan fitur dan target
+    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
+    y = data['Diagnosa']
 
-    #Train and Test split
-    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=0)
+    # Bagi dataset menjadi data latih dan data uji
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
     
     #SVM
-    SVM = svm.SVC(kernel='linear') 
+    SVM = svm.SVC(kernel='linear', C=1) 
     SVM.fit(X_train, y_train)
     Y_prediction = SVM.predict(X_test)
     accuracy_SVM=round(accuracy_score(y_test,Y_pred)* 100, 2)
