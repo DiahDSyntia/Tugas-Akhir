@@ -238,57 +238,60 @@ if selected == "Modelling":
 
 
 if selected == "Implementation":
-    st.title(f"{selected}")
-    st.write("""
-            ### Pilih Metode yang anda inginkan :"""
-            )
-    algoritma=st.selectbox('Pilih', ('Decision Tree','Random Forest','SVM'))
+    data_hf = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
+    def preprocess_data(data): 
+    def preprocess_text(text):
+        # Menghilangkan karakter yang tidak diinginkan, seperti huruf dan tanda baca
+        text = re.sub(r'[^A-Za-z0-9\s]', '', text)
+        # Menghilangkan semua huruf (A-Z, a-z)
+        text = re.sub(r'[A-Za-z]', '', text)
+        # Mengganti spasi ganda dengan spasi tunggal
+        text = re.sub(r'\s+', ' ', text)
+        # Menghapus spasi di awal dan akhir teks
+        text = text.strip()
+        return text
+    # Replace commas with dots and convert numerical columns to floats
+    numerical_columns = ['IMT']
+    data[numerical_columns] = data[numerical_columns].replace({',': '.'}, regex=True).astype(float)
+    columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
+    for col in columns_to_clean:
+        data[col] = data[col].apply(preprocess_text)
+    return data
 
-    data_hf = pd.read_csv("https://raw.githubusercontent.com/AmandaCaecilia/datamining/main/heart_failure_clinical_records_dataset.csv")
-    X=data_hf.iloc[:,0:12].values 
-    y=data_hf.iloc[:,12].values
+def transform_data(data):
+    # Mapping for 'Hipertensi'
+    data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0}) 
+    # One-hot encoding for 'Jenis Kelamin'
+    one_hot_encoder = OneHotEncoder()
+    encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
+    encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['Jenis Kelamin']))  
+    # Drop the original 'Jenis Kelamin' feature
+    data = data.drop('Jenis Kelamin', axis=1)   
+    # Concatenate encoded 'Jenis Kelamin' and transformed 'Diagnosa' with original data
+    data = pd.concat([data, encoded_gender], axis=1)
+    return data
+    
+def normalize_data(data):
+    data.drop(columns=['Jenis Kelamin_P'], inplace=True)
+    data.rename(columns={'Jenis Kelamin_L': 'Jenis Kelamin'}, inplace=True)
+    scaler = MinMaxScaler()
+    columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
+    data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
+    # Menghapus baris dengan nilai yang hilang (NaN)
+    data = data.dropna()
+    # Menghapus duplikat data
+    data = data.drop_duplicates()
+    return data
+    
+    X=data_hf.iloc[:,0:7].values 
+    y=data_hf.iloc[:,7].values
+    
     from sklearn.preprocessing import LabelEncoder
     le = LabelEncoder()
     y = le.fit_transform(y)
 
     #Train and Test split
-    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.3,random_state=0)
-    
-    # Decision Tree
-    decision_tree = DecisionTreeClassifier() 
-    decision_tree.fit(X_train, y_train)  
-    Y_pred = decision_tree.predict(X_test) 
-    accuracy_dt=round(accuracy_score(y_test,Y_pred)* 100, 2)
-    acc_decision_tree = round(decision_tree.score(X_train, y_train) * 100, 2)
-    
-    cm = confusion_matrix(y_test, Y_pred)
-    accuracy = accuracy_score(y_test,Y_pred)
-    precision =precision_score(y_test, Y_pred,average='micro')
-    recall =  recall_score(y_test, Y_pred,average='micro')
-    f1 = f1_score(y_test,Y_pred,average='micro')
-    print('Confusion matrix for DecisionTree\n',cm)
-    print('accuracy_DecisionTree: %.3f' %accuracy)
-    print('precision_DecisionTree: %.3f' %precision)
-    print('recall_DecisionTree: %.3f' %recall)
-    print('f1-score_DecisionTree : %.3f' %f1)
-    
-    # Random Forest
-    random_forest = RandomForestClassifier(n_estimators=100)
-    random_forest.fit(X_train, y_train)
-    Y_prediction = random_forest.predict(X_test)
-    accuracy_rf=round(accuracy_score(y_test,Y_prediction)* 100, 2)
-    acc_random_forest = round(random_forest.score(X_train, y_train) * 100, 2)
-    
-    cm = confusion_matrix(y_test, Y_prediction)
-    accuracy = accuracy_score(y_test,Y_prediction)
-    precision =precision_score(y_test, Y_prediction,average='micro')
-    recall =  recall_score(y_test, Y_prediction,average='micro')
-    f1 = f1_score(y_test,Y_prediction,average='micro')
-    print('Confusion matrix for Random Forest\n',cm)
-    print('accuracy_random_Forest : %.3f' %accuracy)
-    print('precision_random_Forest : %.3f' %precision)
-    print('recall_random_Forest : %.3f' %recall)
-    print('f1-score_random_Forest : %.3f' %f1)
+    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=0)
     
     #SVM
     SVM = svm.SVC(kernel='linear') 
@@ -311,38 +314,24 @@ if selected == "Implementation":
     st.write("""
             ### Input Data :"""
             )
-    age = st.number_input("umur =", min_value=40 ,max_value=90)
-    anemia = st.number_input("anemia =", min_value=0, max_value=1)
-    creatinine_phosphokinase = st.number_input("creatinine_phosphokinase =", min_value=0 , max_value=10000)
-    diabetes = st.number_input("diabetes =", min_value=0, max_value=1)
-    ejection_fraction = st.number_input("ejection_fraction =", min_value=0, max_value=100)
-    high_blood_pressure = st.number_input("high_blood_pressure =", min_value=0 ,max_value=1)
-    platelets = st.number_input("platelets =", min_value=100000, max_value=1000000)
-    serum_creatinine = st.number_input("serum_creatinine =", min_value=0.0, max_value=10.0)
-    serum_sodium = st.number_input("serum_sodium =", min_value=100, max_value=150)
-    sex = st.number_input("sex =", min_value=0, max_value=1)
-    smoking = st.number_input("smoking =", min_value=0, max_value=1)
-    time = st.number_input("time =", min_value=1, max_value=500)
+    Usia = st.number_input("Umur", min_value=0, max_value=150)
+    IMT = st.number_input("IMT", min_value=0.0, max_value=100.0)
+    Sistole = st.number_input("Sistole", min_value=0, max_value=300)
+    Diastole = st.number_input("Diastole", min_value=0, max_value=200)
+    Nafas = st.number_input("Nafas", min_value=0, max_value=100)
+    Detak_nadi = st.number_input("Detak Nadi", min_value=0, max_value=300)
+    Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
+    # Convert gender to binary
+    gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
     submit = st.button("Submit")
+    
     if submit :
-        if algoritma == 'Decision Tree' :
-            X_new = np.array([[age,anemia,creatinine_phosphokinase,diabetes,ejection_fraction,high_blood_pressure,platelets,serum_creatinine,serum_sodium,sex,smoking,time]])
-            prediksi = decision_tree.predict(X_new)
-            if prediksi == 1 :
-                st.write(""" ## Hasil Prediksi : resiko meninggal tinggi""")
-            else : 
-                st.write("""## Hasil Prediksi : resiko meninggal rendah""")
-        elif algoritma == 'Random Forest' :
-            X_new = np.array([[age,anemia,creatinine_phosphokinase,diabetes,ejection_fraction,high_blood_pressure,platelets,serum_creatinine,serum_sodium,sex,smoking,time]])
-            prediksi = random_forest.predict(X_new)
-            if prediksi == 1 :
-                st.write("""## Hasil Prediksi : resiko meninggal tinggi""")
-            else : 
-                st.write("""## Hasil Prediksi : resiko meninggal rendah""")
-        else :
-            X_new = np.array([[age,anemia,creatinine_phosphokinase,diabetes,ejection_fraction,high_blood_pressure,platelets,serum_creatinine,serum_sodium,sex,smoking,time]])
-            prediksi = SVM.predict(X_new)
-            if prediksi == 1 :
-                st.write("""## Hasil Prediksi : resiko meninggal tinggi""")
-            else : 
-                st.write("""## Hasil Prediksi : resiko meninggal rendah""")
+        X_new = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
+        prediksi = SVM.predict(X_new)
+        
+        if prediksi == 1 :
+            st.write("""## Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
+        elif prediction == 2:
+                st.write("# Hipertensi 2, Silahkan ke dokter")
+        else:
+            st.write("Tidak Hipertensi")
