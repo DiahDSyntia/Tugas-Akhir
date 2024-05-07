@@ -40,38 +40,22 @@ if selected == "Home":
     st.title(f'Aplikasi Web Data Mining')
     st.write(""" ### Klasifikasi tingkat kematian gagal jantung menggunakan Metode Decision tree, Random forest, dan SVM
     """)
-    img = Image.open('jantung.jpg')
-    st.image(img, use_column_width=False)
     st.write('Gagal Jantung adalah kondisi ketika otot jantung tidak dapat memompa darah sebagaimana mestinya untuk memenuhi kebutuhan tubuh. Darah merupakan cairan terpenting yang beredar ke seluruh tubuh dengan menyuplai oksigen ke seluruh bagian tubuh. Penyakit kardiovaskular (CVDs) adalah penyebab kematian nomor 1 secara global, merenggut sekitar 17,9 juta nyawa setiap tahun, yang merupakan 31% dari semua kematian di seluruh dunia. Ancaman masalah kardiovaskular yang terus-menerus ini telah meningkat karena pilihan gaya hidup yang buruk seiring dengan sikap acuh tak acuh terhadap kesehatan. Dengan sebagian besar orang berjuang dengan masalah mental, kebiasaan seperti penggunaan tembakau, pola makan yang tidak sehat dan obesitas, ketidakaktifan fisik dan penggunaan alkohol yang berbahaya telah dilakukan oleh populasi massal. Oleh karena itu, orang yang memiliki risiko kardiovaskular tinggi memerlukan deteksi dan manajemen dini di mana model pembelajaran mesin dapat sangat membantu!')
 
 
 if selected == "Datasets":
     st.title(f"{selected}")
-    data_hf = pd.read_csv("https://raw.githubusercontent.com/AmandaCaecilia/datamining/main/heart_failure_clinical_records_dataset.csv")
-    st.write("Dataset Heart Failure : ", data_hf) 
-    st.write('Jumlah baris dan kolom :', data_hf.shape)
+    data_hp = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
+    st.write("Dataset Hipertensi : ", data_hp) 
+    st.write('Jumlah baris dan kolom :', data_hp.shape)
     X=data_hf.iloc[:,0:12].values 
     y=data_hf.iloc[:,12].values
     st.write('Dataset Description :')
-    st.write('1. age: Age of the patient')
-    st.write('2. anemia: Haemoglobin level of patient')
-    st.write('3. creatinine_phosphokinase: Level of the CPK enzyme in the blood (mcg/L)')
-    st.write('4. diabetes: If the patient has diabetes (Boolean)')
-    st.write('5. ejection_fraction: Percentage of blood leaving the heart at each contraction')
-    st.write('6. high_blood_pressure: If the patient has hypertension(Boolean)')
-    st.write('7. platelets: Platelet count of blood (kiloplatelets/mL)')
-    st.write('8. serum_creatinine: Level of serum creatinine in the blood (mg/dL)')
-    st.write('9. serum_sodium: Level of serum sodium in the blood (mEq/L)')
-    st.write('10. sex: Sex of the patient(Boolean)')
-    st.write('11. smoking: If the patient smokes or not(Boolean)')
-    st.write('12. time: Follow-up period')
-    st.write('13. DEATH_EVENT: If the patient deceased during the follow-up period')
-    
-    st.write("Dataset Heart Failure Download : (https://raw.githubusercontent.com/AmandaCaecilia/datamining/main/heart_failure_clinical_records_dataset.csv) ")
+    #st.write('1. age: Age of the patient')
 
 if selected == "Pre-Processing":
     st.title(f"{selected}")
-    data_hf = pd.read_csv("https://raw.githubusercontent.com/AmandaCaecilia/datamining/main/heart_failure_clinical_records_dataset.csv")
+    data_hf = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
     X=data_hf.iloc[:,0:12].values 
     y=data_hf.iloc[:,12].values
     from sklearn.preprocessing import LabelEncoder
@@ -84,7 +68,7 @@ if selected == "Pre-Processing":
     st.write("Hasil Preprocesing : ", scaled)
 
     #Train and Test split
-    X_train,X_test,y_train,y_test=train_test_split(scaled,y,test_size=0.3,random_state=0)
+    X_train,X_test,y_train,y_test=train_test_split(scaled,y,test_size=0.2,random_state=0)
 
 
 if selected == "Modelling":
