@@ -1,177 +1,284 @@
+import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 from collections import OrderedDict
-import seaborn as sns
-from sklearn.preprocessing import MinMaxScaler
-import re
-import streamlit as st
+
+#Metrics
+from sklearn.metrics import make_scorer, accuracy_score,precision_score
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score ,precision_score,recall_score,f1_score
+
+#Model Select
+from sklearn.model_selection import KFold,train_test_split,cross_val_score
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-from sklearn.model_selection import train_test_split, cross_val_score, KFold
-from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.linear_model import  LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import linear_model
+from sklearn.linear_model import SGDClassifier
+from sklearn.tree import DecisionTreeClassifier 
+from sklearn import svm
+from sklearn import metrics 
+from sklearn import preprocessing 
 
-# Judul navbar
-st.sidebar.title('Main Menu')
+from streamlit_option_menu import option_menu
 
-# Pilihan menu dalam bentuk dropdown
-menu_selection = st.sidebar.selectbox('Klik Tombol Di bawah ini', ['Home', 'Pre-Pocesssing Data', 'Klasifikasi SVM','Uji Coba'])
+with st.sidebar:
+    selected = option_menu(
+        menu_title="Main Menu",  # required
+        options=["Home", "Datasets", "Pre-Processing", "Modelling", "Implementation"],  # required
+        icons=["house","folder", "file-bar-graph", "card-list", "calculator"],  # optional
+        menu_icon="menu-up",  # optional
+        default_index=0,  # optional
+        )
 
-# Membuat konten berdasarkan pilihan menu
-if menu_selection == 'Home':
-    st.title('Selamat Datang di Website Klasifikasi Hipertensi')
-    st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
-    st.write('Faktor Faktor Resiko Hipertensi')
-    st.write("""
-    1. Jenis Kelamin
-    2. Usia
-    3. Indeks Massa Tubuh
-    4. Sistolik
-    5. Diastolik
-    6. Nafas
-    7. Detak Nadi
+
+if selected == "Home":
+    st.title(f'Aplikasi Web Data Mining')
+    st.write(""" ### Klasifikasi tingkat kematian gagal jantung menggunakan Metode Decision tree, Random forest, dan SVM
     """)
-    st.markdown("### Data Hipertensi")
-    st.write('Data Hipertensi ini merupakan data dari Puskesmas Modopuro, Mojokerto')
-    url = "https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
-    data = pd.read_csv(url)
-    st.write(data)
+    img = Image.open('jantung.jpg')
+    st.image(img, use_column_width=False)
+    st.write('Gagal Jantung adalah kondisi ketika otot jantung tidak dapat memompa darah sebagaimana mestinya untuk memenuhi kebutuhan tubuh. Darah merupakan cairan terpenting yang beredar ke seluruh tubuh dengan menyuplai oksigen ke seluruh bagian tubuh. Penyakit kardiovaskular (CVDs) adalah penyebab kematian nomor 1 secara global, merenggut sekitar 17,9 juta nyawa setiap tahun, yang merupakan 31% dari semua kematian di seluruh dunia. Ancaman masalah kardiovaskular yang terus-menerus ini telah meningkat karena pilihan gaya hidup yang buruk seiring dengan sikap acuh tak acuh terhadap kesehatan. Dengan sebagian besar orang berjuang dengan masalah mental, kebiasaan seperti penggunaan tembakau, pola makan yang tidak sehat dan obesitas, ketidakaktifan fisik dan penggunaan alkohol yang berbahaya telah dilakukan oleh populasi massal. Oleh karena itu, orang yang memiliki risiko kardiovaskular tinggi memerlukan deteksi dan manajemen dini di mana model pembelajaran mesin dapat sangat membantu!')
 
-elif menu_selection == 'Pre-Pocesssing Data':
-    st.title('Halaman Pre-pocessing Data')
-    st.write('Hipertensi')
 
-    st.markdown("### Data Hipertensi")
-    st.write('Data Hipertensi ini merupakan data dari Puskesmas Modopuro, Mojokerto')
-    url = "https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
-    data = pd.read_csv(url)
-    st.write(data)
-
-    # Tambahkan tombol untuk memicu proses preprocessing
-    if st.button('Proses Data'):
-        # Menghapus baris dengan nilai yang hilang (NaN)
-        data = data.dropna()
-        # Menghapus duplikat data
-        data = data.drop_duplicates()
-
-        # Mapping for 'Hipertensi'
-        data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0})
-
-        # Melakukan one-hot encoding pada kolom 'Jenis Kelamin'
-        data = pd.get_dummies(data, columns=['Jenis Kelamin'], prefix='JK')
-
-        def preprocess_text(text):
-            # Menghapus karakter non-alphanumeric dan spasi ganda
-            text = re.sub(r'[^A-Za-z0-9\s]', '', text)
-            # Menghapus karakter alfabet
-            text = re.sub(r'[A-Za-z]', '', text)
-            # Mengganti spasi ganda dengan spasi tunggal
-            text = re.sub(r'\s+', ' ', text)
-            # Menghapus spasi di awal dan akhir teks
-            text = text.strip()
-            return text
-        
-        columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
-        for col in columns_to_clean:
-            data[col] = data[col].apply(preprocess_text)
-
-        # Tampilkan hasil preprocessing di bawah tombol
-        st.write('Data setelah preprocessing:')
-        st.write(data)
-            
-elif menu_selection == 'Klasifikasi SVM':
-    st.title('Halaman Hasil Klasifikasi SVM')
-    dataset = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/hasilnormalisasi.csv', sep=';')
-    st.write(dataset)
-    # Pisahkan fitur dan target
-    X = dataset[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]  # Fitur (input)
-    y = dataset['Diagnosa']  # Target (output)
-
-    # Bagi dataset menjadi data latih dan data uji
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
-    # Inisialisasi model SVM
-    svm = SVC(kernel='linear', C=1)
-    svm.fit(X_train, y_train)
+if selected == "Datasets":
+    st.title(f"{selected}")
+    data_hf = pd.read_csv("https://raw.githubusercontent.com/AmandaCaecilia/datamining/main/heart_failure_clinical_records_dataset.csv")
+    st.write("Dataset Heart Failure : ", data_hf) 
+    st.write('Jumlah baris dan kolom :', data_hf.shape)
+    X=data_hf.iloc[:,0:12].values 
+    y=data_hf.iloc[:,12].values
+    st.write('Dataset Description :')
+    st.write('1. age: Age of the patient')
+    st.write('2. anemia: Haemoglobin level of patient')
+    st.write('3. creatinine_phosphokinase: Level of the CPK enzyme in the blood (mcg/L)')
+    st.write('4. diabetes: If the patient has diabetes (Boolean)')
+    st.write('5. ejection_fraction: Percentage of blood leaving the heart at each contraction')
+    st.write('6. high_blood_pressure: If the patient has hypertension(Boolean)')
+    st.write('7. platelets: Platelet count of blood (kiloplatelets/mL)')
+    st.write('8. serum_creatinine: Level of serum creatinine in the blood (mg/dL)')
+    st.write('9. serum_sodium: Level of serum sodium in the blood (mEq/L)')
+    st.write('10. sex: Sex of the patient(Boolean)')
+    st.write('11. smoking: If the patient smokes or not(Boolean)')
+    st.write('12. time: Follow-up period')
+    st.write('13. DEATH_EVENT: If the patient deceased during the follow-up period')
     
-    # K-Fold Cross Validation
-    k_fold = 5
-    cv_scores = cross_val_score(svm, X_train, y_train, cv=k_fold)
+    st.write("Dataset Heart Failure Download : (https://raw.githubusercontent.com/AmandaCaecilia/datamining/main/heart_failure_clinical_records_dataset.csv) ")
 
-    # Melatih model pada data latih
-    # svm.fit(X_train, y_train)
+if selected == "Pre-Processing":
+    st.title(f"{selected}")
+    data_hf = pd.read_csv("https://raw.githubusercontent.com/AmandaCaecilia/datamining/main/heart_failure_clinical_records_dataset.csv")
+    X=data_hf.iloc[:,0:12].values 
+    y=data_hf.iloc[:,12].values
+    from sklearn.preprocessing import LabelEncoder
+    le = LabelEncoder()
+    y = le.fit_transform(y)
     
-    # Mengevaluasi model SVM
-    Y_prediction = svm.predict(X_test)
-    accuracy_svm = round(accuracy_score(y_test, Y_prediction) * 100, 2)
-    acc_svm = round(svm.score(X_train, y_train) * 100, 2)
+    from sklearn.preprocessing import MinMaxScaler
+    scaler = MinMaxScaler()
+    scaled = scaler.fit_transform(X)
+    st.write("Hasil Preprocesing : ", scaled)
+
+    #Train and Test split
+    X_train,X_test,y_train,y_test=train_test_split(scaled,y,test_size=0.3,random_state=0)
+
+
+if selected == "Modelling":
+    st.title(f"{selected}")
+    st.write(""" ### Decision Tree, Random Forest, SVM """)
+    data_hf = pd.read_csv("https://raw.githubusercontent.com/AmandaCaecilia/datamining/main/heart_failure_clinical_records_dataset.csv")
+    X=data_hf.iloc[:,0:12].values 
+    y=data_hf.iloc[:,12].values
+    from sklearn.preprocessing import LabelEncoder
+    le = LabelEncoder()
+    y = le.fit_transform(y)
+
+    #Train and Test split
+    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.3,random_state=0)
+    
+    # Decision Tree
+    decision_tree = DecisionTreeClassifier() 
+    decision_tree.fit(X_train, y_train)  
+    Y_pred = decision_tree.predict(X_test) 
+    accuracy_dt=round(accuracy_score(y_test,Y_pred)* 100, 2)
+    acc_decision_tree = round(decision_tree.score(X_train, y_train) * 100, 2)
+    
+    cm = confusion_matrix(y_test, Y_pred)
+    accuracy = accuracy_score(y_test,Y_pred)
+    precision =precision_score(y_test, Y_pred,average='micro')
+    recall =  recall_score(y_test, Y_pred,average='micro')
+    f1 = f1_score(y_test,Y_pred,average='micro')
+    print('Confusion matrix for DecisionTree\n',cm)
+    print('accuracy_DecisionTree: %.3f' %accuracy)
+    print('precision_DecisionTree: %.3f' %precision)
+    print('recall_DecisionTree: %.3f' %recall)
+    print('f1-score_DecisionTree : %.3f' %f1)
+    
+    # Random Forest
+    random_forest = RandomForestClassifier(n_estimators=100)
+    random_forest.fit(X_train, y_train)
+    Y_prediction = random_forest.predict(X_test)
+    accuracy_rf=round(accuracy_score(y_test,Y_prediction)* 100, 2)
+    acc_random_forest = round(random_forest.score(X_train, y_train) * 100, 2)
     
     cm = confusion_matrix(y_test, Y_prediction)
-    accuracy = accuracy_score(y_test, Y_prediction)
-    precision = precision_score(y_test, Y_prediction, average='micro')
-    recall = recall_score(y_test, Y_prediction, average='micro')
-    f1 = f1_score(y_test, Y_prediction, average='micro')
-
-    # Mengukur akurasi pada data uji
-    accuracy = accuracy_score(y_test, Y_prediction)
-    st.write(f'Accuracy on Test Data: {accuracy * 100:.2f}%')
+    accuracy = accuracy_score(y_test,Y_prediction)
+    precision =precision_score(y_test, Y_prediction,average='micro')
+    recall =  recall_score(y_test, Y_prediction,average='micro')
+    f1 = f1_score(y_test,Y_prediction,average='micro')
+    print('Confusion matrix for Random Forest\n',cm)
+    print('accuracy_random_Forest : %.3f' %accuracy)
+    print('precision_random_Forest : %.3f' %precision)
+    print('recall_random_Forest : %.3f' %recall)
+    print('f1-score_random_Forest : %.3f' %f1)
     
-    # Hitung metrik evaluasi
-    precision = precision_score(y_test, Y_prediction, average='micro')
-    recall = recall_score(y_test, Y_prediction, average='micro')
-    f1 = f1_score(y_test, Y_prediction, average='micro')
+    #SVM
+    SVM = svm.SVC(kernel='linear') 
+    SVM.fit(X_train, y_train)
+    Y_prediction = SVM.predict(X_test)
+    accuracy_SVM=round(accuracy_score(y_test,Y_pred)* 100, 2)
+    acc_SVM = round(SVM.score(X_train, y_train) * 100, 2)
     
-    st.write(f'Precision: {precision:.2f}')
-    st.write(f'Recall: {recall:.2f}')
-    st.write(f'F1 Score: {f1:.2f}')
-
-    # Confusion Matrix
-    conf_matrix = confusion_matrix(y_test, Y_prediction)
+    cm = confusion_matrix(y_test, Y_pred)
+    accuracy = accuracy_score(y_test,Y_pred)
+    precision =precision_score(y_test, Y_pred,average='micro')
+    recall =  recall_score(y_test, Y_pred,average='micro')
+    f1 = f1_score(y_test,Y_pred,average='micro')
+    print('Confusion matrix for SVM\n',cm)
+    print('accuracy_SVM : %.3f' %accuracy)
+    print('precision_SVM : %.3f' %precision)
+    print('recall_SVM : %.3f' %recall)
+    print('f1-score_SVM : %.3f' %f1)
+    st.write("""
+    #### Akurasi:""" )
+    results = pd.DataFrame({
+        'Model': ['Decision Tree','Random Forest','SVM'],
+        'Score': [ acc_decision_tree,acc_random_forest, acc_SVM ],
+        'Accuracy_score':[accuracy_dt,accuracy_rf,accuracy_SVM]})
     
-    # Hitung metrik evaluasi
-    accuracy = accuracy_score(y_test, Y_prediction)
+    result_df = results.sort_values(by='Accuracy_score', ascending=False)
+    result_df = result_df.reset_index(drop=True)
+    result_df.head(9)
+    st.write(result_df)
     
-    # Tampilkan visualisasi confusion matrix menggunakan heatmap
-    fig, ax = plt.subplots(figsize=(5, 3))
-    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=False,
-                xticklabels=['Predict Positive', 'Predict Negative'],
-                yticklabels=['Actual Positive', 'Actual Negative'])
-    plt.xlabel('Predicted')
-    plt.ylabel('True')
-    plt.title('Confusion Matrix')
-    st.pyplot(fig) 
+    fig = plt.figure()
+    ax = fig.add_axes([0,0,1,1])
+    ax.bar(['Decision Tree', 'Random Forest','SVM'],[accuracy_dt, accuracy_rf, accuracy_SVM])
+    plt.show()
+    st.pyplot(fig)
 
-    # Membuat DataFrame untuk menampilkan metrik evaluasi dalam bentuk tabel
-    metrics_data = {'Metric': ['Akurasi','Precision', 'Recall', 'F1 Score'],
-                    'Nilai': [accuracy, precision, recall, f1]}
-    metrics_df = pd.DataFrame(metrics_data)
-    st.write(metrics_df)
 
-elif menu_selection == 'Uji Coba':
-    st.title('Halaman Uji Coba')
-    col1,col2 = st.columns([2,2])
-    with col1:
-        usia = st.number_input("Usia",0)
-        IMT = st.number_input("IMT",0.00)
-        sistole = st.number_input("sistole",0.00)
-    with col2:
-        diastole = st.number_input("diastole",0.00)
-        nafas = st.number_input("nafas",0.00)
-        detak_nadi = st.number_input("detak nadi",0.00)
-    jenis_kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
-    submit = st.button('Prediksi')
 
-    if submit:
-        X_new = np.array([[usia, IMT, sistole, diastole, nafas, detak_nadi, 0 if jenis_kelamin == "Laki-laki" else 1]])
-        # Prediksi dengan model SVM
-        predict = svm.predict(X_new)
+if selected == "Implementation":
+    st.title(f"{selected}")
+    st.write("""
+            ### Pilih Metode yang anda inginkan :"""
+            )
+    algoritma=st.selectbox('Pilih', ('Decision Tree','Random Forest','SVM'))
+
+    data_hf = pd.read_csv("https://raw.githubusercontent.com/AmandaCaecilia/datamining/main/heart_failure_clinical_records_dataset.csv")
+    X=data_hf.iloc[:,0:12].values 
+    y=data_hf.iloc[:,12].values
+    from sklearn.preprocessing import LabelEncoder
+    le = LabelEncoder()
+    y = le.fit_transform(y)
+
+    #Train and Test split
+    X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.3,random_state=0)
     
-        # Tulis hasil prediksi
-        if predict == 0:
-            st.write("""# Anda Tidak Hipertensi""")
-        elif predict == 1:
-            st.write("""# Anda Hipertensi tingkat 1, Segera Ke Dokter""")
-        else:
-            st.write("""# Anda Hipertensi tingkat 2, Segera Ke Dokter """)
+    # Decision Tree
+    decision_tree = DecisionTreeClassifier() 
+    decision_tree.fit(X_train, y_train)  
+    Y_pred = decision_tree.predict(X_test) 
+    accuracy_dt=round(accuracy_score(y_test,Y_pred)* 100, 2)
+    acc_decision_tree = round(decision_tree.score(X_train, y_train) * 100, 2)
+    
+    cm = confusion_matrix(y_test, Y_pred)
+    accuracy = accuracy_score(y_test,Y_pred)
+    precision =precision_score(y_test, Y_pred,average='micro')
+    recall =  recall_score(y_test, Y_pred,average='micro')
+    f1 = f1_score(y_test,Y_pred,average='micro')
+    print('Confusion matrix for DecisionTree\n',cm)
+    print('accuracy_DecisionTree: %.3f' %accuracy)
+    print('precision_DecisionTree: %.3f' %precision)
+    print('recall_DecisionTree: %.3f' %recall)
+    print('f1-score_DecisionTree : %.3f' %f1)
+    
+    # Random Forest
+    random_forest = RandomForestClassifier(n_estimators=100)
+    random_forest.fit(X_train, y_train)
+    Y_prediction = random_forest.predict(X_test)
+    accuracy_rf=round(accuracy_score(y_test,Y_prediction)* 100, 2)
+    acc_random_forest = round(random_forest.score(X_train, y_train) * 100, 2)
+    
+    cm = confusion_matrix(y_test, Y_prediction)
+    accuracy = accuracy_score(y_test,Y_prediction)
+    precision =precision_score(y_test, Y_prediction,average='micro')
+    recall =  recall_score(y_test, Y_prediction,average='micro')
+    f1 = f1_score(y_test,Y_prediction,average='micro')
+    print('Confusion matrix for Random Forest\n',cm)
+    print('accuracy_random_Forest : %.3f' %accuracy)
+    print('precision_random_Forest : %.3f' %precision)
+    print('recall_random_Forest : %.3f' %recall)
+    print('f1-score_random_Forest : %.3f' %f1)
+    
+    #SVM
+    SVM = svm.SVC(kernel='linear') 
+    SVM.fit(X_train, y_train)
+    Y_prediction = SVM.predict(X_test)
+    accuracy_SVM=round(accuracy_score(y_test,Y_pred)* 100, 2)
+    acc_SVM = round(SVM.score(X_train, y_train) * 100, 2)
+    
+    cm = confusion_matrix(y_test, Y_pred)
+    accuracy = accuracy_score(y_test,Y_pred)
+    precision =precision_score(y_test, Y_pred,average='micro')
+    recall =  recall_score(y_test, Y_pred,average='micro')
+    f1 = f1_score(y_test,Y_pred,average='micro')
+    print('Confusion matrix for SVM\n',cm)
+    print('accuracy_SVM : %.3f' %accuracy)
+    print('precision_SVM : %.3f' %precision)
+    print('recall_SVM : %.3f' %recall)
+    print('f1-score_SVM : %.3f' %f1)
+        
+    st.write("""
+            ### Input Data :"""
+            )
+    age = st.number_input("umur =", min_value=40 ,max_value=90)
+    anemia = st.number_input("anemia =", min_value=0, max_value=1)
+    creatinine_phosphokinase = st.number_input("creatinine_phosphokinase =", min_value=0 , max_value=10000)
+    diabetes = st.number_input("diabetes =", min_value=0, max_value=1)
+    ejection_fraction = st.number_input("ejection_fraction =", min_value=0, max_value=100)
+    high_blood_pressure = st.number_input("high_blood_pressure =", min_value=0 ,max_value=1)
+    platelets = st.number_input("platelets =", min_value=100000, max_value=1000000)
+    serum_creatinine = st.number_input("serum_creatinine =", min_value=0.0, max_value=10.0)
+    serum_sodium = st.number_input("serum_sodium =", min_value=100, max_value=150)
+    sex = st.number_input("sex =", min_value=0, max_value=1)
+    smoking = st.number_input("smoking =", min_value=0, max_value=1)
+    time = st.number_input("time =", min_value=1, max_value=500)
+    submit = st.button("Submit")
+    if submit :
+        if algoritma == 'Decision Tree' :
+            X_new = np.array([[age,anemia,creatinine_phosphokinase,diabetes,ejection_fraction,high_blood_pressure,platelets,serum_creatinine,serum_sodium,sex,smoking,time]])
+            prediksi = decision_tree.predict(X_new)
+            if prediksi == 1 :
+                st.write(""" ## Hasil Prediksi : resiko meninggal tinggi""")
+            else : 
+                st.write("""## Hasil Prediksi : resiko meninggal rendah""")
+        elif algoritma == 'Random Forest' :
+            X_new = np.array([[age,anemia,creatinine_phosphokinase,diabetes,ejection_fraction,high_blood_pressure,platelets,serum_creatinine,serum_sodium,sex,smoking,time]])
+            prediksi = random_forest.predict(X_new)
+            if prediksi == 1 :
+                st.write("""## Hasil Prediksi : resiko meninggal tinggi""")
+            else : 
+                st.write("""## Hasil Prediksi : resiko meninggal rendah""")
+        else :
+            X_new = np.array([[age,anemia,creatinine_phosphokinase,diabetes,ejection_fraction,high_blood_pressure,platelets,serum_creatinine,serum_sodium,sex,smoking,time]])
+            prediksi = SVM.predict(X_new)
+            if prediksi == 1 :
+                st.write("""## Hasil Prediksi : resiko meninggal tinggi""")
+            else : 
+                st.write("""## Hasil Prediksi : resiko meninggal rendah""")
