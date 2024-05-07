@@ -9,7 +9,7 @@ from collections import OrderedDict
 from sklearn.metrics import make_scorer, accuracy_score,precision_score
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score ,precision_score,recall_score,f1_score
+from sklearn.metrics import accuracy_score, precision_score,recall_score,f1_score
 
 #Model Select
 from sklearn.model_selection import KFold,train_test_split,cross_val_score
@@ -58,8 +58,8 @@ if selected == "Pre-Processing":
     st.markdown('<h3 style="text-align: left;"> Data Asli </h1>', unsafe_allow_html=True)
     st.write("Berikut merupakan data asli yang didapat dari UPT Puskesmas Modopuro Mojokerto.")
     
-    df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
-    st.write("Dataset Hipertensi : ", df) 
+    data_hp = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
+    st.write("Dataset Hipertensi : ", data_hp) 
     st.markdown('<h3 style="text-align: left;"> Lakukan Cleaning Data </h1>', unsafe_allow_html=True)
     if st.button("Clean Data"):
         cleaned_data = preprocess_data(df)
