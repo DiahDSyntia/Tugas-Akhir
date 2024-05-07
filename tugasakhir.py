@@ -87,24 +87,22 @@ with st.sidebar:
 
 
 if selected == "Home":
-    st.title(f'Aplikasi Web Data Mining')
-    st.markdown('<h1 style="text-align: center;"> Selamat Datang di Website Klasifikasi Hipertensi </h1>', unsafe_allow_html=True)
-        st.markdown('<h3 style="text-align: left;"> Hipertensi </h1>', unsafe_allow_html=True)
-        st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
-        st.write('Faktor Faktor Resiko Hipertensi')
-        st.write("""
-        1. Jenis Kelamin
-        2. Usia
-        3. Indeks Massa Tubuh
-        4. Sistolik
-        5. Diastolik
-        6. Nafas
-        7. Detak Nadi
-        """)
-        st.markdown('<h3 style="text-align: left;"> View Data </h1>', unsafe_allow_html=True)
-        df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
-        st.write("Data yang digunakan yaitu data Penyakit Hipertensi dari UPT Puskesmas Modopuro Mojokerto.")
-        st.dataframe(df)
+    st.title(f'Aplikasi Web Klasifikasi Hipertensi')
+    st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
+    st.write('Faktor Faktor Resiko Hipertensi')
+    st.write("""
+    1. Jenis Kelamin
+    2. Usia
+    3. Indeks Massa Tubuh
+    4. Sistolik
+    5. Diastolik
+    6. Nafas
+    7. Detak Nadi
+    """)
+    st.markdown('<h3 style="text-align: left;"> View Data </h1>', unsafe_allow_html=True)
+    df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
+    st.write("Data yang digunakan yaitu data Penyakit Hipertensi dari UPT Puskesmas Modopuro Mojokerto.")
+    st.dataframe(df)
 
 if selected == "Datasets":
     st.title(f"{selected}")
