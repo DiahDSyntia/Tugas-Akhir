@@ -286,7 +286,7 @@ if selected == "Implementation":
     #st.write("Dataset Hipertensi : ", data)
     
     # Memisahkan fitur dan target
-    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
+    X = data[['Jenis Kelamin','Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi']]
     y = data['Diagnosa']
 
     # Bagi dataset menjadi data latih dan data uji
