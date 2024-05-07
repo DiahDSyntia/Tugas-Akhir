@@ -48,16 +48,16 @@ if selected == "Datasets":
     data_hp = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
     st.write("Dataset Hipertensi : ", data_hp) 
     st.write('Jumlah baris dan kolom :', data_hp.shape)
-    X=data_hf.iloc[:,0:12].values 
-    y=data_hf.iloc[:,12].values
+    X=data_hp.iloc[:,0:12].values 
+    y=data_hp.iloc[:,12].values
     st.write('Dataset Description :')
     #st.write('1. age: Age of the patient')
 
 if selected == "Pre-Processing":
     st.title(f"{selected}")
-    data_hf = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
-    X=data_hf.iloc[:,0:12].values 
-    y=data_hf.iloc[:,12].values
+    data_hp = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
+    X=data_hp.iloc[:,0:12].values 
+    y=data_hp.iloc[:,12].values
     from sklearn.preprocessing import LabelEncoder
     le = LabelEncoder()
     y = le.fit_transform(y)
