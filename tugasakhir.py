@@ -1,9 +1,16 @@
 import streamlit as st
+from streamlit_option_menu import option_menu
 import pandas as pd
+from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
+from sklearn.preprocessing import StandardScaler
 import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
-from PIL import Image
 from collections import OrderedDict
+import re
+from sklearn.svm import SVC
+from sklearn.ensemble import BaggingClassifier
+import joblib
 
 #Metrics
 from sklearn.metrics import make_scorer, accuracy_score,precision_score
