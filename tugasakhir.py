@@ -238,23 +238,12 @@ if selected == "Modelling":
 
 
 if selected == "Implementation":
-    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv')
-    def normalize_data(data):
-        data.drop(columns=['Jenis Kelamin_P'], inplace=True)
-        data.rename(columns={'Jenis Kelamin_L': 'Jenis Kelamin'}, inplace=True)
-        scaler = MinMaxScaler()
-        columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
-        data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
-        # Menghapus baris dengan nilai yang hilang (NaN)
-        data = data.dropna()
-        # Menghapus duplikat data
-        data = data.drop_duplicates()
-        return data
+    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
         
     #st.write("Dataset Hipertensi : ", data)
     
     # Memisahkan fitur dan target
-    X = data[['Jenis Kelamin','Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi']]
+    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
     y = data['Diagnosa']
 
     # Bagi dataset menjadi data latih dan data uji
@@ -293,6 +282,17 @@ if selected == "Implementation":
     submit = st.button("Submit")
     
     if submit :
+        def normalize_data(data):
+            data.drop(columns=['Jenis Kelamin_P'], inplace=True)
+            data.rename(columns={'Jenis Kelamin_L': 'Jenis Kelamin'}, inplace=True)
+            scaler = MinMaxScaler()
+            columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
+            data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
+            # Menghapus baris dengan nilai yang hilang (NaN)
+            data = data.dropna()
+            # Menghapus duplikat data
+            data = data.drop_duplicates()
+            return data
         X_new = np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]])
         prediksi = SVM.predict(X_new)
         
