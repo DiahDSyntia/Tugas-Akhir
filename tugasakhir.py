@@ -238,39 +238,7 @@ if selected == "Modelling":
 
 
 if selected == "Implementation":
-    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv', sep=';')
-    def preprocess_data(data): 
-        def preprocess_text(text):
-            # Menghilangkan karakter yang tidak diinginkan, seperti huruf dan tanda baca
-            text = re.sub(r'[^A-Za-z0-9\s]', '', text)
-            # Menghilangkan semua huruf (A-Z, a-z)
-            text = re.sub(r'[A-Za-z]', '', text)
-            # Mengganti spasi ganda dengan spasi tunggal
-            text = re.sub(r'\s+', ' ', text)
-            # Menghapus spasi di awal dan akhir teks
-            text = text.strip()
-            return text
-        # Replace commas with dots and convert numerical columns to floats
-        numerical_columns = ['IMT']
-        data[numerical_columns] = data[numerical_columns].replace({',': '.'}, regex=True).astype(float)
-        columns_to_clean = ['Usia', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi']
-        for col in columns_to_clean:
-            data[col] = data[col].apply(preprocess_text)
-        return data
-
-    def transform_data(data):
-        # Mapping for 'Hipertensi'
-        data['Diagnosa'] = data['Diagnosa'].map({'HIPERTENSI 1': 1, 'HIPERTENSI 2': 2, 'TIDAK': 0}) 
-        # One-hot encoding for 'Jenis Kelamin'
-        one_hot_encoder = OneHotEncoder()
-        encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
-        encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['Jenis Kelamin']))  
-        # Drop the original 'Jenis Kelamin' feature
-        data = data.drop('Jenis Kelamin', axis=1)   
-        # Concatenate encoded 'Jenis Kelamin' and transformed 'Diagnosa' with original data
-        data = pd.concat([data, encoded_gender], axis=1)
-        return data
-        
+    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv')
     def normalize_data(data):
         data.drop(columns=['Jenis Kelamin_P'], inplace=True)
         data.rename(columns={'Jenis Kelamin_L': 'Jenis Kelamin'}, inplace=True)
