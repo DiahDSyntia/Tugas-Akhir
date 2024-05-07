@@ -282,7 +282,8 @@ if selected == "Implementation":
         # Menghapus duplikat data
         data = data.drop_duplicates()
         return data
-    st.write(data)
+        
+    st.write("Dataset Hipertensi : ", data)
     
     # Memisahkan fitur dan target
     X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
