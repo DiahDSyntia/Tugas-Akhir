@@ -57,31 +57,30 @@ if selected == "Pre-Processing":
     st.title(f"{selected}")
     st.markdown('<h3 style="text-align: left;"> Data Asli </h1>', unsafe_allow_html=True)
     st.write("Berikut merupakan data asli yang didapat dari UPT Puskesmas Modopuro Mojokerto.")
+    
+    df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
+    st.dataframe(df)
+    st.markdown('<h3 style="text-align: left;"> Lakukan Cleaning Data </h1>', unsafe_allow_html=True)
+    if st.button("Clean Data"):
+        cleaned_data = preprocess_data(df)
+        st.write("Cleaning Data Selesai.")
+        st.dataframe(cleaned_data)
+        st.session_state.cleaned_data = cleaned_data
 
-    if upload_file is not None:
-        df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv"
-        st.dataframe(df)
-        st.markdown('<h3 style="text-align: left;"> Lakukan Cleaning Data </h1>', unsafe_allow_html=True)
-        if st.button("Clean Data"):
-            cleaned_data = preprocess_data(df)
-            st.write("Cleaning Data Selesai.")
-            st.dataframe(cleaned_data)
-            st.session_state.cleaned_data = cleaned_data
-    
-        st.markdown('<h3 style="text-align: left;"> Lakukan Transformasi Data </h3>', unsafe_allow_html=True)
-        if 'cleaned_data' in st.session_state:
-            if st.button("Transformasi Data"):
-                transformed_data = transform_data(st.session_state.cleaned_data.copy())
-                st.write("Transformasi Data Selesai.")
-                st.dataframe(transformed_data)
-                st.session_state.transformed_data = transformed_data  # Store preprocessed data in session state
-    
-        st.markdown('<h3 style="text-align: left;"> Lakukan Normalisasi Data </h1>', unsafe_allow_html=True)
-        if 'transformed_data' in st.session_state:  # Check if preprocessed_data exists in session state
-            if st.button("Normalisasi Data"):
-                normalized_data = normalize_data(st.session_state.transformed_data.copy())
-                st.write("Normalisasi Data Selesai.")
-                st.dataframe(normalized_data)
+    st.markdown('<h3 style="text-align: left;"> Lakukan Transformasi Data </h3>', unsafe_allow_html=True)
+    if 'cleaned_data' in st.session_state:
+        if st.button("Transformasi Data"):
+            transformed_data = transform_data(st.session_state.cleaned_data.copy())
+            st.write("Transformasi Data Selesai.")
+            st.dataframe(transformed_data)
+            st.session_state.transformed_data = transformed_data  # Store preprocessed data in session state
+
+    st.markdown('<h3 style="text-align: left;"> Lakukan Normalisasi Data </h1>', unsafe_allow_html=True)
+    if 'transformed_data' in st.session_state:  # Check if preprocessed_data exists in session state
+        if st.button("Normalisasi Data"):
+            normalized_data = normalize_data(st.session_state.transformed_data.copy())
+            st.write("Normalisasi Data Selesai.")
+            st.dataframe(normalized_data)
 
 
 if selected == "Modelling":
