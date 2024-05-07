@@ -238,7 +238,7 @@ if selected == "Modelling":
 
 
 if selected == "Implementation":
-    data_hf = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
+    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
     def preprocess_data(data): 
         def preprocess_text(text):
             # Menghilangkan karakter yang tidak diinginkan, seperti huruf dan tanda baca
@@ -283,7 +283,7 @@ if selected == "Implementation":
         data = data.drop_duplicates()
         return data
         
-    st.write("Dataset Hipertensi : ", data)
+    #st.write("Dataset Hipertensi : ", data)
     
     # Memisahkan fitur dan target
     X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
