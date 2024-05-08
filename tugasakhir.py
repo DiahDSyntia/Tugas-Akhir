@@ -20,13 +20,8 @@ from sklearn.metrics import accuracy_score, precision_score,recall_score,f1_scor
 
 #Model Select
 from sklearn.model_selection import KFold,train_test_split,cross_val_score
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import  LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
 from sklearn import linear_model
-from sklearn.linear_model import SGDClassifier
-from sklearn.tree import DecisionTreeClassifier 
 from sklearn import svm
 from sklearn import metrics 
 from sklearn import preprocessing 
@@ -99,10 +94,10 @@ if selected == "Home":
     6. Nafas
     7. Detak Nadi
     """)
-    st.markdown('<h3 style="text-align: left;"> View Data </h1>', unsafe_allow_html=True)
-    df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
-    st.write("Data yang digunakan yaitu data Penyakit Hipertensi dari UPT Puskesmas Modopuro Mojokerto.")
-    st.dataframe(df)
+    #st.markdown('<h3 style="text-align: left;"> View Data </h1>', unsafe_allow_html=True)
+    #df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
+    #st.write("Data yang digunakan yaitu data Penyakit Hipertensi dari UPT Puskesmas Modopuro Mojokerto.")
+    #st.dataframe(df)
 
 if selected == "Datasets":
     st.title(f"{selected}")
@@ -250,7 +245,7 @@ if selected == "Implementation":
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
     # Inisialisasi model SVM sebagai base estimator
-    model = SVC(kernel='rbf', C=1)
+    model = SVC(kernel='linear', C=1)
 
     # K-Fold Cross Validation
     k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
