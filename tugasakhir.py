@@ -319,7 +319,7 @@ if selected == "Implementation":
         datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi1.csv')  
         datatest = pd.concat([datatest, new_data], ignore_index=True)
         datanorm = joblib.load('scaler.pkl').fit_transform(datatest)
-        datapredict = joblib.load('https://github.com/DiahDSyntia/Tugas-Akhir/blob/main/model.pkl').predict(datanorm)
+        datapredict = joblib.load('model.pkl').predict(datanorm)
         
         # Normalisasi data input
         scaler = MinMaxScaler()
