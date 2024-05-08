@@ -11,6 +11,7 @@ import re
 from sklearn.svm import SVC
 from sklearn.ensemble import BaggingClassifier
 import joblib
+import requests
 
 #Metrics
 from sklearn.metrics import make_scorer, accuracy_score,precision_score
@@ -321,7 +322,7 @@ if selected == "Implementation":
         datanorm = joblib.load('scaler.pkl').fit_transform(datatest)
         # Unduh model dari GitHub
         model_url = 'https://github.com/DiahDSyntia/Tugas-Akhir/blob/main/model.pkl'
-        #response = requests.get(model_url)
+        response = requests.get(model_url)
         with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
             tmp_file.write(response.content)
             model_path = tmp_file.name
