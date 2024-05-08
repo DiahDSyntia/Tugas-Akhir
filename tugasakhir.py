@@ -320,7 +320,7 @@ if selected == "Implementation":
         datatest = pd.concat([datatest, new_data], ignore_index=True)
         datanorm = joblib.load('scaler.pkl').fit_transform(datatest)
         # Unduh model dari GitHub
-        model_url = 'https://github.com/DiahDSyntia/Tugas-Akhir/raw/main/model.pkl'
+        model_url = 'https://github.com/DiahDSyntia/Tugas-Akhir/blob/main/model.pkl'
         response = requests.get(model_url)
         with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
             tmp_file.write(response.content)
