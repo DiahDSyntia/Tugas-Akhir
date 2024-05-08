@@ -295,7 +295,7 @@ if selected == "Implementation":
     )
     Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
     # Convert gender to binary
-    gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
+    #gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
     Usia = st.number_input("Umur", min_value=0, max_value=150)
     IMT = st.number_input("IMT", min_value=0.0, max_value=100.0)
     Sistole = st.number_input("Sistole", min_value=0, max_value=300)
@@ -307,13 +307,13 @@ if selected == "Implementation":
     if submit:
         # Masukkan data input pengguna ke dalam DataFrame
         data_input = {
+            'Jenis Kelamin': [0 if Jenis_Kelamin.lower() == 'perempuan' else 1]
             'Usia': [Usia],
             'IMT': [IMT],
             'Sistole': [Sistole],
             'Diastole': [Diastole],
             'Nafas': [Nafas],
-            'Detak Nadi': [Detak_nadi],
-            'Jenis Kelamin': [gender_binary]
+            'Detak Nadi': [Detak_nadi]
         }
         new_data = pd.DataFrame(data_input)
         datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi1.csv')  
