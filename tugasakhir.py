@@ -318,7 +318,7 @@ if selected == "Implementation":
         new_data = pd.DataFrame(data)
         datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi.csv')  
         datatest = pd.concat([datatest, new_data], ignore_index=True)
-        #datanorm = joblib.load('standard_scaler.pkl').fit_transform(datatest)
+        datanorm = joblib.load('scaler.pkl').fit_transform(datatest)
         datapredict = joblib.load('model.pkl').predict(datanorm)
         
         # Normalisasi data input
