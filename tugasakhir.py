@@ -308,7 +308,8 @@ if selected == "Implementation":
     if submit:
         # Masukkan data input pengguna ke dalam DataFrame
         data = {
-            'Jenis Kelamin': [0 if Jenis_Kelamin.lower() == 'perempuan' else 1],
+            "JK_L" : [0 if Jenis_Kelamin.lower() == 'perempuan' else 1],
+            "JK_P" : [1 if Jenis_Kelamin.lower() == 'perempuan' else 0],
             'Usia': [Usia],
             'IMT': [IMT],
             'Sistole': [Sistole],
