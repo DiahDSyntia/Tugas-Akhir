@@ -305,6 +305,22 @@ if selected == "Implementation":
     submit = st.button("Submit")
     
     if submit:
+        # Masukkan data input pengguna ke dalam DataFrame
+        data_input = {
+            'Usia': [Usia],
+            'IMT': [IMT],
+            'Sistole': [Sistole],
+            'Diastole': [Diastole],
+            'Nafas': [Nafas],
+            'Detak Nadi': [Detak_nadi],
+            'Jenis Kelamin': [gender_binary]
+        }
+        new_data = pd.DataFrame(data)
+        datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi.csv')  
+        datatest = pd.concat([datatest, new_data], ignore_index=True)
+        #datanorm = joblib.load('standard_scaler.pkl').fit_transform(datatest)
+        datapredict = joblib.load('model.pkl').predict(datanorm)
+        
         # Normalisasi data input
         scaler = MinMaxScaler()
         X_new_normalized = scaler.fit_transform(np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]]))
