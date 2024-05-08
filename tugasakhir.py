@@ -321,14 +321,16 @@ if selected == "Implementation":
         datatest = pd.concat([datatest, new_data], ignore_index=True)
         datanorm = joblib.load('scaler.pkl').fit_transform(datatest)
         datapredict = joblib.load('modelrbf.pkl').predict(datanorm)
+
+        st.write('### Data yang Diinput:')
+        st.write(f'- Jenis Kelamin: {Jenis_Kelamin}')
+        st.write(f'- Usia: {Usia}')
+        st.write(f'- IMT: {IMT}')
+        st.write(f'- Sistole: {Sistole}')
+        st.write(f'- Diastole: {Diastole}')
+        st.write(f'- Nafas: {Nafas}')
+        st.write(f'- Detak Nadi: {Detak_nadi}')
         
-        # Normalisasi data input
-        scaler = MinMaxScaler()
-        X_new_normalized = scaler.fit_transform(np.array([[Usia, IMT, Sistole, Diastole, Nafas, Detak_nadi, gender_binary]]))
-    
-        # Lakukan prediksi dengan model
-        prediksi = model.predict(X_new_normalized)
-    
         if prediksi == 1 :
             st.write("""# Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
         elif prediksi == 2:
