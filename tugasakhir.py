@@ -333,9 +333,9 @@ if selected == "Implementation":
         st.write(f'- Nafas: {Nafas}')
         st.write(f'- Detak Nadi: {Detak_nadi}')
         
-        if prediksi == 1 :
+        if datapredict[-1] == 1 :
             st.write("""# Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
-        elif prediksi == 2:
+        elif datapredict[-1] == 2:
             st.write("# Hipertensi 2, Silahkan ke dokter")
         else:
             st.write("# Tidak Hipertensi")
