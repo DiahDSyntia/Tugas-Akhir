@@ -307,7 +307,7 @@ if selected == "Implementation":
     
     if submit:
         # Masukkan data input pengguna ke dalam DataFrame
-        data_input = {
+        data = {
             'Jenis Kelamin': [0 if Jenis_Kelamin.lower() == 'perempuan' else 1],
             'Usia': [Usia],
             'IMT': [IMT],
@@ -316,7 +316,7 @@ if selected == "Implementation":
             'Nafas': [Nafas],
             'Detak Nadi': [Detak_nadi]
         }
-        new_data = pd.DataFrame(data_input)
+        new_data = pd.DataFrame(data)
         datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi1.csv')  
         datatest = pd.concat([datatest, new_data], ignore_index=True)
         datanorm = joblib.load('scaler.pkl').fit_transform(datatest)
