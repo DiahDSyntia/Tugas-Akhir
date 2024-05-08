@@ -151,7 +151,7 @@ if selected == "Modelling":
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
     # Inisialisasi model SVM sebagai base estimator
-    model = SVC(kernel='rbf', C=1, gamma=0.1)
+    model = SVC(kernel='rbf', C=1, gamma=1)
 
     # K-Fold Cross Validation
     k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
