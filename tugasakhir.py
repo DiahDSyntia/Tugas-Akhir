@@ -333,13 +333,7 @@ if selected == "Implementation":
         datapredict = joblib.load('modelrbf.pkl').predict(datanorm)
 
         st.write('### Data yang Diinput:')
-        st.write(f'- Jenis Kelamin: {Jenis_Kelamin}, Usia: {Usia}')
-        st.write(f'- Usia: {Usia}')
-        st.write(f'- IMT: {IMT}')
-        st.write(f'- Sistole: {Sistole}')
-        st.write(f'- Diastole: {Diastole}')
-        st.write(f'- Nafas: {Nafas}')
-        st.write(f'- Detak Nadi: {Detak_nadi}')
+        st.write(f'- Jenis Kelamin: {Jenis_Kelamin}, Usia: {Usia}, IMT: {IMT}, Sistole: {Sistole}, Diastole: {Diastole}, Nafas: {Nafas}, Detak Nadi: {Detak_nadi}')
         
         if datapredict[-1] == 1 :
             st.write("""# Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
