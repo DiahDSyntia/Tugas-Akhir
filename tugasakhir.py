@@ -224,19 +224,20 @@ if selected == "Modelling":
         html_code = f"""
         <table style="margin: auto;">
             <tr>
-                <td style="text-align: center;"><h5>Accuracy</h5></td>
-                <td style="text-align: center;"><h5>Precision</h5></td>
-                <td style="text-align: center;"><h5>Recall</h5></td>
-                <td style="text-align: center;"><h5>F1- Score</h5></td>
+                <td style="text-align: center; background-color: #f2f2f2;"><h5>Accuracy</h5></td>
+                <td style="text-align: center; background-color: #f2f2f2;"><h5>Precision</h5></td>
+                <td style="text-align: center; background-color: #f2f2f2;"><h5>Recall</h5></td>
+                <td style="text-align: center; background-color: #f2f2f2;"><h5>F1-Score</h5></td>
             </tr>
             <tr>
-                <td style="text-align: center;">{accuracy * 100:.2f}%</td>
-                <td style="text-align: center;">{precision * 100:.2f}%</td>
-                <td style="text-align: center;">{recall * 100:.2f}%</td>
-                <td style="text-align: center;">{f1 * 100:.2f}%</td>
+                <td style="text-align: center; background-color: #e6f7ff;">{accuracy * 100:.2f}%</td>
+                <td style="text-align: center; background-color: #e6f7ff;">{precision * 100:.2f}%</td>
+                <td style="text-align: center; background-color: #e6f7ff;">{recall * 100:.2f}%</td>
+                <td style="text-align: center; background-color: #e6f7ff;">{f1 * 100:.2f}%</td>
             </tr>
         </table>
         """
+
             
         st.markdown(html_code, unsafe_allow_html=True)
 
