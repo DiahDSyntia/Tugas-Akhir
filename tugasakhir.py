@@ -224,10 +224,10 @@ if selected == "Modelling":
         html_code = f"""
         <table style="margin: auto;">
             <tr>
-                <td style="text-align: center; background-color: skyblue;"><h5>Accuracy</h5></td>
-                <td style="text-align: center; background-color: skyblue;"><h5>Precision</h5></td>
-                <td style="text-align: center; background-color: skyblue;"><h5>Recall</h5></td>
-                <td style="text-align: center; background-color: skyblue;"><h5>F1-Score</h5></td>
+                <td style="text-align: center; background-color: #F0E68C;"><h5>Accuracy</h5></td>
+                <td style="text-align: center; background-color: #F0E68C;"><h5>Precision</h5></td>
+                <td style="text-align: center; background-color: #F0E68C;"><h5>Recall</h5></td>
+                <td style="text-align: center; background-color: #F0E68C;"><h5>F1-Score</h5></td>
             </tr>
             <tr>
                 <td style="text-align: center; background-color: pink;">{accuracy * 100:.2f}%</td>
