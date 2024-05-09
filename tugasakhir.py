@@ -241,7 +241,6 @@ if selected == "Modelling":
             
         st.markdown(html_code, unsafe_allow_html=True)
 
-
 if selected == "Implementation":
     data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
         
@@ -303,6 +302,15 @@ if selected == "Implementation":
     st.write("""
     ### Input Data :"""
     )
+    st.write('Dataset Description :')
+    st.write('1. Jenis Kelamin: Jenis Kelamin pasien. P= Perempuan, L= Laki-Laki')
+    st.write('2. Usia: Usia dari pasien')
+    st.write('3. IMT: Indeks Massa Tubuh Pasien. Hitung IMT Menggunakan rumus IMT= Berat Badan(kg)/Tinggi badan(m)x Tinggi badan(m)')
+    st.write('4. Sistolik: Tekanan darah sistolik Pasien (mmHg). Secara umum, tekanan darah manusia normal adalah 120 mmHg – 140 mmHg, namun pada individu yang mengalami hipertensi, tekanan darah sistoliknya melebihi 140 mmHg')
+    st.write('5. Diastolik: Tekanan darah diastolik pasien (mmHg). Tekanan darah diastolik adalah tekanan darah saat jantung berelaksasi (jantung tidak sedang memompa darah) sebelum kembali memompa darah, tekanan darah diastolik meningkat melebihi 90 mmHg')
+    st.write('6. Nafas: Nafas pasien yang dihitung /menit. Secara umum frekuensi nafas pada orang dewasa (19-59 tahun) adalah 12-20 nafas/menit')
+    st.write('7. Detak Nadi: Detak nadi pasien. Pada orang normal dewasa detak nadi berkisar 60-100 kali/menit.')
+    
     Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
     # Convert gender to binary
     #gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
