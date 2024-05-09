@@ -83,7 +83,7 @@ with st.sidebar:
 
 
 if selected == "Home":
-    st.title(f'Aplikasi Web Klasifikasi Hipertensi')
+    st.title(f'Web Klasifikasi Hipertensi')
     # Menampilkan gambar dari URL
     st.image("hipertensi.jpeg", use_column_width=True)
     st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
@@ -97,10 +97,6 @@ if selected == "Home":
     6. Nafas
     7. Detak Nadi
     """)
-    #st.markdown('<h3 style="text-align: left;"> View Data </h1>', unsafe_allow_html=True)
-    #df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
-    #st.write("Data yang digunakan yaitu data Penyakit Hipertensi dari UPT Puskesmas Modopuro Mojokerto.")
-    #st.dataframe(df)
 
 if selected == "Datasets":
     st.title(f"{selected}")
