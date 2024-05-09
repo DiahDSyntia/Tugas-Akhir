@@ -332,7 +332,7 @@ if selected == "Implementation":
         datanorm = joblib.load('scaler.pkl').fit_transform(datatest)
         datapredict = joblib.load('modelrbf.pkl').predict(datanorm)
 
-        st.write('### Data yang Diinput:')
+        st.write('Data yang Diinput:')
         st.write(f'- Jenis Kelamin: {Jenis_Kelamin}, Usia: {Usia}, IMT: {IMT}, Sistole: {Sistole}, Diastole: {Diastole}, Nafas: {Nafas}, Detak Nadi: {Detak_nadi}')
         
         if datapredict[-1] == 1 :
