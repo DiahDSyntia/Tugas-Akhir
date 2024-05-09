@@ -160,23 +160,30 @@ if selected == "Modelling":
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
     # Inisialisasi model SVM sebagai base estimator
-    model = SVC(kernel='rbf', C=1, gamma=1)
+    model = SVC(kernel='linear', C=1)
 
+    import time
     # K-Fold Cross Validation
     k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
     cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
     
     # Menampilkan akurasi K-Fold Cross Validation
-    print(f'K-Fold Cross Validation Scores: {cv_scores}')
-    print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
+    #print(f'K-Fold Cross Validation Scores: {cv_scores}')
+    #print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
+    
+    # List untuk menyimpan waktu eksekusi setiap fold
+    execution_times = []
     
     # Menyimpan nilai akurasi dari setiap lipatan
     accuracies = []
+    start_time = time.time()
     
     # Melakukan validasi silang dan menyimpan akurasi dari setiap iterasi
     for i, (train_index, test_index) in enumerate(k_fold.split(X_train)):
         X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[test_index]
         y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
+    
+        fold_start_time = time.time()
     
         # Melatih model
         model.fit(X_train_fold, y_train_fold)
@@ -184,14 +191,16 @@ if selected == "Modelling":
         # Menguji model
         y_pred_fold = model.predict(X_val_fold)
     
-        # Mengukur akurasi
-        accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
-        accuracies.append(accuracy_fold)
+        fold_end_time = time.time()
+    
+        # Menghitung dan menyimpan waktu eksekusi fold
+        fold_execution_time = fold_end_time - fold_start_time
+        execution_times.append(fold_execution_time)
     
         print(f'Accuracy di fold {i+1}: {accuracy_fold * 100:.2f}%')
+        print(f'Fold {i+1} execution time: {fold_execution_time:.4f} seconds')
     
-    # Menampilkan rata-rata akurasi dari setiap lipatan
-    print(f'Mean Accuracy of K-Fold Cross Validation: {np.mean(accuracies) * 100:.2f}%')
+    end_time = time.time()
 
     # Melatih model pada data latih
     model.fit(X_train, y_train)
@@ -210,7 +219,7 @@ if selected == "Modelling":
     
     # Tampilkan visualisasi confusion matrix menggunakan heatmap
     fig, ax = plt.subplots(figsize=(5, 3))
-    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
+    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='pink')
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
