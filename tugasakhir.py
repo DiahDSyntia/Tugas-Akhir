@@ -102,13 +102,14 @@ if selected == "Home":
 
 if selected == "Datasets":
     st.title(f"{selected}")
+    st.write("Data yang digunakan yaitu data Penyakit Hipertensi dari UPT Puskesmas Modopuro Mojokerto.")
     data_hp = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
     st.write("Dataset Hipertensi : ", data_hp) 
     st.write('Jumlah baris dan kolom :', data_hp.shape)
     X=data_hp.iloc[:,0:7].values 
     y=data_hp.iloc[:,7].values
     st.write('Dataset Description :')
-    #st.write('1. age: Age of the patient')
+    st.write('1. Usia: Usia dari pasien')
 
 if selected == "Pre-Processing":
     st.title(f"{selected}")
