@@ -84,6 +84,8 @@ with st.sidebar:
 
 if selected == "Home":
     st.title(f'Aplikasi Web Klasifikasi Hipertensi')
+    # Menampilkan gambar dari URL
+    st.image("hipertensi.jpg", use_column_width=True)
     st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
     st.write('Faktor Faktor Resiko Hipertensi')
     st.write("""
