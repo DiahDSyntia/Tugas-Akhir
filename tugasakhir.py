@@ -53,7 +53,7 @@ def transform_data(data):
     # One-hot encoding for 'Jenis Kelamin'
     one_hot_encoder = OneHotEncoder()
     encoded_gender = one_hot_encoder.fit_transform(data[['Jenis Kelamin']].values.reshape(-1, 1))
-    encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['Jenis Kelamin']))  
+    encoded_gender = pd.DataFrame(encoded_gender.toarray(), columns=one_hot_encoder.get_feature_names_out(['JK']))  
     # Drop the original 'Jenis Kelamin' feature
     data = data.drop('Jenis Kelamin', axis=1)   
     # Concatenate encoded 'Jenis Kelamin' and transformed 'Diagnosa' with original data
@@ -61,10 +61,10 @@ def transform_data(data):
     return data
     
 def normalize_data(data):
-    data.drop(columns=['Jenis Kelamin_P'], inplace=True)
-    data.rename(columns={'Jenis Kelamin_L': 'Jenis Kelamin'}, inplace=True)
+    #data.drop(columns=['Jenis Kelamin_P'], inplace=True)
+    #data.rename(columns={'Jenis Kelamin_L': 'Jenis Kelamin'}, inplace=True)
     scaler = MinMaxScaler()
-    columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'Jenis Kelamin']
+    columns_to_normalize = ['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas', 'Detak Nadi', 'JK_L','JK_P']
     data[columns_to_normalize] = scaler.fit_transform(data[columns_to_normalize])
     # Menghapus baris dengan nilai yang hilang (NaN)
     data = data.dropna()
