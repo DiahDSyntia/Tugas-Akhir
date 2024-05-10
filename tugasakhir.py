@@ -228,10 +228,10 @@ if selected == "Modelling":
                 <td style="text-align: center; background-color: #F0E68C;"><h5>F1-Score</h5></td>
             </tr>
             <tr>
-                <td style="text-align: center; background-color: pink;">{accuracy * 100:.2f}%</td>
-                <td style="text-align: center; background-color: pink;">{precision * 100:.2f}%</td>
-                <td style="text-align: center; background-color: pink;">{recall * 100:.2f}%</td>
-                <td style="text-align: center; background-color: pink;">{f1 * 100:.2f}%</td>
+                <td style="text-align: center; background-color: brown;">{accuracy * 100:.2f}%</td>
+                <td style="text-align: center; background-color: brown;">{precision * 100:.2f}%</td>
+                <td style="text-align: center; background-color: brown;">{recall * 100:.2f}%</td>
+                <td style="text-align: center; background-color: brown;">{f1 * 100:.2f}%</td>
             </tr>
         </table>
         """
