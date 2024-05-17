@@ -240,61 +240,6 @@ if selected == "Modelling":
         st.markdown(html_code, unsafe_allow_html=True)
 
 if selected == "Implementation":
-    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialnormalisasi.csv', sep=';')
-
-    # Memisahkan fitur dan target
-    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]
-    y = data['Diagnosa']
-
-    # Bagi dataset menjadi data latih dan data uji
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
-    # Inisialisasi model SVM sebagai base estimator
-    model = SVC(kernel='rbf', C=1)
-
-    # K-Fold Cross Validation
-    k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
-    cv_scores = cross_val_score(model, X_train, y_train, cv=k_fold)
-    
-    # Menampilkan akurasi K-Fold Cross Validation
-    print(f'K-Fold Cross Validation Scores: {cv_scores}')
-    print(f'Mean Accuracy: {cv_scores.mean() * 100:.2f}%')
-    
-    # Menyimpan nilai akurasi dari setiap lipatan
-    accuracies = []
-    
-    # Melakukan validasi silang dan menyimpan akurasi dari setiap iterasi
-    for i, (train_index, test_index) in enumerate(k_fold.split(X_train)):
-        X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[test_index]
-        y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[test_index]
-    
-        # Melatih model
-        model.fit(X_train_fold, y_train_fold)
-    
-        # Menguji model
-        y_pred_fold = model.predict(X_val_fold)
-    
-        # Mengukur akurasi
-        accuracy_fold = accuracy_score(y_val_fold, y_pred_fold)
-        accuracies.append(accuracy_fold)
-    
-        print(f'Accuracy di fold {i+1}: {accuracy_fold * 100:.2f}%')
-    
-    # Menampilkan rata-rata akurasi dari setiap lipatan
-    print(f'Mean Accuracy of K-Fold Cross Validation: {np.mean(accuracies) * 100:.2f}%')
-
-    # Melatih model pada data latih
-    model.fit(X_train, y_train)
-
-    # Menguji model pada data uji
-    y_pred = model.predict(X_test)
-    
-    # Mengukur akurasi pada data uji
-    accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, average='macro')
-    recall = recall_score(y_test, y_pred, average='macro')
-    f1 = f1_score(y_test, y_pred, average='macro')
-
     st.write("""
     ### Penjelasan :"""
     )
