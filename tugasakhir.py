@@ -338,7 +338,7 @@ if selected == "Implementation":
         new_data = pd.DataFrame(data)
         datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialX_test1.csv')  
         datatest = pd.concat([datatest, new_data], ignore_index=True)
-        st.write(datatest)
+        #st.write(datatest)
         datanorm = joblib.load('scaler (1).pkl').fit_transform(datatest)
         datapredict = joblib.load('modelrbf1.pkl').predict(datanorm)
 
