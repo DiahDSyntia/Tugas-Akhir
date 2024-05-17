@@ -84,8 +84,6 @@ with st.sidebar:
 
 if selected == "Home":
     st.title(f'Web Klasifikasi Hipertensi')
-    # Menampilkan gambar dari URL
-    st.image("hipertensi.jpeg", use_column_width=True)
     st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga, normalnya tekanan darah yang dimiliki manusia adalah 120/80 mmHg [7], tapi pada penderita hipertensi tekanan darah sistolik dan diastolik lebih dari 140/90 mmHg [8]. Angka kematian masyarakat Indonesia untuk penyakit hipertensi mencapai 427.218 kasus [14]. Penyakit ini cenderung muncul pada kelompok usia 31-44 (31,6%), usia 45-54 tahun (45,2%), dan usia 55 sampai 64 tahun (55,2%).')
     st.write('Faktor Faktor Resiko Hipertensi')
     st.write("""
