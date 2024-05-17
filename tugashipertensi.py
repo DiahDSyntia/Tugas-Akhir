@@ -238,6 +238,11 @@ if selected == "Modelling":
         st.markdown(html_code, unsafe_allow_html=True)
 
 if selected == "Implementation":
+    st.title(f"{selected}")
+    st.write("""
+            ### Pilih Metode yang anda inginkan :"""
+            )
+    algoritma=st.selectbox('Pilih', ('SVM+Bagging','SVM'))
     data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialnormalisasi.csv', sep=';')
         
     #st.write("Dataset Hipertensi : ", data)
