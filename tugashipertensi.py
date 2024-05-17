@@ -311,7 +311,7 @@ if selected == "Implementation":
     st.write("""
             ### Pilih Metode yang anda inginkan :"""
             )
-    algoritma=st.selectbox('Pilih', ('SVM', 'SVM+Bagging'))
+    algoritma =st.selectbox('Pilih', ('SVM', 'SVM+Bagging'))
     
     st.write("""
     ### Input Data :"""
@@ -358,32 +358,32 @@ if selected == "Implementation":
                 st.write("# Tidak Hipertensi")
                 
         else algoritma == 'SVM+Bagging' :
-            # Masukkan data input pengguna ke dalam DataFrame
-            data = {
-                "JK_L" : [0 if Jenis_Kelamin.lower() == 'perempuan' else 1],
-                "JK_P" : [1 if Jenis_Kelamin.lower() == 'perempuan' else 0],
-                'Usia': [Usia],
-                'IMT': [IMT],
-                'Sistole': [Sistole],
-                'Diastole': [Diastole],
-                'Nafas': [Nafas],
-                'Detak Nadi': [Detak_nadi]
-            }
-            new_data = pd.DataFrame(data)
-            datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialX_test1.csv')  
-            datatest = pd.concat([datatest, new_data], ignore_index=True)
-            #st.write(datatest)
-            datanorm = joblib.load('scaler (1).pkl').fit_transform(datatest)
-            datapredict = joblib.load('modelrbfbagging.pkl').predict(datanorm)
-    
-            st.write('Data yang Diinput:')
-            st.write(f'- Jenis Kelamin: {Jenis_Kelamin}, Usia: {Usia}, IMT: {IMT}, Sistole: {Sistole}, Diastole: {Diastole}, Nafas: {Nafas}, Detak Nadi: {Detak_nadi}')
-            
-            if datapredict[-1] == 1 :
-                st.write("""# Hasil Prediksi : Hipertensi 1, Silahkan Pergi Ke Dokter""")
-            elif datapredict[-1] == 2:
-                st.write("# Hipertensi 2, Silahkan Pergi ke dokter")
-            else:
-                st.write("# Tidak Hipertensi")
+                # Masukkan data input pengguna ke dalam DataFrame
+                data = {
+                    "JK_L" : [0 if Jenis_Kelamin.lower() == 'perempuan' else 1],
+                    "JK_P" : [1 if Jenis_Kelamin.lower() == 'perempuan' else 0],
+                    'Usia': [Usia],
+                    'IMT': [IMT],
+                    'Sistole': [Sistole],
+                    'Diastole': [Diastole],
+                    'Nafas': [Nafas],
+                    'Detak Nadi': [Detak_nadi]
+                }
+                new_data = pd.DataFrame(data)
+                datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialX_test1.csv')  
+                datatest = pd.concat([datatest, new_data], ignore_index=True)
+                #st.write(datatest)
+                datanorm = joblib.load('scaler (1).pkl').fit_transform(datatest)
+                datapredict = joblib.load('modelrbfbagging.pkl').predict(datanorm)
+        
+                st.write('Data yang Diinput:')
+                st.write(f'- Jenis Kelamin: {Jenis_Kelamin}, Usia: {Usia}, IMT: {IMT}, Sistole: {Sistole}, Diastole: {Diastole}, Nafas: {Nafas}, Detak Nadi: {Detak_nadi}')
+                
+                if datapredict[-1] == 1 :
+                    st.write("""# Hasil Prediksi : Hipertensi 1, Silahkan Pergi Ke Dokter""")
+                elif datapredict[-1] == 2:
+                    st.write("# Hipertensi 2, Silahkan Pergi ke dokter")
+                else:
+                    st.write("# Tidak Hipertensi")
     
     
