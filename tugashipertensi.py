@@ -238,6 +238,24 @@ if selected == "Modelling":
         st.markdown(html_code, unsafe_allow_html=True)
 
 if selected == "Implementation":
+    st.write("""
+    ### Penjelasan :"""
+    )
+    st.write('Dataset Description :')
+    st.write('1. Jenis Kelamin: Jenis Kelamin pasien. P= Perempuan, L= Laki-Laki')
+    st.write('2. Usia: Usia dari pasien')
+    st.write('3. IMT: Indeks Massa Tubuh Pasien. Hitung IMT Menggunakan rumus IMT= Berat Badan(kg)/Tinggi badan(m)x Tinggi badan(m)')
+    st.write('4. Sistolik: Tekanan darah sistolik Pasien (mmHg). Secara umum, tekanan darah manusia normal adalah 120 mmHg – 140 mmHg, namun pada individu yang mengalami hipertensi, tekanan darah sistoliknya melebihi 140 mmHg')
+    st.write('5. Diastolik: Tekanan darah diastolik pasien (mmHg). Tekanan darah diastolik adalah tekanan darah saat jantung berelaksasi (jantung tidak sedang memompa darah) sebelum kembali memompa darah, tekanan darah diastolik meningkat melebihi 90 mmHg')
+    st.write('6. Nafas: Nafas pasien yang dihitung /menit. Secara umum frekuensi nafas pada orang dewasa (19-59 tahun) adalah 12-20 nafas/menit')
+    st.write('7. Detak Nadi: Detak nadi pasien. Pada orang normal dewasa detak nadi berkisar 60-100 kali/menit.')
+
+    st.title(f"{selected}")
+    st.write("""
+            ### Pilih Metode yang anda inginkan :"""
+            )
+    algoritma =st.selectbox('Pilih', ('SVM', 'SVM+Bagging'))
+    
     data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialnormalisasi.csv', sep=';')
         
     #st.write("Dataset Hipertensi : ", data)
@@ -294,24 +312,6 @@ if selected == "Implementation":
     precision = precision_score(y_test, y_pred, average='macro')
     recall = recall_score(y_test, y_pred, average='macro')
     f1 = f1_score(y_test, y_pred, average='macro')
-
-    st.write("""
-    ### Penjelasan :"""
-    )
-    st.write('Dataset Description :')
-    st.write('1. Jenis Kelamin: Jenis Kelamin pasien. P= Perempuan, L= Laki-Laki')
-    st.write('2. Usia: Usia dari pasien')
-    st.write('3. IMT: Indeks Massa Tubuh Pasien. Hitung IMT Menggunakan rumus IMT= Berat Badan(kg)/Tinggi badan(m)x Tinggi badan(m)')
-    st.write('4. Sistolik: Tekanan darah sistolik Pasien (mmHg). Secara umum, tekanan darah manusia normal adalah 120 mmHg – 140 mmHg, namun pada individu yang mengalami hipertensi, tekanan darah sistoliknya melebihi 140 mmHg')
-    st.write('5. Diastolik: Tekanan darah diastolik pasien (mmHg). Tekanan darah diastolik adalah tekanan darah saat jantung berelaksasi (jantung tidak sedang memompa darah) sebelum kembali memompa darah, tekanan darah diastolik meningkat melebihi 90 mmHg')
-    st.write('6. Nafas: Nafas pasien yang dihitung /menit. Secara umum frekuensi nafas pada orang dewasa (19-59 tahun) adalah 12-20 nafas/menit')
-    st.write('7. Detak Nadi: Detak nadi pasien. Pada orang normal dewasa detak nadi berkisar 60-100 kali/menit.')
-
-    #st.title(f"{selected}")
-    st.write("""
-            ### Pilih Metode yang anda inginkan :"""
-            )
-    algoritma =st.selectbox('Pilih', ('SVM', 'SVM+Bagging'))
     
     st.write("""
     ### Input Data :"""
