@@ -84,7 +84,7 @@ with st.sidebar:
 
 if selected == "Home":
     st.title(f'Web Klasifikasi Hipertensi')
-    st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga, normalnya tekanan darah yang dimiliki manusia adalah 120/80 mmHg [7], tapi pada penderita hipertensi tekanan darah sistolik dan diastolik lebih dari 140/90 mmHg [8]. Angka kematian masyarakat Indonesia untuk penyakit hipertensi mencapai 427.218 kasus [14]. Penyakit ini cenderung muncul pada kelompok usia 31-44 (31,6%), usia 45-54 tahun (45,2%), dan usia 55 sampai 64 tahun (55,2%).')
+    st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
     st.write('Faktor Faktor Resiko Hipertensi')
     st.write("""
     1. Jenis Kelamin
@@ -99,7 +99,7 @@ if selected == "Home":
 if selected == "Datasets":
     st.title(f"{selected}")
     st.write("Data yang digunakan yaitu data Penyakit Hipertensi dari UPT Puskesmas Modopuro Mojokerto.")
-    data_hp = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/cobadatahipertensi.csv", sep=';')
+    data_hp = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
     st.write("Dataset Hipertensi : ", data_hp) 
     st.write('Jumlah baris dan kolom :', data_hp.shape)
     X=data_hp.iloc[:,0:7].values 
@@ -119,7 +119,7 @@ if selected == "Pre-Processing":
     st.markdown('<h3 style="text-align: left;"> Data Asli </h1>', unsafe_allow_html=True)
     st.write("Berikut merupakan data asli yang didapat dari UPT Puskesmas Modopuro Mojokerto.")
     
-    df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/cobadatahipertensi.csv", sep=';')
+    df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
     st.write("Dataset Hipertensi : ", df) 
     st.markdown('<h3 style="text-align: left;"> Lakukan Cleaning Data </h1>', unsafe_allow_html=True)
     if st.button("Clean Data"):
@@ -146,7 +146,7 @@ if selected == "Pre-Processing":
 
 if selected == "Modelling":
     st.write("Hasil Akurasi, Presisi, Recall, F1- Score Metode SVM")
-    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialnormalisasi.csv', sep=';')
+    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi.csv', sep=';')
 
     # Memisahkan fitur dan target
     X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]
@@ -156,7 +156,7 @@ if selected == "Modelling":
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
     # Inisialisasi model SVM sebagai base estimator
-    model = SVC(kernel='rbf', C=1)
+    model = SVC(kernel='rbf', C=1, gamma=1)
 
     # K-Fold Cross Validation
     k_fold = KFold(n_splits=5, shuffle=True, random_state=0)
@@ -226,10 +226,10 @@ if selected == "Modelling":
                 <td style="text-align: center; background-color: #F0E68C;"><h5>F1-Score</h5></td>
             </tr>
             <tr>
-                <td style="text-align: center; background-color: #F08080;">{accuracy * 100:.2f}%</td>
-                <td style="text-align: center; background-color: #F08080;">{precision * 100:.2f}%</td>
-                <td style="text-align: center; background-color: #F08080;">{recall * 100:.2f}%</td>
-                <td style="text-align: center; background-color: #F08080;">{f1 * 100:.2f}%</td>
+                <td style="text-align: center; background-color: pink;">{accuracy * 100:.2f}%</td>
+                <td style="text-align: center; background-color: pink;">{precision * 100:.2f}%</td>
+                <td style="text-align: center; background-color: pink;">{recall * 100:.2f}%</td>
+                <td style="text-align: center; background-color: pink;">{f1 * 100:.2f}%</td>
             </tr>
         </table>
         """
@@ -238,30 +238,12 @@ if selected == "Modelling":
         st.markdown(html_code, unsafe_allow_html=True)
 
 if selected == "Implementation":
-    st.write("""
-    ### Penjelasan :"""
-    )
-    st.write('Dataset Description :')
-    st.write('1. Jenis Kelamin: Jenis Kelamin pasien. P= Perempuan, L= Laki-Laki')
-    st.write('2. Usia: Usia dari pasien')
-    st.write('3. IMT: Indeks Massa Tubuh Pasien. Hitung IMT Menggunakan rumus IMT= Berat Badan(kg)/Tinggi badan(m)x Tinggi badan(m)')
-    st.write('4. Sistolik: Tekanan darah sistolik Pasien (mmHg). Secara umum, tekanan darah manusia normal adalah 120 mmHg – 140 mmHg, namun pada individu yang mengalami hipertensi, tekanan darah sistoliknya melebihi 140 mmHg')
-    st.write('5. Diastolik: Tekanan darah diastolik pasien (mmHg). Tekanan darah diastolik adalah tekanan darah saat jantung berelaksasi (jantung tidak sedang memompa darah) sebelum kembali memompa darah, tekanan darah diastolik meningkat melebihi 90 mmHg')
-    st.write('6. Nafas: Nafas pasien yang dihitung /menit. Secara umum frekuensi nafas pada orang dewasa (19-59 tahun) adalah 12-20 nafas/menit')
-    st.write('7. Detak Nadi: Detak nadi pasien. Pada orang normal dewasa detak nadi berkisar 60-100 kali/menit.')
-
-    st.title(f"{selected}")
-    st.write("""
-            ### Pilih Metode yang anda inginkan :"""
-            )
-    algoritma =st.selectbox('Pilih', ('SVM', 'SVM+Bagging'))
-    
-    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialnormalisasi.csv', sep=';')
+    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
         
     #st.write("Dataset Hipertensi : ", data)
     
     # Memisahkan fitur dan target
-    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]
+    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
     y = data['Diagnosa']
 
     # Bagi dataset menjadi data latih dan data uji
@@ -309,10 +291,22 @@ if selected == "Implementation":
     
     # Mengukur akurasi pada data uji
     accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, average='macro')
-    recall = recall_score(y_test, y_pred, average='macro')
-    f1 = f1_score(y_test, y_pred, average='macro')
-    
+    precision = precision_score(y_test, y_pred, average='weighted')
+    recall = recall_score(y_test, y_pred, average='weighted')
+    f1 = f1_score(y_test, y_pred, average='weighted')
+
+    st.write("""
+    ### Penjelasan :"""
+    )
+    st.write('Dataset Description :')
+    st.write('1. Jenis Kelamin: Jenis Kelamin pasien. P= Perempuan, L= Laki-Laki')
+    st.write('2. Usia: Usia dari pasien')
+    st.write('3. IMT: Indeks Massa Tubuh Pasien. Hitung IMT Menggunakan rumus IMT= Berat Badan(kg)/Tinggi badan(m)x Tinggi badan(m)')
+    st.write('4. Sistolik: Tekanan darah sistolik Pasien (mmHg). Secara umum, tekanan darah manusia normal adalah 120 mmHg – 140 mmHg, namun pada individu yang mengalami hipertensi, tekanan darah sistoliknya melebihi 140 mmHg')
+    st.write('5. Diastolik: Tekanan darah diastolik pasien (mmHg). Tekanan darah diastolik adalah tekanan darah saat jantung berelaksasi (jantung tidak sedang memompa darah) sebelum kembali memompa darah, tekanan darah diastolik meningkat melebihi 90 mmHg')
+    st.write('6. Nafas: Nafas pasien yang dihitung /menit. Secara umum frekuensi nafas pada orang dewasa (19-59 tahun) adalah 12-20 nafas/menit')
+    st.write('7. Detak Nadi: Detak nadi pasien. Pada orang normal dewasa detak nadi berkisar 60-100 kali/menit.')
+
     st.write("""
     ### Input Data :"""
     )
@@ -328,9 +322,10 @@ if selected == "Implementation":
     submit = st.button("Submit")
     
     if submit:
-        data_input = {
-            "JK_L": [0 if Jenis_Kelamin.lower() == 'perempuan' else 1],
-            "JK_P": [1 if Jenis_Kelamin.lower() == 'perempuan' else 0],
+        # Masukkan data input pengguna ke dalam DataFrame
+        data = {
+            "JK_L" : [0 if Jenis_Kelamin.lower() == 'perempuan' else 1],
+            "JK_P" : [1 if Jenis_Kelamin.lower() == 'perempuan' else 0],
             'Usia': [Usia],
             'IMT': [IMT],
             'Sistole': [Sistole],
@@ -338,22 +333,19 @@ if selected == "Implementation":
             'Nafas': [Nafas],
             'Detak Nadi': [Detak_nadi]
         }
-        
-        new_data = pd.DataFrame(data_input)
-        datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialX_test1.csv')  
+        new_data = pd.DataFrame(data)
+        datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi1.csv')  
         datatest = pd.concat([datatest, new_data], ignore_index=True)
-        scaler = joblib.load('scaler (1).pkl')
-        model_filename = 'modelrbf1.pkl' if algoritma == 'SVM' else 'modelrbfbagging.pkl'
-        model = joblib.load(model_filename)
-        datanorm = scaler.fit_transform(datatest)
-        datapredict = model.predict(datanorm)
-        
+        #st.write(datatest)
+        datanorm = joblib.load('scaler.pkl').fit_transform(datatest)
+        datapredict = joblib.load('modelrbf.pkl').predict(datanorm)
+
         st.write('Data yang Diinput:')
         st.write(f'- Jenis Kelamin: {Jenis_Kelamin}, Usia: {Usia}, IMT: {IMT}, Sistole: {Sistole}, Diastole: {Diastole}, Nafas: {Nafas}, Detak Nadi: {Detak_nadi}')
         
-        if datapredict[-1] == 1:
-            st.write("# Hasil Prediksi: Hipertensi 1, Silahkan Ke Dokter")
+        if datapredict[-1] == 1 :
+            st.write("""# Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
         elif datapredict[-1] == 2:
-            st.write("# Hasil Prediksi: Hipertensi 2, Silahkan Ke Dokter")
+            st.write("# Hipertensi 2, Silahkan ke dokter")
         else:
             st.write("# Tidak Hipertensi")
