@@ -238,7 +238,7 @@ if selected == "Modelling":
         st.markdown(html_code, unsafe_allow_html=True)
 
 if selected == "Implementation":
-    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/cobadatahipertensi.csv', sep=';')
+    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialnormalisasi.csv', sep=';')
         
     #st.write("Dataset Hipertensi : ", data)
     
