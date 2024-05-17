@@ -20,29 +20,6 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score, precision_score,recall_score,f1_score
 
 #Model Select
-from sklearn.model_selection import KFold,train_test_split,cross_val_s…
-[16:40, 17/05/2024] Diah: import streamlit as st
-from streamlit_option_menu import option_menu
-import pandas as pd
-from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
-from sklearn.preprocessing import StandardScaler
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-from collections import OrderedDict
-import re
-from sklearn.svm import SVC
-from sklearn.ensemble import BaggingClassifier
-import joblib
-import requests
-
-#Metrics
-from sklearn.metrics import make_scorer, accuracy_score,precision_score
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score, precision_score,recall_score,f1_score
-
-#Model Select
 from sklearn.model_selection import KFold,train_test_split,cross_val_score
 from sklearn.model_selection import train_test_split
 from sklearn import linear_model
