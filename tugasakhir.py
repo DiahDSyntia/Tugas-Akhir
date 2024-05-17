@@ -241,9 +241,7 @@ if selected == "Modelling":
 
 if selected == "Implementation":
     data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialnormalisasi.csv', sep=';')
-        
-    #st.write("Dataset Hipertensi : ", data)
-    
+
     # Memisahkan fitur dan target
     X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]
     y = data['Diagnosa']
@@ -293,9 +291,9 @@ if selected == "Implementation":
     
     # Mengukur akurasi pada data uji
     accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, average='weighted')
-    recall = recall_score(y_test, y_pred, average='weighted')
-    f1 = f1_score(y_test, y_pred, average='weighted')
+    precision = precision_score(y_test, y_pred, average='macro')
+    recall = recall_score(y_test, y_pred, average='macro')
+    f1 = f1_score(y_test, y_pred, average='macro')
 
     st.write("""
     ### Penjelasan :"""
