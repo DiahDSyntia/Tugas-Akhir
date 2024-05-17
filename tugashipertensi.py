@@ -1,4 +1,27 @@
-import streamlit as st
+[15:39, 17/05/2024] Diah: import streamlit as st
+from streamlit_option_menu import option_menu
+import pandas as pd
+from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from collections import OrderedDict
+import re
+from sklearn.svm import SVC
+from sklearn.ensemble import BaggingClassifier
+import joblib
+import requests
+
+#Metrics
+from sklearn.metrics import make_scorer, accuracy_score,precision_score
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score, precision_score,recall_score,f1_score
+
+#Model Select
+from sklearn.model_selection import KFold,train_test_split,cross_val_s…
+[16:40, 17/05/2024] Diah: import streamlit as st
 from streamlit_option_menu import option_menu
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
@@ -238,12 +261,12 @@ if selected == "Modelling":
         st.markdown(html_code, unsafe_allow_html=True)
 
 if selected == "Implementation":
-    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialnormalisasi.csv', sep=';')
+    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
         
     #st.write("Dataset Hipertensi : ", data)
     
     # Memisahkan fitur dan target
-    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]
+    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
     y = data['Diagnosa']
 
     # Bagi dataset menjadi data latih dan data uji
@@ -334,11 +357,11 @@ if selected == "Implementation":
             'Detak Nadi': [Detak_nadi]
         }
         new_data = pd.DataFrame(data)
-        datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/trialX_test1.csv')  
+        datatest = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datatestingsebnormalisasi1.csv')  
         datatest = pd.concat([datatest, new_data], ignore_index=True)
         #st.write(datatest)
-        datanorm = joblib.load('scaler (1).pkl').fit_transform(datatest)
-        datapredict = joblib.load('modelrbf1.pkl').predict(datanorm)
+        datanorm = joblib.load('scaler.pkl').fit_transform(datatest)
+        datapredict = joblib.load('modelrbf.pkl').predict(datanorm)
 
         st.write('Data yang Diinput:')
         st.write(f'- Jenis Kelamin: {Jenis_Kelamin}, Usia: {Usia}, IMT: {IMT}, Sistole: {Sistole}, Diastole: {Diastole}, Nafas: {Nafas}, Detak Nadi: {Detak_nadi}')
