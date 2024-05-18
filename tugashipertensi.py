@@ -153,7 +153,7 @@ if selected == "Modelling":
     y = data['Diagnosa']
 
     # Bagi dataset menjadi data latih dan data uji
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 
     # Inisialisasi model SVM sebagai base estimator
     model = SVC(kernel='rbf', C=1, gamma=1)
