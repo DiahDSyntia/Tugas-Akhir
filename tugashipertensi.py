@@ -354,8 +354,8 @@ if selected == "Implementation":
         st.write(f'Hasil prediksi menggunakan model: {model_name}')
         
         if datapredict[-1] == 1 :
-            st.write("""## Hasil Prediksi Menggunakan {model_name} : Hipertensi 1, Silahkan Ke Dokter""")
+            st.write("""## Hasil Prediksi Menggunakan ({model_name}) : Hipertensi 1, Silahkan Ke Dokter""")
         elif datapredict[-1] == 2:
-            st.write("## Hasil Prediksi Menggunakan {model_name} : Hipertensi 2, Silahkan ke dokter")
+            st.write("## Hasil Prediksi Menggunakan ({model_name}) : Hipertensi 2, Silahkan ke dokter")
         else:
-            st.write("## Hasil Prediksi Menggunakan {model_name} : Tidak Hipertensi")
+            st.write("## Hasil Prediksi Menggunakan ({model_name}) : Tidak Hipertensi")
