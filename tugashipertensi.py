@@ -308,6 +308,11 @@ if selected == "Implementation":
     st.write('7. Detak Nadi: Detak nadi pasien. Pada orang normal dewasa detak nadi berkisar 60-100 kali/menit.')
 
     st.write("""
+            ### Pilih Metode yang anda inginkan :"""
+            )
+    algoritma=st.selectbox('Pilih', ('SVM','SVM+Bagging'))
+    
+    st.write("""
     ### Input Data :"""
     )
     Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
