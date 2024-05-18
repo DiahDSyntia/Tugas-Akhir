@@ -338,10 +338,18 @@ if selected == "Implementation":
         datatest = pd.concat([datatest, new_data], ignore_index=True)
         #st.write(datatest)
         datanorm = joblib.load('scalernormalisasi.pkl').fit_transform(datatest)
-        datapredict = joblib.load('modelrbfc1.pkl').predict(datanorm)
+        # Prediksi dengan metode yang dipilih
+        if metode == "SVM":
+            model = joblib.load('modelrbfc1.pkl')
+            model_name = "SVM"
+        else:  # SVM + Bagging
+            model = joblib.load('modelbagging (1).pkl')
+            model_name = "SVM + Bagging"
+        datapredict = model.predict(datanorm)
 
         st.write('Data yang Diinput:')
         st.write(f'- Jenis Kelamin: {Jenis_Kelamin}, Usia: {Usia}, IMT: {IMT}, Sistole: {Sistole}, Diastole: {Diastole}, Nafas: {Nafas}, Detak Nadi: {Detak_nadi}')
+        st.write(f'Hasil prediksi menggunakan model: {model_name}')
         
         if datapredict[-1] == 1 :
             st.write("""# Hasil Prediksi : Hipertensi 1, Silahkan Ke Dokter""")
