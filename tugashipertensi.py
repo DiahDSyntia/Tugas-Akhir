@@ -306,11 +306,10 @@ if selected == "Implementation":
     st.write('5. Diastolik: Tekanan darah diastolik pasien (mmHg). Tekanan darah diastolik adalah tekanan darah saat jantung berelaksasi (jantung tidak sedang memompa darah) sebelum kembali memompa darah, tekanan darah diastolik meningkat melebihi 90 mmHg')
     st.write('6. Nafas: Nafas pasien yang dihitung /menit. Secara umum frekuensi nafas pada orang dewasa (19-59 tahun) adalah 12-20 nafas/menit')
     st.write('7. Detak Nadi: Detak nadi pasien. Pada orang normal dewasa detak nadi berkisar 60-100 kali/menit.')
-    
+
     st.write("""
     ### Input Data :"""
     )
-    algoritma=st.selectbox('Pilih Metode yang diinginkan', ('SVM','SVM+Bagging'))
     Jenis_Kelamin = st.selectbox("Jenis Kelamin", ["Laki-laki", "Perempuan"])
     # Convert gender to binary
     #gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
