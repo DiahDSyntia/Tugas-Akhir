@@ -83,7 +83,7 @@ with st.sidebar:
 
 
 if selected == "Home":
-    st.title(f'Web Klasifikasi Hipertensi')
+    st.title(f'Aplikasi Web Klasifikasi Hipertensi')
     st.write('Hipertensi adalah kondisi yang terjadi ketika tekanan darah naik di atas kisaran normal, biasanya masyarakat menyebutnya darah tinggi. Penyakit hipertensi berkaitan dengan kenaikan tekanan darah di sistolik maupun diastolik. Faktor faktor yang berperan untuk penyakit ini adalah perubahan gaya hidup, asupan makanan dengan kadar lemak tinggi, dan kurangnya aktivitas fisik seperti olahraga')
     st.write('Faktor Faktor Resiko Hipertensi')
     st.write("""
@@ -95,6 +95,10 @@ if selected == "Home":
     6. Nafas
     7. Detak Nadi
     """)
+    #st.markdown('<h3 style="text-align: left;"> View Data </h1>', unsafe_allow_html=True)
+    #df = pd.read_csv("https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/DATABARU3.xlsx%20-%20DATAFIX.csv")
+    #st.write("Data yang digunakan yaitu data Penyakit Hipertensi dari UPT Puskesmas Modopuro Mojokerto.")
+    #st.dataframe(df)
 
 if selected == "Datasets":
     st.title(f"{selected}")
@@ -146,10 +150,10 @@ if selected == "Pre-Processing":
 
 if selected == "Modelling":
     st.write("Hasil Akurasi, Presisi, Recall, F1- Score Metode SVM")
-    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi.csv', sep=';')
+    data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
 
     # Memisahkan fitur dan target
-    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','JK_L','JK_P']]
+    X = data[['Usia', 'IMT', 'Sistole', 'Diastole', 'Nafas','Detak Nadi','Jenis Kelamin']]
     y = data['Diagnosa']
 
     # Bagi dataset menjadi data latih dan data uji
@@ -206,7 +210,7 @@ if selected == "Modelling":
     
     # Tampilkan visualisasi confusion matrix menggunakan heatmap
     fig, ax = plt.subplots(figsize=(5, 3))
-    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='pink')
+    sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues')
     plt.xlabel('Predicted')
     plt.ylabel('True')
     plt.title('Confusion Matrix')
@@ -220,22 +224,22 @@ if selected == "Modelling":
         html_code = f"""
         <table style="margin: auto;">
             <tr>
-                <td style="text-align: center; background-color: #F0E68C;"><h5>Accuracy</h5></td>
-                <td style="text-align: center; background-color: #F0E68C;"><h5>Precision</h5></td>
-                <td style="text-align: center; background-color: #F0E68C;"><h5>Recall</h5></td>
-                <td style="text-align: center; background-color: #F0E68C;"><h5>F1-Score</h5></td>
+                <td style="text-align: center;"><h5>Accuracy</h5></td>
+                <td style="text-align: center;"><h5>Precision</h5></td>
+                <td style="text-align: center;"><h5>Recall</h5></td>
+                <td style="text-align: center;"><h5>F1- Score</h5></td>
             </tr>
             <tr>
-                <td style="text-align: center; background-color: pink;">{accuracy * 100:.2f}%</td>
-                <td style="text-align: center; background-color: pink;">{precision * 100:.2f}%</td>
-                <td style="text-align: center; background-color: pink;">{recall * 100:.2f}%</td>
-                <td style="text-align: center; background-color: pink;">{f1 * 100:.2f}%</td>
+                <td style="text-align: center;">{accuracy * 100:.2f}%</td>
+                <td style="text-align: center;">{precision * 100:.2f}%</td>
+                <td style="text-align: center;">{recall * 100:.2f}%</td>
+                <td style="text-align: center;">{f1 * 100:.2f}%</td>
             </tr>
         </table>
         """
-
             
         st.markdown(html_code, unsafe_allow_html=True)
+
 
 if selected == "Implementation":
     data = pd.read_csv('https://raw.githubusercontent.com/DiahDSyntia/Tugas-Akhir/main/datanormalisasi2.csv', sep=';')
@@ -294,19 +298,7 @@ if selected == "Implementation":
     precision = precision_score(y_test, y_pred, average='weighted')
     recall = recall_score(y_test, y_pred, average='weighted')
     f1 = f1_score(y_test, y_pred, average='weighted')
-
-    st.write("""
-    ### Penjelasan :"""
-    )
-    st.write('Dataset Description :')
-    st.write('1. Jenis Kelamin: Jenis Kelamin pasien. P= Perempuan, L= Laki-Laki')
-    st.write('2. Usia: Usia dari pasien')
-    st.write('3. IMT: Indeks Massa Tubuh Pasien. Hitung IMT Menggunakan rumus IMT= Berat Badan(kg)/Tinggi badan(m)x Tinggi badan(m)')
-    st.write('4. Sistolik: Tekanan darah sistolik Pasien (mmHg). Secara umum, tekanan darah manusia normal adalah 120 mmHg – 140 mmHg, namun pada individu yang mengalami hipertensi, tekanan darah sistoliknya melebihi 140 mmHg')
-    st.write('5. Diastolik: Tekanan darah diastolik pasien (mmHg). Tekanan darah diastolik adalah tekanan darah saat jantung berelaksasi (jantung tidak sedang memompa darah) sebelum kembali memompa darah, tekanan darah diastolik meningkat melebihi 90 mmHg')
-    st.write('6. Nafas: Nafas pasien yang dihitung /menit. Secara umum frekuensi nafas pada orang dewasa (19-59 tahun) adalah 12-20 nafas/menit')
-    st.write('7. Detak Nadi: Detak nadi pasien. Pada orang normal dewasa detak nadi berkisar 60-100 kali/menit.')
-
+        
     st.write("""
     ### Input Data :"""
     )
@@ -314,7 +306,7 @@ if selected == "Implementation":
     # Convert gender to binary
     #gender_binary = 1 if Jenis_Kelamin == "Laki-laki" else 0
     Usia = st.number_input("Umur", min_value=0, max_value=150)
-    IMT = st.number_input("IMT(Indeks Massa Tubuh)", min_value=0.0, max_value=100.0)
+    IMT = st.number_input("IMT", min_value=0.0, max_value=100.0)
     Sistole = st.number_input("Sistole", min_value=0, max_value=300)
     Diastole = st.number_input("Diastole", min_value=0, max_value=200)
     Nafas = st.number_input("Nafas", min_value=0, max_value=100)
